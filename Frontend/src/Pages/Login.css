@@ -1,0 +1,103 @@
+/* Login.css */
+
+.campus-title {
+    color: white;
+    font-size: 48px;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 30px;
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.699);
+    letter-spacing: 1px;
+}
+
+
+.login-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.login-box {
+    background: white;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(23, 69, 164, 0.2);
+    width: 100%;
+    max-width: 400px;
+    border-top: 4px solid #1745a4;
+}
+
+.login-box h2 {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #1745a4;
+    font-size: 28px;
+    font-weight: 600;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: #1745a4;
+    font-weight: 500;
+    font-size: 14px;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 12px 15px;
+    border: 2px solid #1745a4;
+    border-radius: 6px;
+    font-size: 14px;
+    box-sizing: border-box;
+    transition: all 0.3s ease;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: #1f7dcd;
+    box-shadow: 0 0 0 3px rgba(31, 125, 205, 0.1);
+}
+
+.form-group input::placeholder {
+    color: #aaa;
+}
+
+.login-button {
+    width: 100%;
+    padding: 14px;
+    background: linear-gradient(135deg, #1745a4 0%, #1f7dcd 100%);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 10px;
+}
+
+.login-button:hover {
+    background: linear-gradient(135deg, #1f7dcd 0%, #20bad8 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(31, 125, 205, 0.3);
+}
+
+.login-button:active {
+    transform: translateY(0);
+}
+
+.logo {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    width: 120px;  /* Ajusta el tamaño según tu logo */
+    height: auto;
+    z-index: 10;
+}
