@@ -2,8 +2,7 @@ import Navbar from '../Components/Navbar';
 import CourseCard from '../Components/CourseCard';
 import './Dashboard.css';
 
-const Dashboard = () => {
-    // Datos de ejemplo - después esto vendrá de tu backend
+export default function Dashboard (){
     const courses = [
         {
             id: 1,
@@ -46,39 +45,37 @@ const Dashboard = () => {
                 "Decoradores",
                 "TypeScript con React"
             ]
-        },
-        {
-            id: 4,
-            title: "Diseño UI/UX",
-            description: "Aprende los principios del diseño de interfaces modernas y atractivas.",
-            duration: "12 horas",
-            topics: [
-                "Principios de diseño",
-                "Teoría del color",
-                "Tipografía",
-                "Diseño responsive",
-                "Prototipado en Figma",
-                "Accesibilidad web"
-            ]
         }
     ];
 
     return (
-        <div className="dashboard">
-            <Navbar />
-            <div className="dashboard-container">
-                <div className="dashboard-header">
-                    <h1>Mis Cursos</h1>
-                    <p>Explora y comienza tu aprendizaje</p>
+        <div className='container'>
+            <div className="dashboard">
+                <Navbar />
+                <div className="dashboard-container">
+                    <div className="dashboard-header">
+                        <h1>Mis Cursos</h1>
+                        <p>Explora y comienza tu aprendizaje</p>
+                    </div>
+                   <div className='courses-grid'>
+                        {courses.map((course) => (
+                            <div key={course.id} className='parent'>
+                                <div className='card'>
+                                    <div className='date-box'>
+                                        <span className='date'>{course.duration.split(' ')[0]}</span>
+                                        <span className='month'>{course.duration.split(' ')[1]}</span>
+                                    </div>
+                                    <div className='content-box'>
+                                        <span className='card-title'>{course.title}</span>
+                                        <p className='card-content'>{course.description}</p>
+                                        <div className='see-more'>Ver más →</div>
+                                    </div>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
                 </div>
-                <div className="courses-grid">
-                    {courses.map(course => (
-                        <CourseCard key={course.id} course={course} />
-                    ))}
-                </div>
-            </div>
-        </div>
+            </div> 
+        </div>     
     );
 };
-
-export default Dashboard;
