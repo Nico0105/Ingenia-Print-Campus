@@ -6,7 +6,7 @@ import Login from './Pages/Login.jsx';
 import Dashboard from './Pages/Dashboard.jsx';
 import Home from './Pages/Home.jsx';
 import { Navigate } from 'react-router-dom';
-import './index.css';
+
 const App = () => {
   return (
     <div className="App">

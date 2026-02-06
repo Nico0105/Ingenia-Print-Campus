@@ -1,24 +1,30 @@
-/* index.css - Solo estilos globales */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
-
+/* RESET DURO */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+}
 
+html, body {
+  height: 100%;
 }
 
 body {
-   font-family: 'Poppins', sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  line-height: 1.5;
+  font-family: system-ui, sans-serif;
 }
 
-/* Variables CSS globales */
-:root {
-  --primary-color: #4CAF50;
-  --secondary-color: #2196F3;
-  --danger-color: #f44336;
-  --text-color: #333;
-  --background-color: #f5f5f5;
+ul, ol {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+button, input, textarea {
+  font: inherit;
+  border: none;
+  background: none;
 }
