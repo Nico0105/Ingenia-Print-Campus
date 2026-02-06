@@ -4,8 +4,9 @@ import logo from './logo.svg';
 import './App.css';
 import Login from './Pages/Login.jsx';
 import Dashboard from './Pages/Dashboard.jsx';
+import Home from './Pages/Home.jsx';
 import { Navigate } from 'react-router-dom';
-
+import './index.css';
 const App = () => {
   return (
     <div className="App">
@@ -13,6 +14,8 @@ const App = () => {
         <Route path="/" element={<Navigate to="/Login" replace />} />
         <Route path="/Login" element={<Login />} />
         <Route path="/Dashboard" element={<Dashboard />} />
+        <Route path="/Home" element={<Home />} />
+        
 
         {/* Aca añadimops mas rutas */}
 
