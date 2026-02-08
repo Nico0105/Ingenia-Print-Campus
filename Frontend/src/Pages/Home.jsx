@@ -2,10 +2,61 @@ import React, { useEffect, useState } from "react";
 import "./Home.css";
 import { useNavigate } from "react-router-dom";
 
+
 export default function Home() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [scrollY, setScrollY] = useState(0);
 
+  const chips = [
+    "Todos Nuestros Modelos",
+    "Linea Profesional",
+    "Linea Resina",
+    "Linea Industrial",
+    "Insumos / Accesorios / Materiales"
+  ];
+  const [activeChip, setActiveChip] = useState(chips[0]);
+
+
+  const products = [
+  {
+    id: 1,
+    name: "Creality Ender 3 V4",
+    price: "$1.250.000",
+    description: "Impresora FDM versátil, ideal para producción y prototipado.",
+    image: "Creality_Ender_3_V4.JPEG", // futuro
+    specs: [
+      "300 x 300 x 300 mm",
+      "600 mm/s",
+      "PLA, PETG, ABS",
+    ],
+  },
+  {
+    id: 2,
+    name: "Bambu Lab H2D",
+    price: "$2.100.000",
+    description: "Alta velocidad y precisión para trabajos profesionales.",
+    image: "BAMBULAB_H2D.JPEG",
+    specs: [
+      "Ø 250 x 400 mm",
+      "450 mm/s",
+      "TPU, PLA+",
+    ],
+  },
+  {
+    id: 3,
+    name: "Bambu Lab H2S",
+    price: "$1.850.000",
+    description: "Equilibrio perfecto entre rendimiento y confiabilidad.",
+    image: "BambuLabH2S.JPEG",
+    specs: [
+      "Ø 250 x 400 mm",
+      "450 mm/s",
+      "TPU, PLA+",
+    ],
+  },
+];
+
+  
   const navigate = useNavigate();
 
   const HandleLogin = () => {
@@ -79,11 +130,14 @@ export default function Home() {
         {/* FILTER BAR */}
         <section className="filters">
           <div className="filter-left">
-            <button className="chip active">Todos Nuestros Modelos</button>
-            <button className="chip">Linea Profesional</button>
-            <button className="chip">Linea Resina</button>
-            <button className="chip">Linea Industrial</button>
-            <button className="chip">Insumos / Accesorios / Materiales</button>
+            {chips.map((chip) => (
+              <button
+                key={chip}
+                className={`chip ${activeChip === chip ? "active" : ""}`}
+                onClick={() => setActiveChip(chip)}
+              >
+                {chip}</button>
+            ))}
           </div>
 
           <div className="filter-right">
@@ -97,7 +151,7 @@ export default function Home() {
         </section>
 
         {/* PRODUCTS */}
-        <section className="products">
+       <section className="products">
           <div className="section-header">
             <div>
               <h3>Nuestros Modelos</h3>
@@ -106,51 +160,33 @@ export default function Home() {
           </div>
 
           <div className="product-grid">
-            <div className="card">
-              <div className="card-image core-x"></div>
-              <div className="card-body">
-                <h4>Creality Ender 3 V4</h4>
-                <ul>
-                  <li>300 x 300 x 300 mm</li>
-                  <li>600 mm/s</li>
-                  <li>PLA, PETG, ABS</li>
-                </ul>
-                <div className="card-actions">
-                  <button className="btn-primary small">Consulta Aquí</button>
+            {products.map((product) => (
+              <div className="card" key={product.id}>
+                <div className="card-image">
+                  {/* Imagen futura */}
+                  <img src={product.image} alt={product.name} />
+                </div>
+
+                <div className="card-body">
+                  <h4>{product.name}</h4>
+
+                  <p className="price">{product.price}</p>
+                  <p className="description">{product.description}</p>
+
+                  <ul>
+                    {product.specs.map((spec, index) => (
+                      <li key={index}>{spec}</li>
+                    ))}
+                  </ul>
+
+                  <div className="card-actions">
+                    <button className="btn-primary small">
+                      Consulta Aquí
+                    </button>
+                  </div>
                 </div>
               </div>
-            </div>
-
-            <div className="card">
-              <div className="card-image delta"></div>
-              <div className="card-body">
-                <h4>Bambu Lab H2D</h4>
-                <ul>
-                  <li>Ø 250 x 400 mm</li>
-                  <li>450 mm/s</li>
-                  <li>TPU, PLA+</li>
-                </ul>
-                <div className="card-actions">
-                  <button className="btn-primary small">Consulta Aquí</button>
-                </div>
-              </div>
-            </div>
-
-            <div className="card">
-              <div className="card-image delta"></div>
-              <div className="card-body">
-                <h4>Bambu Lab H2S</h4>
-                <ul>
-                  <li>Ø 250 x 400 mm</li>
-                  <li>450 mm/s</li>
-                  <li>TPU, PLA+</li>
-                </ul>
-                <div className="card-actions">
-                  <button className="btn-primary small">Consulta Aquí</button>
-                </div>
-              </div>
-            </div>
-
+            ))}
           </div>
         </section>
 
