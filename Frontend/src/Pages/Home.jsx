@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./Home.css";
 import { useNavigate } from "react-router-dom";
-import Globe from '../Components/Globe';
 
 export default function Home() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
@@ -46,20 +45,20 @@ export default function Home() {
           </div>
 
           <nav className="nav">
-            <a href="#">Catalogo</a>
-            <a href="#">Nosotros</a>
-            <a href="#">Support</a>
-            <a href="#">Software</a>
+            <button className="nav-btn active">Catalogo</button>
+            <button className="nav-btn">Nosotros</button>
+            <button className="nav-btn">Cursos</button>
+            <button className="nav-btn">Software</button>
           </nav>
         </div>
 
         <div className="header-right">
           <div className="search-box">
-            <input type="text" placeholder="Search models or parts..." />
+            <input type="text" placeholder="Buscar modelos o partes..." />
           </div>
 
           <button className="btn-primary" onClick={HandleLogin}>
-            <span className="material-symbols-outlined">Iniciar Sesion</span>
+            <span className="material-symbols-outlined">CAMPUS</span>
           </button>
         </div>
       </header>
@@ -72,40 +71,10 @@ export default function Home() {
 
             <h2 className="hero-title">
               INGENIA PRINT <br />
-              <span>IMPRIMIENDO SOLUCIONES</span>
+              <span>Ideas que toman forma</span>
             </h2>
-
-            <p className="hero-text">
-              The future of manufacturing is here. INGENIA professional-grade
-              3D printers deliver unmatched precision, speed, and reliability.
-            </p>
-
-            <div className="hero-actions">
-              <button className="btn-primary big">
-                Comprar Ahora
-              </button>
-
-              <button className="btn-secondary">
-                Especificaciones Tecnicas
-              </button>
-            </div>
           </div>
-
-          {/* GLOBE VISUAL */}
-          <div className="hero-visual">
-            <div className="globe-container">
-              <Globe
-                theta={0.01}
-                dark={1}
-                scale={0.5}
-                diffuse={1.2}
-                baseColor="#ffffff"
-                markerColor="#ff7d04"
-                glowColor="#979797"
-              />
-            </div>
-          </div>
-        </section>
+         </section> 
 
         {/* FILTER BAR */}
         <section className="filters">
@@ -131,8 +100,8 @@ export default function Home() {
         <section className="products">
           <div className="section-header">
             <div>
-              <h3>Professional Printers</h3>
-              <p>Precision-engineered hardware for industrial workflows.</p>
+              <h3>Nuestros Modelos</h3>
+              <p>Rendimiento, precisión y durabilidad</p>
             </div>
           </div>
 
@@ -140,17 +109,14 @@ export default function Home() {
             <div className="card">
               <div className="card-image core-x"></div>
               <div className="card-body">
-                <h4>INGENIA Core X</h4>
+                <h4>Creality Ender 3 V4</h4>
                 <ul>
                   <li>300 x 300 x 300 mm</li>
                   <li>600 mm/s</li>
                   <li>PLA, PETG, ABS</li>
                 </ul>
                 <div className="card-actions">
-                  <button className="btn-primary small">Comprar Ahora</button>
-                  <button className="btn-info">
-                    <span className="material-symbols-outlined">info</span>
-                  </button>
+                  <button className="btn-primary small">Consulta Aquí</button>
                 </div>
               </div>
             </div>
@@ -158,20 +124,33 @@ export default function Home() {
             <div className="card">
               <div className="card-image delta"></div>
               <div className="card-body">
-                <h4>Delta Pro-S</h4>
+                <h4>Bambu Lab H2D</h4>
                 <ul>
                   <li>Ø 250 x 400 mm</li>
                   <li>450 mm/s</li>
                   <li>TPU, PLA+</li>
                 </ul>
                 <div className="card-actions">
-                  <button className="btn-primary small">Comprar Ahora</button>
-                  <button className="btn-info">
-                    <span className="material-symbols-outlined">info</span>
-                  </button>
+                  <button className="btn-primary small">Consulta Aquí</button>
                 </div>
               </div>
             </div>
+
+            <div className="card">
+              <div className="card-image delta"></div>
+              <div className="card-body">
+                <h4>Bambu Lab H2S</h4>
+                <ul>
+                  <li>Ø 250 x 400 mm</li>
+                  <li>450 mm/s</li>
+                  <li>TPU, PLA+</li>
+                </ul>
+                <div className="card-actions">
+                  <button className="btn-primary small">Consulta Aquí</button>
+                </div>
+              </div>
+            </div>
+
           </div>
         </section>
 

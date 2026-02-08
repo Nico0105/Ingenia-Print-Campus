@@ -17,7 +17,7 @@ export default function Dashboard() {
     },
     {
       id: 3,
-      title: "Impresion 3D Fundamentos Escenciales",
+      title: "Impresion 3D Fundamentos",
       description: "Domina TypeScript y lleva tu código JavaScript al siguiente nivel.",
       duration: "6 horas"
     }
