@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./Home.css";
+import HeroPrinter from "../Components/HeroPrinter";
+import { animate } from "animejs";
 import { useNavigate } from "react-router-dom";
 
 
@@ -125,18 +127,9 @@ export default function Home() {
             <span>Ideas que toman forma</span>
           </h2>
         </div>
-
-        {/* Impresora 3D de Sketchfab en el fondo */}
-        <div className="printer-embed">
-          <iframe 
-          title="Makerbot Replicator" 
-          frameBorder="0" 
-          allowFullScreen 
-          mozallowfullscreen="true" 
-          webkitallowfullscreen="true" 
-          allow="autoplay; fullscreen; xr-spatial-tracking" 
-          src="https://sketchfab.com/models/1c9ffb3a75884ef7bbd9fbcda00a8661/embed?autostart=1&autospin=0.2&ui_animations=0&ui_controls=0&ui_infos=0&ui_inspector=0&ui_stop=0&ui_watermark=0&ui_hint=0&ui_help=0&ui_settings=0&ui_vr=0&ui_ar=0&ui_theme=dark&transparent=1&preload=1">
-        </iframe>
+        {/* Animacion */}
+        <div className="hero-animation">
+          <HeroPrinter />
         </div>
       </section>
 

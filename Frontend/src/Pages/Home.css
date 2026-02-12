@@ -31,21 +31,14 @@
   overflow: hidden;
 }
 
-.printer-embed {
+.head {
   position: absolute;
-  right: 0;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 50%;
-  height: 80vh;
-  opacity: 0.4;
-  pointer-events: none; /* Para que no interfiera con clics */
-}
-
-.printer-embed iframe {
-  width: 100%;
-  height: 100%;
-  pointer-events: none; /* Desactiva TODOS los clics */
+  top: 20px;
+  left: 30px;
+  width: 60px;
+  height: 18px;
+  background: #3b82f6;
+  border-radius: 4px;
 }
 
 .hero-content {
