@@ -199,8 +199,8 @@ function ValorCard({ v, idx }) {
 export default function Nosotros() {
     const navigate = useNavigate();
 
-    const Handlehome = () =>{
-        navigate('/Home')
+    const handleCatalogo = () => {
+        navigate('/catalogo')
     }
 
 
@@ -226,7 +226,7 @@ export default function Nosotros() {
           diseñadores, makers y empresas de toda Argentina. Más que vender equipos:
           construimos el futuro de la manufactura aditiva.
         </p>
-        <button className="nos-hero-cta">Conocé nuestro catálogo →</button>
+        <button className="nos-hero-cta" onClick={handleCatalogo}>Conocé nuestro catálogo →</button>
         <div className="nos-scroll-line">
           <div className="nos-scroll-bar" />
           Scroll para explorar
