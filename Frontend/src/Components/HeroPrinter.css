@@ -14,6 +14,13 @@
   justify-content: center;
 }
 
+/* Hide/stack the animation on smaller screens to avoid overlap and overflow */
+@media (max-width: 768px) {
+  .printer3d-scene { display: none; }
+  .printer3d-scene::after { display: none; }
+  .printer3d-wrapper, .printer3d-glow, .printer3d-hud { display: none; }
+}
+
 /* Scanline overlay */
 .printer3d-scene::after {
   content: '';

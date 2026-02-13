@@ -1,0 +1,612 @@
+@import url('https://fonts.googleapis.com/css2?family=Teko:wght@300..700&family=Space+Mono:wght@400;700&display=swap');
+
+.nosotros {
+  --bg-primary: #05060a;
+  --bg-soft: #0f1117;
+  --text-primary: #ffffff;
+  --text-muted: #9ca3af;
+  --border-soft: rgba(255, 255, 255, 0.1);
+  --accent-orange: #d97706;
+  --accent-orange-dark: #b45309;
+  --accent-orange-glow: rgba(217, 119, 6, 0.3);
+  --accent-blue: #1e40af;
+  --accent-blue-dark: #1e3a8a;
+  --accent-blue-glow: rgba(30, 64, 175, 0.3);
+  --gradient-tech: linear-gradient(135deg, #1e40af 0%, #d97706 100%);
+  --gradient-tech-soft: linear-gradient(135deg, rgba(30, 64, 175, 0.2) 0%, rgba(217, 119, 6, 0.2) 100%);
+
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: 'Teko', sans-serif;
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+/* ── GRID BACKGROUND ── */
+.nosotros .grid-bg {
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(30, 64, 175, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(30, 64, 175, 0.04) 1px, transparent 1px);
+  background-size: 60px 60px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+
+
+/* ── HERO ── */
+.nosotros .nos-hero {
+  position: relative;
+  z-index: 1;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 120px 60px 80px;
+  overflow: hidden;
+}
+
+.nosotros .nos-hero-orb-blue {
+  position: absolute;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(30, 64, 175, 0.25) 0%, transparent 70%);
+  top: -100px;
+  left: -200px;
+  border-radius: 50%;
+  pointer-events: none;
+  animation: nosFloatBlue 8s ease-in-out infinite;
+}
+
+.nosotros .nos-hero-orb-orange {
+  position: absolute;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(217, 119, 6, 0.2) 0%, transparent 70%);
+  bottom: 0;
+  right: -100px;
+  border-radius: 50%;
+  pointer-events: none;
+  animation: nosFloatOrange 6s ease-in-out infinite;
+}
+
+@keyframes nosFloatBlue {
+  0%, 100% { transform: translateY(0px) translateX(0px); }
+  50%       { transform: translateY(30px) translateX(20px); }
+}
+
+@keyframes nosFloatOrange {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-25px); }
+}
+
+.nosotros .nos-hero-label {
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;            /* Labels pequeños — se mantienen en Mono */
+  letter-spacing: 4px;
+  color: var(--accent-orange);
+  text-transform: uppercase;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  opacity: 0;
+  animation: nosFadeUp 0.8s ease forwards 0.2s;
+}
+
+.nosotros .nos-hero-label::before {
+  content: '';
+  display: inline-block;
+  width: 32px;
+  height: 1px;
+  background: var(--accent-orange);
+}
+
+.nosotros .nos-hero-title {
+  font-family: 'Teko', sans-serif;
+  font-weight: 600;
+  font-size: clamp(52px, 9vw, 110px);   /* Teko es visualmente ~20% más grande — reducido */
+  line-height: 0.95;
+  letter-spacing: 1px;
+  margin-bottom: 24px;
+  opacity: 0;
+  animation: nosFadeUp 0.9s ease forwards 0.4s;
+}
+
+.nosotros .nos-hero-title span {
+  display: block;
+  background: var(--gradient-tech);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.nosotros .nos-hero-desc {
+  max-width: 520px;
+  font-family: 'Space Mono', monospace;   /* Descripción en Mono para contraste */
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 1.8;
+  color: var(--text-muted);
+  margin-bottom: 40px;
+  opacity: 0;
+  animation: nosFadeUp 1s ease forwards 0.6s;
+}
+
+.nosotros .nos-hero-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text-primary);
+  background: var(--gradient-tech);
+  padding: 12px 28px;
+  border: none;
+  cursor: pointer;
+  clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
+  transition: opacity 0.3s, transform 0.3s;
+  opacity: 0;
+  animation: nosFadeUp 1s ease forwards 0.8s;
+}
+
+.nosotros .nos-hero-cta:hover {
+  opacity: 0.85;
+  transform: translateY(-2px);
+}
+
+.nosotros .nos-scroll-line {
+  position: absolute;
+  bottom: 40px;
+  left: 60px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  font-family: 'Space Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 3px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  opacity: 0;
+  animation: nosFadeUp 1s ease forwards 1.2s;
+}
+
+.nosotros .nos-scroll-bar {
+  width: 60px;
+  height: 1px;
+  background: var(--gradient-tech);
+  position: relative;
+  overflow: hidden;
+}
+
+.nosotros .nos-scroll-bar::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: white;
+  animation: nosScanLine 2s linear infinite;
+}
+
+@keyframes nosScanLine {
+  0%   { left: -100%; }
+  100% { left: 100%; }
+}
+
+@keyframes nosFadeUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── SECTION BASE ── */
+.nosotros .nos-section {
+  position: relative;
+  z-index: 1;
+  padding: 100px 60px;
+}
+
+.nosotros .nos-section-label {
+  font-family: 'Space Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 4px;
+  color: var(--accent-orange);
+  text-transform: uppercase;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.nosotros .nos-section-label::before {
+  content: '';
+  width: 24px;
+  height: 1px;
+  background: var(--accent-orange);
+  flex-shrink: 0;
+}
+
+.nosotros .nos-section-title {
+  font-family: 'Teko', sans-serif;
+  font-weight: 600;
+  font-size: clamp(32px, 5vw, 60px);    /* Reducido respecto al original */
+  letter-spacing: 1px;
+  line-height: 1;
+}
+
+/* ── HISTORIA ── */
+.nosotros .nos-historia {
+  background: var(--bg-soft);
+  border-top: 1px solid var(--border-soft);
+  border-bottom: 1px solid var(--border-soft);
+}
+
+.nosotros .nos-historia-inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: start;
+  margin-top: 48px;
+}
+
+.nosotros .nos-historia-text {
+  font-family: 'Space Mono', monospace;
+  font-size: 13px;
+  line-height: 1.9;
+  color: var(--text-muted);
+}
+
+.nosotros .nos-historia-text p + p {
+  margin-top: 18px;
+}
+
+.nosotros .nos-historia-text strong {
+  color: var(--text-primary);
+  font-weight: 700;
+}
+
+/* ── TIMELINE ── */
+.nosotros .nos-timeline {
+  display: flex;
+  flex-direction: column;
+  padding-left: 28px;
+  border-left: 1px solid var(--border-soft);
+  position: relative;
+}
+
+.nosotros .nos-timeline-item {
+  position: relative;
+  padding: 0 0 36px 28px;
+  opacity: 0;
+  transform: translateX(20px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.nosotros .nos-timeline-item.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.nosotros .nos-timeline-item::before {
+  content: '';
+  position: absolute;
+  left: -5px;
+  top: 6px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--accent-orange);
+  box-shadow: 0 0 12px var(--accent-orange-glow);
+}
+
+.nosotros .nos-timeline-year {
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  color: var(--accent-orange);
+  letter-spacing: 2px;
+  margin-bottom: 4px;
+}
+
+.nosotros .nos-timeline-title {
+  font-family: 'Teko', sans-serif;
+  font-weight: 600;
+  font-size: 20px;           /* Teko 20px ≈ Rajdhani 18px visualmente */
+  color: var(--text-primary);
+  margin-bottom: 4px;
+  letter-spacing: 0.5px;
+  line-height: 1.1;
+}
+
+.nosotros .nos-timeline-desc {
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  color: var(--text-muted);
+  line-height: 1.7;
+}
+
+/* ── STATS ── */
+.nosotros .nos-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2px;
+  margin-top: 48px;
+}
+
+.nosotros .nos-stat-card {
+  background: var(--bg-soft);
+  border: 1px solid var(--border-soft);
+  padding: 40px 32px;
+  position: relative;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.5s ease, transform 0.5s ease, border-color 0.3s;
+}
+
+.nosotros .nos-stat-card.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.nosotros .nos-stat-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--gradient-tech);
+  transform: scaleX(0);
+  transition: transform 0.4s ease;
+  transform-origin: left;
+}
+
+.nosotros .nos-stat-card:hover::before { transform: scaleX(1); }
+.nosotros .nos-stat-card:hover         { border-color: rgba(217, 119, 6, 0.3); }
+
+.nosotros .nos-stat-number {
+  font-family: 'Teko', sans-serif;
+  font-weight: 600;
+  font-size: 56px;           /* Reducido de 72px — Teko es más voluminosa */
+  line-height: 1;
+  background: var(--gradient-tech);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  display: block;
+}
+
+.nosotros .nos-stat-suffix {
+  font-family: 'Teko', sans-serif;
+  font-weight: 500;
+  font-size: 30px;           /* Reducido de 40px */
+  background: var(--gradient-tech);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.nosotros .nos-stat-label {
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 2px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  margin-top: 8px;
+  font-weight: 400;
+}
+
+.nosotros .nos-stat-desc {
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  color: rgba(156, 163, 175, 0.6);
+  margin-top: 6px;
+  line-height: 1.6;
+}
+
+/* ── VALORES ── */
+.nosotros .nos-valores-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-top: 48px;
+}
+
+.nosotros .nos-valor-card {
+  background: var(--bg-soft);
+  border: 1px solid var(--border-soft);
+  padding: 36px 32px;
+  position: relative;
+  overflow: hidden;
+  clip-path: polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 16px 100%, 0 calc(100% - 16px));
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+  cursor: default;
+}
+
+.nosotros .nos-valor-card.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.nosotros .nos-valor-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--gradient-tech-soft);
+  opacity: 0;
+  transition: opacity 0.4s;
+}
+
+.nosotros .nos-valor-card:hover::after { opacity: 1; }
+
+.nosotros .nos-valor-icon {
+  font-size: 26px;           /* Reducido de 32px */
+  margin-bottom: 16px;
+  display: block;
+}
+
+.nosotros .nos-valor-num {
+  position: absolute;
+  top: 20px;
+  right: 24px;
+  font-family: 'Teko', sans-serif;
+  font-weight: 700;
+  font-size: 40px;           /* Reducido de 48px */
+  color: rgba(255, 255, 255, 0.04);
+  line-height: 1;
+  pointer-events: none;
+}
+
+.nosotros .nos-valor-title {
+  font-family: 'Teko', sans-serif;
+  font-weight: 600;
+  font-size: 22px;           /* Reducido de 28px — Teko igual visualmente */
+  letter-spacing: 1px;
+  margin-bottom: 10px;
+  position: relative;
+  z-index: 1;
+  line-height: 1.1;
+}
+
+.nosotros .nos-valor-desc {
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  line-height: 1.75;
+  color: var(--text-muted);
+  font-weight: 400;
+  position: relative;
+  z-index: 1;
+}
+
+.nosotros .nos-valor-accent {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: var(--gradient-tech);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s ease;
+}
+
+.nosotros .nos-valor-card:hover .nos-valor-accent { transform: scaleX(1); }
+
+/* ── MISIÓN BANNER ── */
+.nosotros .nos-mision-banner {
+  position: relative;
+  z-index: 1;
+  margin: 80px 60px;
+  padding: 64px 80px;
+  background: var(--gradient-tech-soft);
+  border: 1px solid rgba(217, 119, 6, 0.2);
+  overflow: hidden;
+  clip-path: polygon(0 0, calc(100% - 24px) 0, 100% 24px, 100% 100%, 24px 100%, 0 calc(100% - 24px));
+}
+
+.nosotros .nos-mision-banner::before {
+  content: '"';
+  position: absolute;
+  top: -20px;
+  left: 40px;
+  font-family: 'Teko', sans-serif;
+  font-weight: 700;
+  font-size: 200px;          /* Reducido de 240px */
+  color: rgba(217, 119, 6, 0.06);
+  line-height: 1;
+  pointer-events: none;
+}
+
+.nosotros .nos-mision-tag {
+  font-family: 'Space Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 4px;
+  color: var(--accent-orange);
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+
+.nosotros .nos-mision-text {
+  font-family: 'Teko', sans-serif;
+  font-weight: 500;
+  font-size: clamp(22px, 3.2vw, 40px);  /* Reducido de clamp(28px, 4vw, 52px) */
+  letter-spacing: 0.5px;
+  line-height: 1.2;
+  max-width: 800px;
+  position: relative;
+  z-index: 1;
+}
+
+.nosotros .nos-mision-text span {
+  background: var(--gradient-tech);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ── DIVIDER ── */
+.nosotros .nos-divider {
+  position: relative;
+  z-index: 1;
+  height: 1px;
+  margin: 0 60px;
+  background: linear-gradient(90deg, transparent, var(--accent-blue), var(--accent-orange), transparent);
+  opacity: 0.3;
+}
+
+/* ── FOOTER ── */
+.nosotros .nos-footer {
+  position: relative;
+  z-index: 1;
+  padding: 48px 60px;
+  border-top: 1px solid var(--border-soft);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 100px;
+}
+
+.nosotros .nos-footer-logo {
+  font-family: 'Teko', sans-serif;
+  font-weight: 600;
+  font-size: 18px;           /* Reducido de 22px */
+  letter-spacing: 3px;
+  background: var(--gradient-tech);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1;
+}
+
+.nosotros .nos-footer-copy {
+  font-family: 'Space Mono', monospace;
+  font-size: 9px;
+  color: rgba(156, 163, 175, 0.4);
+  letter-spacing: 2px;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 1024px) {
+  .nosotros .nos-hero           { padding: 110px 30px 80px; }
+  .nosotros .nos-section        { padding: 72px 30px; }
+  .nosotros .nos-historia-inner { grid-template-columns: 1fr; gap: 48px; }
+  .nosotros .nos-stats-grid     { grid-template-columns: repeat(2, 1fr); }
+  .nosotros .nos-valores-grid   { grid-template-columns: repeat(2, 1fr); }
+  .nosotros .nos-mision-banner  { margin: 0 30px; padding: 40px; }
+  .nosotros .nos-footer         { padding: 32px 30px; }
+  .nosotros .nos-divider        { margin: 0 30px; }
+}
+
+@media (max-width: 640px) {
+  .nosotros .nos-stats-grid    { grid-template-columns: 1fr; }
+  .nosotros .nos-valores-grid  { grid-template-columns: 1fr; }
+  .nosotros .nos-hero-title    { font-size: 48px; }
+  .nosotros .nos-mision-banner { padding: 32px 24px; }
+}

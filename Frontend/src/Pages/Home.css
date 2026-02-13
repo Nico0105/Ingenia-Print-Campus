@@ -86,13 +86,109 @@
 
 .filters {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 32px 48px;
+  flex-direction: column;
+  gap: 12px;
+  padding: 24px 48px;
   background: rgba(15, 17, 23, 0.8);  /* Fondo oscuro semi-transparente */
   border-top: 1px solid var(--border-soft);
   border-bottom: 1px solid var(--border-soft);
 }
+
+.filters-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  gap: 12px;
+}
+
+.filter-toggle {
+  display: none; /* visible solo en mobile/tablet */
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.06);
+  color: var(--text-muted);
+  border-radius: 10px;
+  cursor: pointer;
+  font-family: 'Teko', sans-serif;
+  font-weight: 700;
+}
+.filter-toggle .filter-icon {
+  width: 18px;
+  height: 2px;
+  background: linear-gradient(90deg, var(--accent-blue), var(--accent-orange));
+  display: block;
+  position: relative;
+}
+.filter-toggle .filter-icon::before,
+.filter-toggle .filter-icon::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: inherit;
+}
+.filter-toggle .filter-icon::before { top: -6px; }
+.filter-toggle .filter-icon::after  { top: 6px; }
+
+.filters-menu {
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height 280ms cubic-bezier(.2,.9,.2,1), padding 200ms ease;
+  padding: 0 0;
+  /* por defecto ocultamos la porción de ordenado dentro del panel */
+}
+.filters.open .filters-menu {
+  max-height: 480px; /* suficiente para los chips y select */
+  padding: 12px 0 0 0;
+}
+
+/* Evitar que el `Ordenar por` dentro del panel sea visible en desktop */
+.filters-menu .filter-right { display: none; }
+
+/* desktop/tablet visibility helpers */
+.desktop-only { display: block; }
+.mobile-only  { display: none; }
+
+@media (max-width: 768px) {
+  .filters { padding: 16px; }
+  .filter-toggle { display: flex; }
+  .desktop-only { display: none; }
+  .mobile-only  { display: flex; justify-content: space-between; }
+  .filters-menu { width: 100%; }
+  .filter-left { display: flex; gap: 8px; flex-wrap: wrap; }
+
+  /* mostrar el `Ordenar por` que está dentro del panel sólo en mobile */
+  .filters-menu .filter-right { display: flex; gap: 8px; align-items: center; }
+}
+
+/* Desktop / Laptop: mostrar siempre el panel de filtros (no colapsado) */
+@media (min-width: 769px) {
+  .filters { padding: 24px 48px; }
+  .filter-toggle { display: none; }
+  .filters-menu { max-height: none; padding: 12px 0 0 0; overflow: visible; }
+  .filter-left { display: flex; gap: 12px; }
+  .desktop-only { display: flex; }
+  .mobile-only { display: none; }
+
+  /* asegurar que el `Ordenar por` dentro del panel siga oculto en desktop */
+  .filters-menu .filter-right { display: none; }
+  .filters-bar .filter-right { display: flex; gap: 12px; align-items: center; }
+}
+
+/* Desktop / Laptop: mostrar siempre el panel de filtros (no colapsado) */
+@media (min-width: 769px) {
+  .filters { padding: 24px 48px; }
+  .filter-toggle { display: none; }
+  .filters-menu { max-height: none; padding: 12px 0 0 0; overflow: visible; }
+  .filter-left { display: flex; gap: 12px; }
+  .desktop-only { display: flex; }
+  .mobile-only { display: none; }
+}
+
 
 .chip {
   padding: 12px 24px;  /* Aumentado de 10px 20px */
@@ -166,6 +262,26 @@ p {
   border-bottom: 1px solid rgba(217, 119, 6, 0.2);
 }
 
+/* Prevent horizontal overflow on small devices */
+.home { overflow-x: hidden; }
+
+@media (max-width: 768px) {
+  .header { padding: 12px 16px; }
+  .logo img { height: 48px; }
+  /* Agrandar título cuando la animación se oculta */
+  .hero-title { font-size: 40px; line-height: 1.05; }
+  .hero-content { padding-left: 16px; text-align: center; width: 100%; }
+  /* Ocultar contenedor de animación para liberar espacio */
+  .hero-animation { display: none; }
+
+  .filters { padding: 16px; gap: 12px; flex-direction: column; align-items: stretch; }
+  .filter-left { flex-wrap: wrap; gap: 8px; }
+  .filter-right { width: 100%; justify-content: space-between; }
+  .search-box input { width: 160px; }
+  .product-grid { gap: 20px; }
+  main { padding-bottom: 60px; }
+}
+
 .header-left,
 .header-right {
   display: flex;
@@ -181,11 +297,12 @@ p {
 }
 
 .logo img {
-  height: 40px;
+  height: 56px;
   width: auto;
 }
 
 .logo h1 {
+  font-family: 'Teko', sans-serif;
   font-size: 24px;
   font-weight: 900;
   letter-spacing: 1px;
@@ -196,6 +313,8 @@ p {
   background-clip: text;
 }
 
+
+
 /* Navigation - Botones Futuristas */
 .nav {
   display: flex;
@@ -203,6 +322,7 @@ p {
 }
 
 .nav-btn {
+  font-family: 'Teko', sans-serif;
   position: relative;
   padding: 12px 24px;
   background: transparent;

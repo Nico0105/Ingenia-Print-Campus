@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./Home.css";
 import HeroPrinter from "../Components/HeroPrinter";
+import MainNavbar from "../Components/MainNavbar";
 import { animate } from "animejs";
 import { useNavigate } from "react-router-dom";
 
@@ -17,6 +18,7 @@ export default function Home() {
     "Insumos / Accesorios / Materiales"
   ];
   const [activeChip, setActiveChip] = useState(chips[0]);
+  const [filtersOpen, setFiltersOpen] = useState(false);
 
 
   const products = [
@@ -52,6 +54,18 @@ export default function Home() {
     image: "BambuLabH2S.JPEG",
     specs: [
       "Ø 250 x 400 mm",
+      "450 mm/s",
+      "TPU, PLA+",
+    ],
+  },
+  {
+    id: 4,
+    name: "Elegoo Saturn 4 Ultra",
+    price: "$1.343.900",
+    description: "ELEGOO Impresora 3D de resina Saturn-4ULTRA MSLA 12K LCD mono 10″ Wi-Fi impresión ",
+    image: "Elegoo_Saturn4_Ultra.jpeg",
+    specs: [
+      "218 x 122 x 220 mm",
       "450 mm/s",
       "TPU, PLA+",
     ],
@@ -92,17 +106,7 @@ export default function Home() {
       {/* HEADER */}
       <header className="header">
         <div className="header-left">
-          <div className="logo">
-            <img className="logo" src="./Logo.png" alt="logo" />
-            <h1>INGENIA</h1>
-          </div>
-
-          <nav className="nav">
-            <button className="nav-btn active">Catalogo</button>
-            <button className="nav-btn">Nosotros</button>
-            <button className="nav-btn">Cursos</button>
-            <button className="nav-btn">Software</button>
-          </nav>
+          <MainNavbar />
         </div>
 
         <div className="header-right">
@@ -134,25 +138,49 @@ export default function Home() {
       </section>
 
         {/* FILTER BAR */}
-        <section className="filters">
-          <div className="filter-left">
-            {chips.map((chip) => (
-              <button
-                key={chip}
-                className={`chip ${activeChip === chip ? "active" : ""}`}
-                onClick={() => setActiveChip(chip)}
-              >
-                {chip}</button>
-            ))}
+        <section className={`filters ${filtersOpen ? 'open' : ''}`}>
+          <div className="filters-bar">
+            <button
+              className="filter-toggle"
+              aria-expanded={filtersOpen}
+              onClick={() => setFiltersOpen((s) => !s)}
+            >
+              <span className="filter-icon" />
+              <span className="filter-label">Filtros</span>
+            </button>
+
+            <div className="filter-right desktop-only">
+              <span>Ordenar por:</span>
+              <select>
+                <option>Destacados</option>
+                <option>Mayor Precio</option>
+                <option>Menor Precio</option>
+              </select>
+            </div>
           </div>
 
-          <div className="filter-right">
-            <span>Ordenar por:</span>
-            <select>
-              <option>Destacados</option>
-              <option>Mayor Precio</option>
-              <option>Menor Precio</option>
-            </select>
+          {/* slide-down menu (visible en mobile/tablet) */}
+          <div className="filters-menu" aria-hidden={!filtersOpen}>
+            <div className="filter-left">
+              {chips.map((chip) => (
+                <button
+                  key={chip}
+                  className={`chip ${activeChip === chip ? "active" : ""}`}
+                  onClick={() => { setActiveChip(chip); setFiltersOpen(false); }}
+                >
+                  {chip}
+                </button>
+              ))}
+            </div>
+
+            <div className="filter-right mobile-only">
+              <span>Ordenar por:</span>
+              <select>
+                <option>Destacados</option>
+                <option>Mayor Precio</option>
+                <option>Menor Precio</option>
+              </select>
+            </div>
           </div>
         </section>
 
