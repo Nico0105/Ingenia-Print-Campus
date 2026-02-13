@@ -123,7 +123,7 @@ export default function Catalogo() {
 
                   <div className="product-footer">
                     <span className="product-price">{product.price}</span>
-                    <button className="btn-add-cart">Consultar</button>
+                    <button className="btn-add-cart" onClick={() => navigate(`/product/${product.id}`)}>Consultar</button>
                   </div>
                 </div>
               </div>

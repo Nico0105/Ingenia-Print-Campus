@@ -4,14 +4,16 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: 'Teko', sans-serif !important;
 }
 
 html, body {
   height: 100%;
+  font-family: 'Teko', sans-serif;
 }
 
 body {
-  line-height: 1.6;  /* CAMBIADO de 0.5 a 1.6 */
+  line-height: 1.6;
   font-family: 'Teko', sans-serif;
 }
 
@@ -26,6 +28,15 @@ a {
 
 button, input, textarea {
   font: inherit;
+  font-family: 'Teko', sans-serif !important;
   border: none;
   background: none;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Teko', sans-serif !important;
+}
+
+p, span, div, li {
+  font-family: 'Teko', sans-serif !important;
 }

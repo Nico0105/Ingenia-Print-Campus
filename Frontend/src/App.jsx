@@ -8,6 +8,7 @@ import Home from './Pages/Home.jsx';
 import { Navigate } from 'react-router-dom';
 import Nosotros from './Pages/Nosotros.jsx';
 import Catalogo from './Pages/Catalogo.jsx';
+import Product from './Pages/Product.jsx';
 
 const App = () => {
   return (
@@ -19,12 +20,7 @@ const App = () => {
         <Route path="/Home" element={<Home />} />
         <Route path="/Nosotros" element={<Nosotros />} />
         <Route path="/Catalogo" element={<Catalogo />} />
-
-
-
-
-        {/* Aca añadimos mas rutas */}
-
+        <Route path="/product/:productId" element={<Product />} />
       </Routes>
     </div>
   );
