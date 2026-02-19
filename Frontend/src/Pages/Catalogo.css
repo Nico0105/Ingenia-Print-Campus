@@ -88,7 +88,7 @@
   border-radius: 8px;
   color: var(--text-muted);
   font-family: 'Teko', sans-serif;
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 600;
   text-align: left;
   cursor: pointer;
@@ -160,7 +160,7 @@
 .price-display {
   text-align: center;
   font-family: 'Teko', sans-serif;
-  font-size: 14px;
+  font-size: 15px;
   color: var(--accent-orange);
   font-weight: 600;
 }
@@ -173,7 +173,7 @@
   border-radius: 8px;
   color: var(--text-muted);
   font-family: 'Teko', sans-serif;
-  font-size: 13px;
+  font-size: 15px;
   font-weight: 700;
   text-transform: uppercase;
   cursor: pointer;
@@ -214,7 +214,7 @@
 }
 
 .products-header p {
-  font-size: 14px;
+  font-size: 15px;
   color: var(--text-muted);
   margin: 0;
 }
@@ -283,7 +283,7 @@
 }
 
 .product-category {
-  font-size: 11px;
+  font-size: 15px;
   color: var(--accent-orange);
   text-transform: uppercase;
   letter-spacing: 1px;
@@ -298,7 +298,7 @@
   display: flex;
   flex-direction: column;
   gap: 6px;
-  font-size: 12px;
+  font-size: 15px;
   color: var(--text-muted);
 }
 
@@ -312,20 +312,10 @@
   display: flex;
   gap: 12px;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   margin-top: auto;
   padding-top: 12px;
   border-top: 1px solid rgba(255, 255, 255, 0.05);
-}
-
-.product-price {
-  font-family: 'Teko', sans-serif;
-  font-size: 16px;
-  font-weight: 700;
-  background: var(--gradient-tech);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
 }
 
 .btn-add-cart {
@@ -335,11 +325,12 @@
   border-radius: 6px;
   color: white;
   font-family: 'Teko', sans-serif;
-  font-size: 11px;
+  font-size: 15px;
   font-weight: 700;
   text-transform: uppercase;
   cursor: pointer;
   transition: all 0.2s ease;
+  flex: 1;
 }
 
 .btn-add-cart:hover {

@@ -352,12 +352,9 @@ export default function Product() {
   ];
 
   // HOOKS - SIEMPRE ANTES DE CONDICIONALES
-  const [quantity, setQuantity] = useState(1);
-  const [addedToCart, setAddedToCart] = useState(false);
-
-  const handleAddToCart = () => {
-    setAddedToCart(true);
-    setTimeout(() => setAddedToCart(false), 2000);
+  const handleWhatsAppContact = () => {
+    const message = encodeURIComponent(`Hola, me gustaría consultar disponibilidad y más información sobre: ${product.name}`);
+    window.open(`https://wa.me/541134406167?text=${message}`, "_blank");
   };
 
   // Buscar el producto por ID
@@ -410,7 +407,7 @@ export default function Product() {
           </div>
         </section>
 
-        {/* RIGHT: DETAILS & BUY */}
+        {/* caracteristicas y detalles */}
         <section className="product-details">
           {/* HEADER */}
           <div className="product-title-section">
@@ -420,14 +417,6 @@ export default function Product() {
               <span className="rating">⭐ {product.rating}</span>
               <span className="reviews">({product.reviews} reseñas)</span>
             </div>
-          </div>
-
-          {/* PRICE */}
-          <div className="price-section">
-            <span className="price">{product.price}</span>
-            <span className={`stock-indicator ${product.inStock ? "in-stock" : "out-of-stock"}`}>
-              {product.inStock ? "✓ En Stock" : "✗ Agotado"}
-            </span>
           </div>
 
           {/* DESCRIPTION */}
@@ -460,24 +449,10 @@ export default function Product() {
 
           {/* CTA SECTION */}
           <div className="cta-section">
-            {product.inStock && (
-              <div className="quantity-selector">
-                <label>Cantidad:</label>
-                <button onClick={() => setQuantity(Math.max(1, quantity - 1))}>−</button>
-                <input type="number" value={quantity} readOnly />
-                <button onClick={() => setQuantity(quantity + 1)}>+</button>
-              </div>
-            )}
-
             <button 
-              className={`btn-cart ${addedToCart ? "added" : ""}`}
-              onClick={handleAddToCart}
-              disabled={!product.inStock}
+              className="btn-inquiry"
+              onClick={handleWhatsAppContact}
             >
-              {addedToCart ? "✓ Agregado al Carrito" : "Agregar al Carrito"}
-            </button>
-
-            <button className="btn-inquiry">
               💬 Consultar Disponibilidad
             </button>
           </div>
@@ -515,7 +490,6 @@ export default function Product() {
               >
                 <img src={relatedProduct.image} alt={relatedProduct.name} />
                 <h4>{relatedProduct.name}</h4>
-                <p>{relatedProduct.price}</p>
               </div>
             ))}
         </div>

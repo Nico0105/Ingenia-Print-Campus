@@ -54,7 +54,7 @@
   background: rgba(217, 119, 6, 0.15);  /* Naranja oscuro con transparencia */
   border: 1px solid rgba(217, 119, 6, 0.4);
   border-radius: 24px;
-  font-size: 11px;
+  font-size: 15px;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 1.5px;
@@ -196,7 +196,7 @@
   border: 1px solid var(--border-soft);
   border-radius: 20px;
   color: var(--text-muted);
-  font-size: 13px;
+  font-size: 15px;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -732,7 +732,7 @@ main {
 .footer-links a {
   color: var(--text-muted);
   text-decoration: none;
-  font-size: 13px;
+  font-size: 15px;
   transition: all 0.3s ease;
 }
 
@@ -749,7 +749,7 @@ main {
 
 .footer-bottom p {
   color: var(--text-muted);
-  font-size: 12px;
+  font-size: 15px;
   margin: 0;
 }
 
@@ -762,7 +762,7 @@ main {
   color: white;
   border: none;
   border-radius: 8px;
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 600;
   cursor: pointer;
   display: flex;

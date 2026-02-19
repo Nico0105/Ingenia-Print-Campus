@@ -4,20 +4,22 @@
   top: 0;
   left: 0;
   right: 0;
-  z-index: 100;
+  z-index: 1000;
 
   display: flex;
   align-items: center;
   gap: 24px;
 
   padding: 16px 48px;
-  background: rgba(10, 14, 26, 0.95);
+  background: rgba(0, 10, 33, 0.95);
   backdrop-filter: blur(14px);
   border-bottom: 1px solid rgba(217, 119, 6, 0.2);
+  transition: transform 240ms ease, background 200ms ease;
+  will-change: transform;
 }
 
 .nos-logo img {
-  height: 56px;
+  height: 70px;
   cursor: pointer;
 }
 
@@ -119,7 +121,7 @@
   top: 100%;
   left: 0;
   right: 0;
-  background: rgba(10, 14, 26, 0.98);
+  background: rgba(0, 10, 33, 0.98);
   border-bottom: 1px solid rgba(255,255,255,0.04);
   transform-origin: top;
   transform: scaleY(0);
@@ -131,6 +133,13 @@
 .mobile-nav { display: flex; flex-direction: column; gap: 8px; }
 .mobile-nav .nav-btn { width: 100%; text-align: left; padding: 12px 16px; border-radius: 8px; }
 .mobile-nav .campus-mobile { border: 1px solid rgba(255,255,255,0.08); background: transparent; }
+
+.nos-nav.hidden {
+  transform: translateY(-120%);
+}
+
+/* When on Nosotros, keep navbar pinned and visible */
+/* removed .pinned rule — autohide will control visibility via .nos-nav.hidden */
 
 @media (max-width: 768px) {
   .nos-nav { padding: 12px 20px; }

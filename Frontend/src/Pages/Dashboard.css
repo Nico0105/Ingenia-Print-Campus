@@ -123,7 +123,7 @@
 }
 
 .dashboard-month {
-  font-size: 14px;
+  font-size: 15px;
   color: #6b7280;
 }
 
@@ -161,7 +161,7 @@
   align-self: flex-start;
   padding: 12px 20px;
   border-radius: 12px;
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 600;
   color: #1745a4;
   background: rgba(23, 69, 164, 0.05);

@@ -40,12 +40,10 @@ export default function Catalogo() {
   ];
 
   const [activeCategory, setActiveCategory] = useState("all");
-  const [priceRange, setPriceRange] = useState(5000000);
 
   const filteredProducts = allProducts.filter((product) => {
     const categoryMatch = activeCategory === "all" || product.category === activeCategory;
-    const priceMatch = parseInt(product.price.replace(/[^0-9]/g, "")) <= priceRange;
-    return categoryMatch && priceMatch;
+    return categoryMatch;
   });
 
   return (
@@ -74,25 +72,7 @@ export default function Catalogo() {
             </div>
           </div>
 
-          <div className="filters-section">
-            <h3 className="filters-title">Rango de Precio</h3>
-            <div className="price-filter">
-              <input
-                type="range"
-                min="0"
-                max="5000000"
-                step="100000"
-                value={priceRange}
-                onChange={(e) => setPriceRange(Number(e.target.value))}
-                className="price-slider"
-              />
-              <div className="price-display">
-                Hasta: ${(priceRange / 1000).toFixed(0)}K
-              </div>
-            </div>
-          </div>
-
-          <button className="reset-filters" onClick={() => { setActiveCategory("all"); setPriceRange(5000000); }}>
+          <button className="reset-filters" onClick={() => { setActiveCategory("all"); }}>
             Limpiar Filtros
           </button>
         </aside>
@@ -122,7 +102,6 @@ export default function Catalogo() {
                   </ul>
 
                   <div className="product-footer">
-                    <span className="product-price">{product.price}</span>
                     <button className="btn-add-cart" onClick={() => navigate(`/product/${product.id}`)}>Consultar</button>
                   </div>
                 </div>

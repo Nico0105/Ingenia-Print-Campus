@@ -9,17 +9,21 @@ import { Navigate } from 'react-router-dom';
 import Nosotros from './Pages/Nosotros.jsx';
 import Catalogo from './Pages/Catalogo.jsx';
 import Product from './Pages/Product.jsx';
+import Garantia from './Pages/Garantia.jsx';
+import Curso from './Pages/Curso.jsx';
 
 const App = () => {
   return (
     <div className="App">
       <Routes>
-        <Route path="/" element={<Navigate to="/Login" replace />} />
+        <Route path="/" element={<Navigate to="/Home" replace />} />
         <Route path="/Login" element={<Login />} />
         <Route path="/Dashboard" element={<Dashboard />} />
         <Route path="/Home" element={<Home />} />
         <Route path="/Nosotros" element={<Nosotros />} />
         <Route path="/Catalogo" element={<Catalogo />} />
+        <Route path="/Garantia" element={<Garantia />} />
+        <Route path="/Curso" element={<Curso />} />
         <Route path="/product/:productId" element={<Product />} />
       </Routes>
     </div>

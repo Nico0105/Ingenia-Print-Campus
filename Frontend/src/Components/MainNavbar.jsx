@@ -1,21 +1,51 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import "./MainNavbar.css";
 
 export default function MainNavbar() {
   const navigate = useNavigate();
   const { pathname } = useLocation();
+  const lower = pathname.toLowerCase();
   const [menuOpen, setMenuOpen] = useState(false);
+  const [hidden, setHidden] = useState(false);
+  const lastScrollY = useRef(0);
 
   const go = (to) => {
     setMenuOpen(false);
     navigate(to);
   };
 
+  useEffect(() => {
+    const handleScroll = () => {
+      const onGarantia = lower.includes('garantia');
+      const onNosotros = lower.includes('nosotros');
+      const shouldAutohide = onGarantia || onNosotros;
+      const currentY = window.scrollY || window.pageYOffset;
+
+      // Only apply autohide on selected pages (Garantia or Nosotros)
+      if (!shouldAutohide) {
+        if (hidden) setHidden(false);
+        lastScrollY.current = currentY;
+        return;
+      }
+
+      if (currentY > lastScrollY.current && currentY > 80) {
+        setHidden(true);
+      } else {
+        setHidden(false);
+      }
+
+      lastScrollY.current = currentY;
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [pathname, hidden]);
+
   return (
-    <nav className="nos-nav">
+    <nav className={`nos-nav ${hidden ? 'hidden' : ''}`}>
       <div className="nos-logo" onClick={() => go("/Home")}> 
-        <img src="./Logo.png" alt="Logo Ingenia" />
+        <img src="/Logo_Principal.png" alt="Logo Ingenia" />
       </div>
 
       <div className="nos-nav-logo">INGENIA PRINT</div>
@@ -23,8 +53,8 @@ export default function MainNavbar() {
       <div className="nav">
         <button className={`nav-btn ${pathname === "/Catalogo" ? "active" : ""}`} onClick={() => go("/Catalogo")}>Catalogo</button>
         <button className={`nav-btn ${pathname === "/Nosotros" ? "active" : ""}`} onClick={() => go("/Nosotros")}>Nosotros</button>
-        <button className={`nav-btn ${pathname === "/Cursos" ? "active" : ""}`} onClick={() => go("/Cursos")}>Cursos</button>
-        <button className={`nav-btn ${pathname === "/Software" ? "active" : ""}`} onClick={() => go("/Software")}>Software</button>
+        <button className={`nav-btn ${pathname === "/Curso" ? "active" : ""}`} onClick={() => go("/Curso")}>Cursos</button>
+        <button className={`nav-btn ${pathname === "/Garantia" ? "active" : ""}`} onClick={() => go("/Garantia")}>Garantía</button>
       </div>
 
       <button className="campus-btn" onClick={() => go('/login')}>CAMPUS</button>
@@ -45,8 +75,8 @@ export default function MainNavbar() {
         <div className="mobile-nav">
           <button className={`nav-btn ${pathname === "/Catalogo" ? "active" : ""}`} onClick={() => go("/Catalogo")}>Catalogo</button>
           <button className={`nav-btn ${pathname === "/Nosotros" ? "active" : ""}`} onClick={() => go("/Nosotros")}>Nosotros</button>
-          <button className={`nav-btn ${pathname === "/Cursos" ? "active" : ""}`} onClick={() => go("/Cursos")}>Cursos</button>
-          <button className={`nav-btn ${pathname === "/Software" ? "active" : ""}`} onClick={() => go("/Software")}>Software</button>
+          <button className={`nav-btn ${pathname === "/Curso" ? "active" : ""}`} onClick={() => go("/Curso")}>Cursos</button>
+          <button className={`nav-btn ${pathname === "/Garantia" ? "active" : ""}`} onClick={() => go("/Garantia")}>Garantía</button>
           <button className="nav-btn campus-mobile" onClick={() => go('/login')}>CAMPUS</button>
         </div>
       </div>

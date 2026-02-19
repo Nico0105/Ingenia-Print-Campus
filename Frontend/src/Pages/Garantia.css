@@ -1,0 +1,543 @@
+@import url('https://fonts.googleapis.com/css2?family=Teko:wght@300;400;500;600;700&family=Barlow:wght@300;400;500;600&family=Barlow+Condensed:wght@400;600;700&display=swap');
+
+:root {
+  --bg-primary: #05060a;
+  --bg-soft: #0f1117;
+  --text-primary: #ffffff;
+  --text-muted: #9ca3af;
+  --border-soft: rgba(255, 255, 255, 0.1);
+  --accent-orange: #d97706;
+  --accent-orange-dark: #b45309;
+  --accent-orange-glow: rgba(217, 119, 6, 0.3);
+  --accent-blue: #1e40af;
+  --accent-blue-dark: #1e3a8a;
+  --accent-blue-glow: rgba(30, 64, 175, 0.3);
+  --gradient-tech: linear-gradient(135deg, #1e40af 0%, #d97706 100%);
+  --gradient-tech-soft: linear-gradient(135deg, rgba(30, 64, 175, 0.2) 0%, rgba(217, 119, 6, 0.2) 100%);
+}
+
+/* ── PAGE WRAPPER ── */
+.garantia-page {
+  min-height: 100vh;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: 'Barlow', sans-serif;
+  position: relative;
+  overflow-x: hidden;
+  padding-top: 120px;
+}
+
+.garantia-page::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(30, 64, 175, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(30, 64, 175, 0.03) 1px, transparent 1px);
+  background-size: 40px 40px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── HERO ── */
+.garantia-hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 6rem 2rem 4rem;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.garantia-hero-glow-blue {
+  position: absolute;
+  top: -100px;
+  left: -100px;
+  width: 600px;
+  height: 600px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(30, 64, 175, 0.18) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.garantia-hero-glow-orange {
+  position: absolute;
+  bottom: -100px;
+  right: -100px;
+  width: 500px;
+  height: 500px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(217, 119, 6, 0.15) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.garantia-hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--gradient-tech-soft);
+  border: 1px solid rgba(217, 119, 6, 0.3);
+  border-radius: 100px;
+  padding: 6px 18px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.72rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--accent-orange);
+  margin-bottom: 2rem;
+  animation: garantia-fadeSlideDown 0.6s ease both;
+}
+
+.garantia-hero-badge-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent-orange);
+  animation: garantia-pulse 2s infinite;
+}
+
+.garantia-hero-shield {
+  width: 100px;
+  height: 100px;
+  margin-bottom: 2.5rem;
+  animation: garantia-fadeSlideDown 0.7s ease both;
+}
+
+.garantia-shield-ring {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  background:
+    linear-gradient(var(--bg-primary), var(--bg-primary)) padding-box,
+    var(--gradient-tech) border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.garantia-shield-ring::after {
+  content: '';
+  position: absolute;
+  inset: -8px;
+  border-radius: 50%;
+  background: var(--gradient-tech-soft);
+  z-index: -1;
+  filter: blur(8px);
+}
+
+.garantia-hero-title {
+  font-family: 'Teko', sans-serif;
+  font-size: clamp(3.5rem, 7vw, 6rem);
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  margin-bottom: 1.5rem;
+  animation: garantia-fadeSlideDown 0.8s ease both;
+}
+
+.garantia-hero-title span {
+  background: var(--gradient-tech);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.garantia-hero-subtitle {
+  font-size: 1.1rem;
+  color: var(--text-muted);
+  max-width: 560px;
+  line-height: 1.7;
+  animation: garantia-fadeSlideDown 0.9s ease both;
+}
+
+.garantia-hero-subtitle strong {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.garantia-hero-line {
+  width: 80px;
+  height: 2px;
+  background: var(--gradient-tech);
+  margin: 2rem auto;
+  animation: garantia-fadeSlideDown 1s ease both;
+}
+
+/* ── SHARED SECTION ── */
+.garantia-section {
+  position: relative;
+  z-index: 1;
+  padding: 5rem 2rem;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.garantia-section-label {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.72rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent-orange);
+  margin-bottom: 1rem;
+}
+
+.garantia-section-title {
+  font-family: 'Teko', sans-serif;
+  font-size: clamp(2.2rem, 4vw, 3.5rem);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  margin-bottom: 3.5rem;
+}
+
+/* ── SERVICES ── */
+.garantia-services-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5px;
+  background: var(--border-soft);
+  border: 1px solid var(--border-soft);
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.garantia-service-card {
+  background: var(--bg-soft);
+  padding: 2.5rem 2rem;
+  position: relative;
+  transition: background 0.3s;
+  cursor: default;
+}
+
+.garantia-service-card:hover {
+  background: #13151f;
+}
+
+.garantia-service-card:hover .garantia-service-icon-wrap {
+  border-color: rgba(217, 119, 6, 0.5);
+  box-shadow: 0 0 20px var(--accent-orange-glow);
+}
+
+.garantia-service-number {
+  font-family: 'Teko', sans-serif;
+  font-size: 5rem;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.04);
+  position: absolute;
+  top: 1rem;
+  right: 1.5rem;
+  line-height: 1;
+  user-select: none;
+}
+
+.garantia-service-icon-wrap {
+  width: 52px;
+  height: 52px;
+  border-radius: 12px;
+  border: 1px solid var(--border-soft);
+  background: var(--gradient-tech-soft);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+  transition: all 0.3s;
+}
+
+.garantia-service-card h3 {
+  font-family: 'Teko', sans-serif;
+  font-size: 1.6rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  margin-bottom: 0.5rem;
+  color: var(--text-primary);
+}
+
+.garantia-service-card p {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+/* ── COVERAGE ── */
+.garantia-coverage-section {
+  position: relative;
+  z-index: 1;
+  padding: 5rem 2rem;
+  background: var(--bg-soft);
+  border-top: 1px solid var(--border-soft);
+  border-bottom: 1px solid var(--border-soft);
+}
+
+.garantia-coverage-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.garantia-coverage-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--border-soft);
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid var(--border-soft);
+}
+
+.garantia-coverage-card {
+  background: var(--bg-primary);
+  padding: 2.5rem 2rem;
+  position: relative;
+  overflow: hidden;
+  transition: background 0.3s;
+}
+
+.garantia-coverage-card:hover {
+  background: #080a0f;
+}
+
+.garantia-coverage-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--gradient-tech);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.garantia-coverage-card:hover::before {
+  opacity: 1;
+}
+
+.garantia-coverage-months {
+  font-family: 'Teko', sans-serif;
+  font-size: 5rem;
+  font-weight: 700;
+  line-height: 1;
+  background: var(--gradient-tech);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 0.25rem;
+}
+
+.garantia-coverage-label {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.72rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 1.5rem;
+}
+
+.garantia-coverage-divider {
+  width: 40px;
+  height: 2px;
+  background: var(--gradient-tech);
+  margin-bottom: 1.5rem;
+  opacity: 0.6;
+}
+
+.garantia-coverage-items {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.garantia-coverage-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+.garantia-coverage-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--accent-orange);
+  margin-top: 0.45rem;
+  flex-shrink: 0;
+}
+
+/* ── EXCLUSIONS ── */
+.garantia-exclusions-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  align-items: start;
+}
+
+.garantia-exclusion-card {
+  background: var(--bg-soft);
+  border: 1px solid var(--border-soft);
+  border-radius: 16px;
+  padding: 2rem;
+}
+
+.garantia-exclusion-card.garantia-no-warranty {
+  border-color: rgba(239, 68, 68, 0.2);
+  background: rgba(239, 68, 68, 0.03);
+}
+
+.garantia-exclusion-card.garantia-no-warranty .garantia-exclusion-title {
+  color: #ef4444;
+}
+
+.garantia-exclusion-title {
+  font-family: 'Teko', sans-serif;
+  font-size: 1.6rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  margin-bottom: 1.2rem;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.garantia-exclusion-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.garantia-exclusion-list li {
+  font-size: 0.87rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+  padding-left: 1rem;
+  position: relative;
+}
+
+.garantia-exclusion-list li::before {
+  content: '—';
+  position: absolute;
+  left: 0;
+  color: var(--accent-orange);
+  opacity: 0.7;
+}
+
+.garantia-exclusion-list.garantia-red li::before {
+  color: #ef4444;
+}
+
+/* ── CTA ── */
+.garantia-cta-section {
+  position: relative;
+  z-index: 1;
+  padding: 6rem 2rem;
+  text-align: center;
+  overflow: hidden;
+}
+
+.garantia-cta-section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 80% 60% at 50% 100%, rgba(30, 64, 175, 0.12) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.garantia-cta-inner {
+  max-width: 680px;
+  margin: 0 auto;
+  position: relative;
+}
+
+.garantia-cta-title {
+  font-family: 'Teko', sans-serif;
+  font-size: clamp(2.5rem, 5vw, 4.5rem);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  margin-bottom: 1rem;
+  line-height: 1;
+}
+
+.garantia-cta-gradient-text {
+  background: var(--gradient-tech);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.garantia-cta-desc {
+  color: var(--text-muted);
+  font-size: 1rem;
+  margin-bottom: 2.5rem;
+  line-height: 1.7;
+}
+
+.garantia-cta-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 32px;
+  border-radius: 8px;
+  background: var(--gradient-tech);
+  color: white;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  border: none;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 0 30px var(--accent-blue-glow);
+}
+
+.garantia-cta-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 40px rgba(217, 119, 6, 0.4), 0 0 20px var(--accent-blue-glow);
+}
+
+.garantia-cta-note {
+  margin-top: 1.5rem;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  letter-spacing: 0.05em;
+}
+
+/* ── ANIMATIONS ── */
+@keyframes garantia-fadeSlideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes garantia-pulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.4; }
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 768px) {
+  .garantia-coverage-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .garantia-exclusions-grid {
+    grid-template-columns: 1fr;
+  }
+}

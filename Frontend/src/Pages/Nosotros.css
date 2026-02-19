@@ -84,7 +84,7 @@
 
 .nosotros .nos-hero-label {
   font-family: 'Space Mono', monospace;
-  font-size: 10px;            /* Labels pequeños — se mantienen en Mono */
+  font-size: 15px;            /* Labels pequeños — se mantienen en Mono */
   letter-spacing: 4px;
   color: var(--accent-orange);
   text-transform: uppercase;
@@ -126,7 +126,7 @@
 .nosotros .nos-hero-desc {
   max-width: 520px;
   font-family: 'Space Mono', monospace;   /* Descripción en Mono para contraste */
-  font-size: 13px;
+  font-size: 15px;
   font-weight: 400;
   line-height: 1.8;
   color: var(--text-muted);
@@ -140,7 +140,7 @@
   align-items: center;
   gap: 10px;
   font-family: 'Space Mono', monospace;
-  font-size: 11px;
+  font-size: 15px;
   letter-spacing: 2px;
   text-transform: uppercase;
   color: var(--text-primary);
@@ -167,7 +167,7 @@
   align-items: center;
   gap: 16px;
   font-family: 'Space Mono', monospace;
-  font-size: 9px;
+  font-size: 15px;
   letter-spacing: 3px;
   color: var(--text-muted);
   text-transform: uppercase;
@@ -213,7 +213,7 @@
 
 .nosotros .nos-section-label {
   font-family: 'Space Mono', monospace;
-  font-size: 9px;
+  font-size: 15px;
   letter-spacing: 4px;
   color: var(--accent-orange);
   text-transform: uppercase;
@@ -256,7 +256,7 @@
 
 .nosotros .nos-historia-text {
   font-family: 'Space Mono', monospace;
-  font-size: 13px;
+  font-size: 15px;
   line-height: 1.9;
   color: var(--text-muted);
 }
@@ -306,7 +306,7 @@
 
 .nosotros .nos-timeline-year {
   font-family: 'Space Mono', monospace;
-  font-size: 10px;
+  font-size: 15px;
   color: var(--accent-orange);
   letter-spacing: 2px;
   margin-bottom: 4px;
@@ -324,7 +324,7 @@
 
 .nosotros .nos-timeline-desc {
   font-family: 'Space Mono', monospace;
-  font-size: 11px;
+  font-size: 15px;
   color: var(--text-muted);
   line-height: 1.7;
 }
@@ -393,7 +393,7 @@
 
 .nosotros .nos-stat-label {
   font-family: 'Space Mono', monospace;
-  font-size: 10px;
+  font-size: 15px;
   letter-spacing: 2px;
   color: var(--text-muted);
   text-transform: uppercase;
@@ -403,7 +403,7 @@
 
 .nosotros .nos-stat-desc {
   font-family: 'Space Mono', monospace;
-  font-size: 10px;
+  font-size: 15px;
   color: rgba(156, 163, 175, 0.6);
   margin-top: 6px;
   line-height: 1.6;
@@ -477,7 +477,7 @@
 
 .nosotros .nos-valor-desc {
   font-family: 'Space Mono', monospace;
-  font-size: 11px;
+  font-size: 15px;
   line-height: 1.75;
   color: var(--text-muted);
   font-weight: 400;
@@ -526,7 +526,7 @@
 
 .nosotros .nos-mision-tag {
   font-family: 'Space Mono', monospace;
-  font-size: 9px;
+  font-size: 15px;
   letter-spacing: 4px;
   color: var(--accent-orange);
   text-transform: uppercase;
@@ -587,7 +587,7 @@
 
 .nosotros .nos-footer-copy {
   font-family: 'Space Mono', monospace;
-  font-size: 9px;
+  font-size: 15px;
   color: rgba(156, 163, 175, 0.4);
   letter-spacing: 2px;
 }
