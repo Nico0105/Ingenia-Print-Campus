@@ -459,6 +459,7 @@ p {
 .card-actions {
   display: flex;
   gap: 12px;
+  margin-top: auto;
 }
 
 .btn-info {
@@ -564,6 +565,9 @@ main {
   transition: all 0.4s ease;
   cursor: pointer;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  min-height: 400px;
 }
 
 .card::before {
@@ -644,6 +648,13 @@ main {
   z-index: 1;
 }
 
+.card-body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 100px;
+}
+
 .card-body h4 {
   font-size: 22px;
   font-weight: 700;
@@ -657,7 +668,8 @@ main {
 .card-body ul {
   list-style: none;
   padding: 0;
-  margin: 0 0 20px 0;
+  margin: auto 0 24px 0;
+  min-height: 80px;
 }
 
 .card-body ul li {

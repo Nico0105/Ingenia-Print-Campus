@@ -24,11 +24,39 @@ function initDB() {
       subcategoria TEXT
     )
   `);
+  
+  // Crear tabla de administradores
+  db.run(`
+    CREATE TABLE IF NOT EXISTS admins (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      username TEXT UNIQUE NOT NULL,
+      password TEXT NOT NULL,
+      email TEXT,
+      created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+    )
+  `);
+  
+  // Insertar admin por defecto si no existe
+  db.get('SELECT id FROM admins WHERE username = ?', ['admin'], (err, row) => {
+    if (!row) {
+      db.run('INSERT INTO admins (username, password, email) VALUES (?, ?, ?)', 
+        ['admin', 'admin123', 'admin@ingenia.com']);
+    }
+  });
 }
 
 export function getProductoByNombre(nombre: string): Promise<any | null> {
   return new Promise((resolve, reject) => {
     db.get('SELECT * FROM productos WHERE nombre = ?', [nombre], (err, row) => {
+      if (err) reject(err);
+      else resolve(row || null);
+    });
+  });
+}
+
+export function getProductoById(id: number): Promise<any | null> {
+  return new Promise((resolve, reject) => {
+    db.get('SELECT * FROM productos WHERE id = ?', [id], (err, row) => {
       if (err) reject(err);
       else resolve(row || null);
     });
@@ -58,12 +86,12 @@ export function insertProducto(producto: any): Promise<number> {
   });
 }
 
-export function updateProducto(nombre: string, producto: any): Promise<void> {
+export function updateProducto(id: number, producto: any): Promise<void> {
   return new Promise((resolve, reject) => {
-    const { imagenes, descripcion_general, en_stock } = producto;
+    const { nombre, categoria, imagenes, descripcion_general, en_stock } = producto;
     db.run(
-      'UPDATE productos SET imagenes = ?, descripcion_general = ?, en_stock = ? WHERE nombre = ?',
-      [JSON.stringify(imagenes), JSON.stringify(descripcion_general), en_stock ? 1 : 0, nombre],
+      'UPDATE productos SET nombre = ?, categoria = ?, imagenes = ?, descripcion_general = ?, en_stock = ? WHERE id = ?',
+      [nombre, categoria || 'Sin categoría', JSON.stringify(imagenes), JSON.stringify(descripcion_general), en_stock ? 1 : 0, id],
       (err) => {
         if (err) reject(err);
         else resolve();
@@ -91,5 +119,14 @@ export function toggleStock(nombre: string): Promise<void> {
         else resolve();
       }
     );
+  });
+}
+
+export function getAdminByUsername(username: string): Promise<any | null> {
+  return new Promise((resolve, reject) => {
+    db.get('SELECT * FROM admins WHERE username = ?', [username], (err, row) => {
+      if (err) reject(err);
+      else resolve(row || null);
+    });
   });
 }

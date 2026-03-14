@@ -1,169 +1,483 @@
 .admin-panel {
-  background: #05060a;
-  color: #f0f2f8;
+  background: #0a0d14;
+  color: #e2e8f0;
   min-height: 100vh;
-  padding: 20px;
+  padding: 24px 32px;
+  font-family: 'Segoe UI', system-ui, sans-serif;
 }
 
 .admin-header {
-  text-align: center;
-  margin-bottom: 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 32px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #1e293b;
 }
 
 .admin-header h1 {
-  color: #e07b20;
-  margin-bottom: 15px;
+  color: #f97316;
+  font-size: 28px;
+  font-weight: 700;
+  margin: 0;
+  letter-spacing: -0.5px;
 }
 
 .header-actions {
   display: flex;
-  justify-content: center;
-  gap: 15px;
+  gap: 12px;
+}
+
+.btn-logout,
+.btn-catalog,
+.btn-add {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  transition: all 0.2s ease;
 }
 
 .btn-logout {
-  background: #ef4444;
+  background: #dc2626;
   color: white;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 4px;
-  cursor: pointer;
 }
 
-.admin-content {
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
-.btn-add {
-  background: #e07b20;
-  color: rgb(255, 255, 255);
-  border: none;
-  padding: 10px 20px;
-  border-radius: 4px;
-  cursor: pointer;
-  margin-bottom: 20px;
-}
-
-.header-actions {
-  display: flex;
-  gap: 10px;
+.btn-logout:hover {
+  background: #b91c1c;
 }
 
 .btn-catalog {
-  background: #3b82f6;
+  background: #1e40af;
   color: white;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 4px;
-  cursor: pointer;
 }
 
+.btn-catalog:hover {
+  background: #1e3a8a;
+}
+
+.btn-add {
+  background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
+  color: white;
+  font-size: 15px;
+  padding: 12px 24px;
+}
+
+.btn-add:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(249, 115, 22, 0.4);
+}
+
+.admin-content {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.products-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.products-header h2 {
+  color: #f8fafc;
+  font-size: 22px;
+  margin: 0;
+}
+
+/* Form Container */
 .form-container {
-  background: #0d0f18;
-  padding: 20px;
-  border-radius: 8px;
-  margin-bottom: 20px;
+  background: #111827;
+  padding: 32px;
+  border-radius: 16px;
+  margin-bottom: 32px;
+  border: 1px solid #1e293b;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.3);
 }
 
 .form-container h2 {
-  margin-bottom: 15px;
+  color: #f8fafc;
+  font-size: 24px;
+  margin: 0 0 24px 0;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #1e293b;
 }
 
 .form-container h3 {
-  color: #ffffff;
-  font-size: 18px;
-  margin-top: 20px;
-  margin-bottom: 10px;
+  color: #f97316;
+  font-size: 16px;
+  font-weight: 600;
+  margin: 28px 0 16px 0;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
 .form-group {
-  margin-bottom: 15px;
+  margin-bottom: 20px;
 }
 
 .form-group label {
   display: block;
-  margin-bottom: 5px;
-  font-weight: bold;
-  font-size: 16px;
-  color: #ffffff;
+  margin-bottom: 8px;
+  font-weight: 500;
+  font-size: 14px;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 .form-container input,
 .form-container textarea {
   width: 100%;
-  padding: 10px;
-  background: #1a1d2a;
-  border: 1px solid #374151;
-  border-radius: 4px;
-  color: #ffffff;
+  padding: 14px 16px;
+  background: #0f172a;
+  border: 1px solid #334155;
+  border-radius: 8px;
+  color: #f1f5f9;
+  font-size: 15px;
+  transition: all 0.2s ease;
+  box-sizing: border-box;
 }
 
 .form-container input:focus,
 .form-container textarea:focus {
-  border-color: #e07b20;
+  border-color: #f97316;
   outline: none;
-  background: #1a1d2a;
-  color: #ffffff;
+  background: #0f172a;
+  box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.1);
 }
 
 .form-container input::placeholder,
 .form-container textarea::placeholder {
-  color: rgba(255, 255, 255, 0.6);
-  opacity: 1;
+  color: #475569;
 }
 
-.form-container button {
-  margin-right: 10px;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
+.form-container textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+/* Form Buttons */
+.form-buttons {
+  display: flex;
+  gap: 12px;
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid #1e293b;
 }
 
 .form-container button[type="submit"] {
-  background: #10b981;
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
   color: white;
+  padding: 14px 32px;
+  font-weight: 600;
+  font-size: 15px;
+}
+
+.form-container button[type="submit"]:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
 }
 
 .form-container button[type="button"] {
-  background: #6b7280;
-  color: white;
+  background: #334155;
+  color: #cbd5e1;
+  padding: 14px 24px;
+  font-weight: 500;
 }
 
+.form-container button[type="button"]:hover {
+  background: #475569;
+}
+
+/* Dynamic fields (materiales, ideal para) */
+.dynamic-field {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.dynamic-field input {
+  flex: 1;
+}
+
+.dynamic-field button {
+  background: #dc2626 !important;
+  color: white !important;
+  padding: 12px 16px !important;
+  font-size: 18px;
+}
+
+.dynamic-field button:hover {
+  background: #b91c1c !important;
+}
+
+.add-field-btn {
+  background: #1e40af !important;
+  color: white !important;
+  padding: 10px 20px !important;
+  margin-top: 8px;
+  display: inline-block;
+}
+
+.add-field-btn:hover {
+  background: #1e3a8a !important;
+}
+
+/* Products List */
 .products-list {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 12px;
+}
+
+.products-list h2 {
+  color: #f8fafc;
+  font-size: 20px;
+  margin-bottom: 16px;
 }
 
 .product-item {
-  background: #0d0f18;
-  padding: 15px;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  background: #111827;
+  padding: 0;
+  border-radius: 12px;
+  border: 1px solid #1e293b;
+  transition: all 0.2s ease;
+  overflow: hidden;
+}
+
+.product-item:hover {
+  border-color: #334155;
+  background: #1a2332;
+}
+
+.product-item.expanded {
+  border-color: #f97316;
+  margin-bottom: 12px;
+}
+
+.product-main {
+  padding: 20px 24px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  cursor: pointer;
+}
+
+.product-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 }
 
 .product-name {
-  font-size: 18px;
-  font-weight: bold;
+  font-size: 16px;
+  font-weight: 600;
+  color: #f1f5f9;
+}
+
+.product-category {
+  font-size: 13px;
+  color: #64748b;
+}
+
+.product-stock {
+  font-size: 12px;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-weight: 500;
+  margin-top: 6px;
+  display: inline-block;
+}
+
+.product-stock.in-stock {
+  background: rgba(16, 185, 129, 0.15);
+  color: #34d399;
+}
+
+.product-stock.out-of-stock {
+  background: rgba(239, 68, 68, 0.15);
+  color: #f87171;
 }
 
 .actions {
   display: flex;
-  gap: 10px;
+  gap: 8px;
 }
 
 .actions button {
-  padding: 5px 10px;
+  padding: 8px 16px;
   border: none;
-  border-radius: 4px;
+  border-radius: 6px;
   cursor: pointer;
+  font-size: 13px;
+  font-weight: 500;
+  transition: all 0.2s ease;
 }
 
-.actions button:nth-child(1) { background: #3b82f6; color: white; }
-.actions button:nth-child(2) { background: #ef4444; color: white; }
-.actions button:nth-child(3) { background: #f59e0b; color: white; }
+.actions button:hover {
+  transform: translateY(-1px);
+}
+
+.actions button:first-child {
+  background: #3b82f6;
+  color: white;
+}
+
+.actions button:first-child:hover {
+  background: #2563eb;
+}
+
+.actions button:nth-child(2) {
+  background: #dc2626;
+  color: white;
+}
+
+.actions button:nth-child(2):hover {
+  background: #b91c1c;
+}
+
+.actions button:nth-child(3) {
+  background: #f59e0b;
+  color: white;
+}
+
+.actions button:nth-child(3):hover {
+  background: #d97706;
+}
+
+.btn-cancel-action {
+  background: #6b7280 !important;
+  color: white !important;
+  padding: 8px 16px !important;
+}
+
+/* Inline Form */
+.inline-form {
+  padding: 24px;
+  background: #0d1117;
+  border-top: 1px solid #1e293b;
+}
+
+.inline-form h3,
+.inline-form h4 {
+  color: #f97316;
+  font-size: 14px;
+  font-weight: 600;
+  margin: 20px 0 12px 0;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.inline-form .form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 500;
+  font-size: 13px;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.inline-form input,
+.inline-form textarea {
+  width: 100%;
+  padding: 14px 16px;
+  background: #0f172a;
+  border: 1px solid #334155;
+  border-radius: 8px;
+  color: #f1f5f9;
+  font-size: 15px;
+  transition: all 0.2s ease;
+  box-sizing: border-box;
+}
+
+.inline-form input:focus,
+.inline-form textarea:focus {
+  border-color: #f97316;
+  outline: none;
+  background: #0f172a;
+  box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.1);
+}
+
+.inline-form h3 {
+  margin-top: 0;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.specs-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+.inline-form .form-group {
+  margin-bottom: 16px;
+}
+
+.form-buttons {
+  display: flex;
+  gap: 12px;
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid #1e293b;
+}
+
+.btn-save {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important;
+  color: white !important;
+  padding: 12px 24px !important;
+  font-weight: 600;
+}
+
+.btn-cancel {
+  background: #374151 !important;
+  color: #d1d5db !important;
+  padding: 12px 24px !important;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .admin-panel {
+    padding: 16px;
+  }
+
+  .admin-header {
+    flex-direction: column;
+    gap: 16px;
+    text-align: center;
+  }
+
+  .form-container {
+    padding: 20px;
+  }
+
+  .form-row,
+  .specs-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .product-item {
+    flex-direction: column;
+    gap: 16px;
+    align-items: flex-start;
+  }
+
+  .actions {
+    width: 100%;
+    flex-wrap: wrap;
+  }
+
+  .actions button {
+    flex: 1;
+    min-width: 100px;
+  }
+}

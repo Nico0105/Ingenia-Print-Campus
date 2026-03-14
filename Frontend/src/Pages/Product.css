@@ -27,6 +27,8 @@
   display: flex;
   flex-direction: column;
   overflow-x: hidden;
+  overflow-y: visible;
+  padding-bottom: 100px;
 }
 
 /* HEADER */
@@ -86,31 +88,6 @@
   align-items: center;
   font-size: 15px;
   color: var(--text-muted);
-<<<<<<< HEAD
-<<<<<<< HEAD
-  margin-top: 110px;
-=======
-  margin-top: 130px;
->>>>>>> parent of 9c44a30 (Add / json, and catalogo with real products)
-  border-bottom: 1px solid var(--border-soft);
-}
-
-.breadcrumb-link {
-  cursor: pointer;
-  color: var(--accent-blue);
-  transition: color 0.2s ease;
-}
-
-.breadcrumb-link:hover {
-  color: var(--accent-orange);
-}
-
-.breadcrumb-current {
-  color: var(--text-primary);
-  font-weight: 600;
-}
-
-=======
   margin-top: 130px;
   border-bottom: 1px solid var(--border-soft);
 }
@@ -130,7 +107,6 @@
   font-weight: 600;
 }
 
->>>>>>> parent of 9c44a30 (Add / json, and catalogo with real products)
 /* MAIN CONTENT */
 .product-main {
   display: flex;
@@ -143,9 +119,7 @@
   padding-top: 100px;
 }
 
-/* =====================
-   GALLERY SECTION (LEFT)
-===================== */
+/* GALLERY SECTION (LEFT) */
 .product-gallery {
   flex: 0 0 45%;
   display: flex;
@@ -221,9 +195,7 @@
   object-fit: cover;
 }
 
-/* =====================
-   DETAILS SECTION (RIGHT)
-===================== */
+/* DETAILS SECTION (RIGHT) */
 .product-details {
   flex: 0 0 55%;
   display: flex;
@@ -474,21 +446,81 @@
   margin: 0;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-/* =========================
-   SPECS SECTION — Minimal B2B
-========================= */
+.info-box strong {
+  color: var(--text-primary);
+}
 
+/* ESPECIFICACIONES TÉCNICAS */
+.specs-technical {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 48px;
+  border-top: 1px solid var(--border-soft);
+  clear: both;
+}
+
+.specs-technical h2 {
+  font-family: 'Teko', sans-serif;
+  font-size: 28px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  margin-bottom: 24px;
+  color: var(--text-primary);
+}
+
+.specs-table {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 8px;
+}
+
+.spec-row {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: 16px;
+  padding: 14px 18px;
+  background: rgba(15, 17, 23, 0.6);
+  border: 1px solid var(--border-soft);
+  border-radius: 6px;
+  align-items: center;
+}
+
+.spec-row .spec-label {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.spec-row .spec-value {
+  font-family: 'Barlow', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-primary);
+  text-align: left;
+}
+
+/* SPECS SECTION */
 .product-specs {
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
-  padding: 64px 56px;
+  padding: 48px;
+  padding-bottom: 100px;
   border-top: 1px solid var(--border-soft);
   display: flex;
   flex-direction: column;
-  gap: 40px;
+  gap: 24px;
+  clear: both;
+  min-height: 200px;
+  overflow: visible;
+}
+
+.ideal-para-section {
+  margin-top: 80px;
 }
 
 .product-specs h2 {
@@ -496,20 +528,19 @@
   font-size: 28px;
   font-weight: 600;
   letter-spacing: 1px;
-  margin-bottom: 40px;
+  margin-bottom: 8px;
   color: var(--text-primary);
 }
 
-/* Grid limpio (solo para ESPECIFICACIONES) */
 .specs-sections-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 24px;
+  gap: 20px;
+  min-height: 200px;
 }
 
-/* Tarjeta minimal */
 .spec-section {
-  background: var(--bg-card);
+  background: rgba(15, 17, 23, 0.6);
   border: 1px solid var(--border-soft);
   border-radius: 8px;
   padding: 20px 24px;
@@ -525,7 +556,6 @@
   padding: 15px 20px;
 }
 
-/* Título de sección */
 .spec-section h3 {
   font-family: 'Barlow Condensed', sans-serif;
   font-size: 14px;
@@ -535,7 +565,6 @@
   margin-bottom: 16px;
 }
 
-/* Lista tipo tabla limpia */
 .spec-section ul {
   list-style: none;
   margin: 0;
@@ -555,7 +584,6 @@
   border-bottom: none;
 }
 
-/* Especificaciones técnicas en formato centrado */
 .spec-list {
   list-style: none;
   margin: 0;
@@ -574,29 +602,16 @@
   border-bottom: none;
 }
 
-/* =========================
-=======
-.info-box strong {
-  color: var(--text-primary);
-}
-
-/* =====================
->>>>>>> parent of 9c44a30 (Add / json, and catalogo with real products)
-=======
-.info-box strong {
-  color: var(--text-primary);
-}
-
-/* =====================
->>>>>>> parent of 9c44a30 (Add / json, and catalogo with real products)
-   RELATED PRODUCTS
-===================== */
+/* RELATED PRODUCTS */
 .related-products {
   padding: 48px;
   max-width: 1400px;
   margin: 0 auto;
   width: 100%;
+  margin-top: 350px;
   border-top: 1px solid var(--border-soft);
+  position: relative;
+  z-index: 1;
 }
 
 .related-products h2 {
@@ -672,11 +687,7 @@
   font-size: 15px;
 }
 
-/* =========================
-   RESPONSIVE
-========================= */
-
-/* TABLET & SMALL DESKTOP: SINGLE COLUMN */
+/* RESPONSIVE */
 @media (max-width: 1200px) {
   .product-main {
     flex-direction: column;
@@ -705,28 +716,21 @@
   .info-boxes {
     grid-template-columns: 1fr;
   }
+
+  .product-specs {
+    padding: 40px 20px;
+  }
+
+  .specs-sections-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .related-products {
+    padding: 40px 20px;
+  }
 }
 
-/* MOBILE */
 @media (max-width: 768px) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-  .breadcrumb { padding: 14px 20px; font-size: 11px; margin-top: 100px; }
-  .product-gallery { padding: 20px; }
-  .main-image { aspect-ratio: 1; }
-  .product-details { padding: 20px; }
-  .product-details h1 { font-size: 34px; }
-  .info-boxes { grid-template-columns: 1fr; }
-  .product-specs { padding: 40px 20px; }
-  .product-specs::before { left: 20px; }
-  .related-products::before { left: 20px; }
-  .specs-sections-grid { grid-template-columns: 1fr; }
-  .related-products { padding: 40px 20px; }
-  .related-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
-  .related-products h2, .product-specs h2 { font-size: 26px; }
-=======
-=======
->>>>>>> parent of 9c44a30 (Add / json, and catalogo with real products)
   .breadcrumb {
     padding: 16px 20px;
     font-size: 13px;
@@ -770,28 +774,13 @@
   .info-box p {
     font-size: 11px;
   }
-<<<<<<< HEAD
->>>>>>> parent of 9c44a30 (Add / json, and catalogo with real products)
-=======
->>>>>>> parent of 9c44a30 (Add / json, and catalogo with real products)
+
+  .specs-technical {
+    padding: 40px 20px;
+  }
 }
 
-/* SMALL MOBILE */
 @media (max-width: 480px) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-  .breadcrumb { flex-wrap: wrap; gap: 6px; margin-top: 100px; }
-  .product-details h1 { font-size: 28px; }
-  .specs-grid { grid-template-columns: 1fr; gap: 8px; }
-  .cta-section { padding: 16px; }
-  .btn-inquiry { font-size: 14px; padding: 14px 20px; }
-  .related-grid { grid-template-columns: 1fr; }
-  .info-boxes { gap: 8px; }
-  .info-box { padding: 14px 10px; }
-}
-=======
-=======
->>>>>>> parent of 9c44a30 (Add / json, and catalogo with real products)
   .breadcrumb {
     flex-wrap: wrap;
     font-size: 13px;
@@ -870,7 +859,3 @@
     font-size: 20px;
   }
 }
-<<<<<<< HEAD
->>>>>>> parent of 9c44a30 (Add / json, and catalogo with real products)
-=======
->>>>>>> parent of 9c44a30 (Add / json, and catalogo with real products)

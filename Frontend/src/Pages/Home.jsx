@@ -5,6 +5,7 @@ import MainNavbar from "../Components/MainNavbar";
 import Footer from "../Components/Footer";
 import { animate } from "animejs";
 import { useNavigate, Link } from "react-router-dom";
+import { API_URL } from "../config";
 
 
 export default function Home() {
@@ -19,7 +20,7 @@ export default function Home() {
   }
 
   useEffect(() => {
-    fetch('http://localhost:5000/api/products')
+    fetch(`${API_URL}/api/products`)
       .then(res => res.json())
       .then(data => setProducts(data.slice(0, 4)))
       .catch(err => console.error('Error fetching products:', err));
@@ -75,7 +76,13 @@ export default function Home() {
             {products.map((product) => (
               <div className="card" key={product.id}>
                 <div className="card-image">
-                  <img src={product.imagenes[0] || '/placeholder.jpg'} alt={product.nombre} />
+                  <img 
+                    src={product.imagenes && product.imagenes[0] ? product.imagenes[0] : 'https://via.placeholder.com/300x200?text=No+Image'} 
+                    alt={product.nombre} 
+                    onError={(e) => {
+                      e.target.src = 'https://via.placeholder.com/300x200?text=No+Image';
+                    }}
+                  />
                 </div>
 
                 <div className="card-body">

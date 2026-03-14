@@ -1,12 +1,8 @@
 import { Request, Response } from 'express';
 import { LoginRequest, LoginResponse } from '../types';
+import { getAdminByUsername } from '../db';
 
-// Usuarios de ejemplo (luego conectarás una DB)
-const users = [
-    { id: '1', username: 'admin', password: 'admin123', email: 'admin@ingenia.com' }
-];
-
-export const login = (req: Request, res: Response): void => {
+export const login = async (req: Request, res: Response): Promise<void> => {
     try {
         const { username, password }: LoginRequest = req.body;
 
@@ -19,8 +15,8 @@ export const login = (req: Request, res: Response): void => {
             return;
         }
 
-        // Buscar usuario
-        const user = users.find(u => u.username === username);
+        // Buscar usuario en la base de datos
+        const user = await getAdminByUsername(username);
 
         if (!user || user.password !== password) {
             res.status(401).json({
