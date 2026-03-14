@@ -87,6 +87,7 @@
   font-size: 15px;
   color: var(--text-muted);
 <<<<<<< HEAD
+<<<<<<< HEAD
   margin-top: 110px;
 =======
   margin-top: 130px;
@@ -109,6 +110,27 @@
   font-weight: 600;
 }
 
+=======
+  margin-top: 130px;
+  border-bottom: 1px solid var(--border-soft);
+}
+
+.breadcrumb-link {
+  cursor: pointer;
+  color: var(--accent-blue);
+  transition: color 0.2s ease;
+}
+
+.breadcrumb-link:hover {
+  color: var(--accent-orange);
+}
+
+.breadcrumb-current {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+>>>>>>> parent of 9c44a30 (Add / json, and catalogo with real products)
 /* MAIN CONTENT */
 .product-main {
   display: flex;
@@ -453,6 +475,7 @@
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* =========================
    SPECS SECTION — Minimal B2B
 ========================= */
@@ -552,6 +575,13 @@
 }
 
 /* =========================
+=======
+.info-box strong {
+  color: var(--text-primary);
+}
+
+/* =====================
+>>>>>>> parent of 9c44a30 (Add / json, and catalogo with real products)
 =======
 .info-box strong {
   color: var(--text-primary);
@@ -680,6 +710,7 @@
 /* MOBILE */
 @media (max-width: 768px) {
 <<<<<<< HEAD
+<<<<<<< HEAD
   .breadcrumb { padding: 14px 20px; font-size: 11px; margin-top: 100px; }
   .product-gallery { padding: 20px; }
   .main-image { aspect-ratio: 1; }
@@ -694,6 +725,8 @@
   .related-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
   .related-products h2, .product-specs h2 { font-size: 26px; }
 =======
+=======
+>>>>>>> parent of 9c44a30 (Add / json, and catalogo with real products)
   .breadcrumb {
     padding: 16px 20px;
     font-size: 13px;
@@ -737,11 +770,15 @@
   .info-box p {
     font-size: 11px;
   }
+<<<<<<< HEAD
+>>>>>>> parent of 9c44a30 (Add / json, and catalogo with real products)
+=======
 >>>>>>> parent of 9c44a30 (Add / json, and catalogo with real products)
 }
 
 /* SMALL MOBILE */
 @media (max-width: 480px) {
+<<<<<<< HEAD
 <<<<<<< HEAD
   .breadcrumb { flex-wrap: wrap; gap: 6px; margin-top: 100px; }
   .product-details h1 { font-size: 28px; }
@@ -753,6 +790,8 @@
   .info-box { padding: 14px 10px; }
 }
 =======
+=======
+>>>>>>> parent of 9c44a30 (Add / json, and catalogo with real products)
   .breadcrumb {
     flex-wrap: wrap;
     font-size: 13px;
@@ -831,4 +870,7 @@
     font-size: 20px;
   }
 }
+<<<<<<< HEAD
+>>>>>>> parent of 9c44a30 (Add / json, and catalogo with real products)
+=======
 >>>>>>> parent of 9c44a30 (Add / json, and catalogo with real products)

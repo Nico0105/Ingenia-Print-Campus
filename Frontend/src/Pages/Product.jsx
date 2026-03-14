@@ -5,6 +5,7 @@ import Footer from "../Components/Footer";
 import { useParams, useNavigate } from "react-router-dom";
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 // Extrae la descripción general (el título del producto)
 function getDescripcionGeneral(contenido) {
   if (!contenido || !contenido.titulo) return [];
@@ -36,6 +37,8 @@ function getSecciones(contenido) {
   return secciones;
 }
 
+=======
+>>>>>>> parent of 9c44a30 (Add / json, and catalogo with real products)
 =======
 >>>>>>> parent of 9c44a30 (Add / json, and catalogo with real products)
 export default function Product() {
@@ -511,6 +514,7 @@ export default function Product() {
       </main>
 
 <<<<<<< HEAD
+<<<<<<< HEAD
       {/* SECCIONES DE CARACTERÍSTICAS - debajo del main */}
       <section className="product-specs">
         <h2>Características y Especificaciones</h2>
@@ -549,6 +553,27 @@ export default function Product() {
         currentId={product.id}
         navigate={navigate}
       />
+=======
+      {/* RELATED PRODUCTS */}
+      <section className="related-products">
+        <h2>Productos Relacionados</h2>
+        <div className="related-grid">
+          {allProducts
+            .filter((p) => p.category === product.category && p.id !== product.id)
+            .slice(0, 4)
+            .map((relatedProduct) => (
+              <div
+                key={relatedProduct.id}
+                className="related-card"
+                onClick={() => navigate(`/product/${relatedProduct.id}`)}
+              >
+                <img src={relatedProduct.image} alt={relatedProduct.name} />
+                <h4>{relatedProduct.name}</h4>
+              </div>
+            ))}
+        </div>
+      </section>
+>>>>>>> parent of 9c44a30 (Add / json, and catalogo with real products)
 =======
       {/* RELATED PRODUCTS */}
       <section className="related-products">

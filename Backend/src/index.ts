@@ -13,12 +13,15 @@ app.use(cors());
 app.use(express.json());
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 // Static files
 app.use(
   "/uploads",
   express.static(path.join(process.cwd(), "src", "uploads"))
 );
 
+=======
+>>>>>>> parent of 9c44a30 (Add / json, and catalogo with real products)
 =======
 >>>>>>> parent of 9c44a30 (Add / json, and catalogo with real products)
 // Rutas

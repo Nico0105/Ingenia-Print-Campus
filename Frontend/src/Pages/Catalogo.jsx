@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 export default function Catalogo() {
   const navigate = useNavigate();
 <<<<<<< HEAD
+<<<<<<< HEAD
   const [allProducts, setAllProducts] = useState([]);
   const [activeCategory, setActiveCategory] = useState("all");
   const [loading, setLoading] = useState(true);
@@ -33,6 +34,8 @@ export default function Catalogo() {
       name: cat,
     })),
 =======
+=======
+>>>>>>> parent of 9c44a30 (Add / json, and catalogo with real products)
   
   // Sample products data (5-6 items × 4 columns = 20-24 items)
   const allProducts = [
@@ -56,6 +59,9 @@ export default function Catalogo() {
     { id: 18, name: "Cama Magnética PEI", category: "accesorios", price: "$35.000", image: "cama_magnetica.jpeg", specs: ["PEI", "Adhesión superior", "Reutilizable"] },
     { id: 19, name: "Limpiador Ultrasónico", category: "accesorios", price: "$180.000", image: "limpiador_ultrasonico.jpeg", specs: ["2L", "40kHz", "Para resina"] },
     { id: 20, name: "Guantes Nitrilo Caja", category: "consumibles", price: "$12.000", image: "guantes.jpeg", specs: ["100 pares", "Talla M", "Protección"] },
+<<<<<<< HEAD
+>>>>>>> parent of 9c44a30 (Add / json, and catalogo with real products)
+=======
 >>>>>>> parent of 9c44a30 (Add / json, and catalogo with real products)
   ];
 
