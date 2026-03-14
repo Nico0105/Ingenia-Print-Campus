@@ -1,0 +1,169 @@
+.admin-panel {
+  background: #05060a;
+  color: #f0f2f8;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+.admin-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.admin-header h1 {
+  color: #e07b20;
+  margin-bottom: 15px;
+}
+
+.header-actions {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+
+.btn-logout {
+  background: #ef4444;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.admin-content {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.btn-add {
+  background: #e07b20;
+  color: rgb(255, 255, 255);
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-bottom: 20px;
+}
+
+.header-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.btn-catalog {
+  background: #3b82f6;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.form-container {
+  background: #0d0f18;
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.form-container h2 {
+  margin-bottom: 15px;
+}
+
+.form-container h3 {
+  color: #ffffff;
+  font-size: 18px;
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+  font-size: 16px;
+  color: #ffffff;
+}
+
+.form-container input,
+.form-container textarea {
+  width: 100%;
+  padding: 10px;
+  background: #1a1d2a;
+  border: 1px solid #374151;
+  border-radius: 4px;
+  color: #ffffff;
+}
+
+.form-container input:focus,
+.form-container textarea:focus {
+  border-color: #e07b20;
+  outline: none;
+  background: #1a1d2a;
+  color: #ffffff;
+}
+
+.form-container input::placeholder,
+.form-container textarea::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+  opacity: 1;
+}
+
+.form-container button {
+  margin-right: 10px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.form-container button[type="submit"] {
+  background: #10b981;
+  color: white;
+}
+
+.form-container button[type="button"] {
+  background: #6b7280;
+  color: white;
+}
+
+.products-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.product-item {
+  background: #0d0f18;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.product-name {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.actions {
+  display: flex;
+  gap: 10px;
+}
+
+.actions button {
+  padding: 5px 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.actions button:nth-child(1) { background: #3b82f6; color: white; }
+.actions button:nth-child(2) { background: #ef4444; color: white; }
+.actions button:nth-child(3) { background: #f59e0b; color: white; }

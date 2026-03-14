@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import "./Nosotros.css";
 import MainNavbar from "../Components/MainNavbar";
+import Footer from "../Components/Footer";
 import { useNavigate } from "react-router-dom";
 
 // ── DATA ──────────────────────────────────────────────────────────────────────
@@ -303,10 +304,7 @@ export default function Nosotros() {
       </section>
 
       {/* FOOTER */}
-      <footer className="nos-footer">
-        <div className="nos-footer-logo">INGENIA PRINT</div>
-        <div className="nos-footer-copy">© 2024 INGENIA PRINT — TODOS LOS DERECHOS RESERVADOS</div>
-      </footer>
+      <Footer />
     </div>
   );
 }

@@ -1,6 +1,7 @@
 import React from 'react';
 import './Garantia.css';
 import MainNavbar from '../Components/MainNavbar';
+import Footer from '../Components/Footer';
 import { useNavigate } from "react-router-dom";
 
 const ShieldIcon = () => (
@@ -235,6 +236,7 @@ export default function Garantia() {
         </div>
       </section>
 
+      <Footer />
     </div>
   );
 }

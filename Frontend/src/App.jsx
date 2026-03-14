@@ -11,6 +11,8 @@ import Catalogo from './Pages/Catalogo.jsx';
 import Product from './Pages/Product.jsx';
 import Garantia from './Pages/Garantia.jsx';
 import Curso from './Pages/Curso.jsx';
+import LoginAdmin from './Pages/LoginAdmin.jsx';
+import AdminPanel from './Pages/AdminPanel.jsx';
 
 const App = () => {
   return (
@@ -25,6 +27,8 @@ const App = () => {
         <Route path="/Garantia" element={<Garantia />} />
         <Route path="/Curso" element={<Curso />} />
         <Route path="/product/:productId" element={<Product />} />
+        <Route path="/login-admin" element={<LoginAdmin />} />
+        <Route path="/admin" element={<AdminPanel />} />
       </Routes>
     </div>
   );

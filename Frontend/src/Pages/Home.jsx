@@ -2,77 +2,16 @@ import React, { useEffect, useState } from "react";
 import "./Home.css";
 import HeroPrinter from "../Components/HeroPrinter";
 import MainNavbar from "../Components/MainNavbar";
+import Footer from "../Components/Footer";
 import { animate } from "animejs";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 
 export default function Home() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [scrollY, setScrollY] = useState(0);
+  const [products, setProducts] = useState([]);
 
-  const chips = [
-    "Todos Nuestros Modelos",
-    "Linea Profesional",
-    "Linea Resina",
-    "Linea Industrial",
-    "Insumos / Accesorios / Materiales"
-  ];
-  const [activeChip, setActiveChip] = useState(chips[0]);
-  const [filtersOpen, setFiltersOpen] = useState(false);
-
-
-  const products = [
-  {
-    id: 1,
-    name: "Creality Ender 3 V4",
-    price: "$1.250.000",
-    description: "Impresora FDM versátil, ideal para producción y prototipado.",
-    image: "Creality_Ender_3_V4.JPEG", // futuro
-    specs: [
-      "300 x 300 x 300 mm",
-      "600 mm/s",
-      "PLA, PETG, ABS",
-    ],
-  },
-  {
-    id: 2,
-    name: "Bambu Lab H2D",
-    price: "$2.100.000",
-    description: "Alta velocidad y precisión para trabajos profesionales.",
-    image: "BAMBULAB_H2D.JPEG",
-    specs: [
-      "Ø 250 x 400 mm",
-      "450 mm/s",
-      "TPU, PLA+",
-    ],
-  },
-  {
-    id: 3,
-    name: "Bambu Lab H2S",
-    price: "$1.850.000",
-    description: "Equilibrio perfecto entre rendimiento y confiabilidad.",
-    image: "BambuLabH2S.JPEG",
-    specs: [
-      "Ø 250 x 400 mm",
-      "450 mm/s",
-      "TPU, PLA+",
-    ],
-  },
-  {
-    id: 4,
-    name: "Elegoo Saturn 4 Ultra",
-    price: "$1.343.900",
-    description: "ELEGOO Impresora 3D de resina Saturn-4ULTRA MSLA 12K LCD mono 10″ Wi-Fi impresión ",
-    image: "Elegoo_Saturn4_Ultra.jpeg",
-    specs: [
-      "218 x 122 x 220 mm",
-      "450 mm/s",
-      "TPU, PLA+",
-    ],
-  },
-];
-
-  
   const navigate = useNavigate();
 
   const HandleLogin = () => {
@@ -80,24 +19,10 @@ export default function Home() {
   }
 
   useEffect(() => {
-    const handleMouseMove = (e) => {
-      setMousePosition({
-        x: e.clientX,
-        y: e.clientY,
-      });
-    };
-
-    const handleScroll = () => {
-      setScrollY(window.scrollY);
-    };
-
-    window.addEventListener("mousemove", handleMouseMove);
-    window.addEventListener("scroll", handleScroll);
-
-    return () => {
-      window.removeEventListener("mousemove", handleMouseMove);
-      window.removeEventListener("scroll", handleScroll);
-    };
+    fetch('http://localhost:5000/api/products')
+      .then(res => res.json())
+      .then(data => setProducts(data.slice(0, 4)))
+      .catch(err => console.error('Error fetching products:', err));
   }, []);
 
   return (
@@ -137,53 +62,6 @@ export default function Home() {
         </div>
       </section>
 
-        {/* FILTER BAR */}
-        <section className={`filters ${filtersOpen ? 'open' : ''}`}>
-          <div className="filters-bar">
-            <button
-              className="filter-toggle"
-              aria-expanded={filtersOpen}
-              onClick={() => setFiltersOpen((s) => !s)}
-            >
-              <span className="filter-icon" />
-              <span className="filter-label">Filtros</span>
-            </button>
-
-            <div className="filter-right desktop-only">
-              <span>Ordenar por:</span>
-              <select>
-                <option>Destacados</option>
-                <option>Mayor Precio</option>
-                <option>Menor Precio</option>
-              </select>
-            </div>
-          </div>
-
-          {/* slide-down menu (visible en mobile/tablet) */}
-          <div className="filters-menu" aria-hidden={!filtersOpen}>
-            <div className="filter-left">
-              {chips.map((chip) => (
-                <button
-                  key={chip}
-                  className={`chip ${activeChip === chip ? "active" : ""}`}
-                  onClick={() => { setActiveChip(chip); setFiltersOpen(false); }}
-                >
-                  {chip}
-                </button>
-              ))}
-            </div>
-
-            <div className="filter-right mobile-only">
-              <span>Ordenar por:</span>
-              <select>
-                <option>Destacados</option>
-                <option>Mayor Precio</option>
-                <option>Menor Precio</option>
-              </select>
-            </div>
-          </div>
-        </section>
-
         {/* PRODUCTS */}
        <section className="products">
           <div className="section-header">
@@ -197,24 +75,22 @@ export default function Home() {
             {products.map((product) => (
               <div className="card" key={product.id}>
                 <div className="card-image">
-                  {/* Imagen futura */}
-                  <img src={product.image} alt={product.name} />
+                  <img src={product.imagenes[0] || '/placeholder.jpg'} alt={product.nombre} />
                 </div>
 
                 <div className="card-body">
-                  <h4>{product.name}</h4>
+                  <h4>{product.nombre}</h4>
 
-                  <p className="price">{product.price}</p>
-                  <p className="description">{product.description}</p>
+                  <p className="description">{product.contenido?.titulo || 'Descripción no disponible'}</p>
 
                   <ul>
-                    {product.specs.map((spec, index) => (
-                      <li key={index}>{spec}</li>
+                    {Object.entries(product.contenido?.especificaciones || {}).slice(0, 3).map(([key, value], index) => (
+                      <li key={index}>{key}: {value}</li>
                     ))}
                   </ul>
 
                   <div className="card-actions">
-                    <button className="btn-primary small">
+                    <button className="btn-primary small" onClick={() => navigate(`/product/${product.id}`)}>
                       Consulta Aquí
                     </button>
                   </div>
@@ -225,33 +101,7 @@ export default function Home() {
         </section>
 
         {/* FOOTER */}
-        <footer className="footer">
-          <div className="footer-top">
-            <div className="footer-brand">
-              <h2>INGENIA</h2>
-            </div>
-
-            <div className="footer-links">
-              <div>
-                <h5>Company</h5>
-                <a href="#">About</a>
-                <a href="#">Technology</a>
-                <a href="#">Careers</a>
-              </div>
-
-              <div>
-                <h5>Support</h5>
-                <a href="#">Manuals</a>
-                <a href="#">Firmware</a>
-                <a href="#">Community</a>
-              </div>
-            </div>
-          </div>
-
-          <div className="footer-bottom">
-            <p>© 2024 INGENIA. Engineered for precision.</p>
-          </div>
-        </footer>
+        <Footer />
       </main>
     </div>
   );

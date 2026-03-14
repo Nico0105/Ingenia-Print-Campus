@@ -745,12 +745,27 @@ main {
   padding: 16px 48px;
   border-top: 1px solid rgba(255, 255, 255, 0.05);
   text-align: center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .footer-bottom p {
   color: var(--text-muted);
   font-size: 15px;
   margin: 0;
+}
+
+.admin-link {
+  color: var(--accent-orange);
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 600;
+  transition: color 0.3s;
+}
+
+.admin-link:hover {
+  color: var(--accent-orange-dark);
 }
 
 /* =========================

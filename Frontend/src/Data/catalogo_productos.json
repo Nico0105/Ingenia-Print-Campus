@@ -1,0 +1,1482 @@
+{
+  "productos": [
+    {
+      "nombre": "Bambu Lab P1S",
+      "imagenes": [
+        "P1S-1.png",
+        "P1S-4.png",
+        "P1S-3.jpg",
+        "P1S-2.webp"
+      ],
+      "descripcion_general": {
+        "titulo": "Impresora 3D FDM CoreXY cerrada de alto rendimiento. Diseñada para makers, estudios de diseño, entornos educativos y talleres que buscan rendimiento robusto, calidad superior y facilidad de uso.",
+        "especificaciones": {
+          "Tecnología": "FDM (Modelado por deposición fundida)",
+          "Cinemática": "CoreXY",
+          "Volumen de impresión": "256 × 256 × 256 mm",
+          "Velocidad máxima": "500 mm/s",
+          "Aceleración máxima": "20.000 mm/s²",
+          "Temperatura máxima de boquilla": "300 °C",
+          "Temperatura máxima de cama": "100 °C",
+          "Diámetro de filamento": "1.75 mm",
+          "Hotend": "All-metal, boquilla 0.4 mm (opciones: 0.2, 0.6, 0.8 mm)",
+          "Recinto": "Cerrado con filtro de carbón activado",
+          "Conectividad": "Wi-Fi / USB / Bambu Studio y app móvil",
+          "Nivelación": "Automática",
+          "Cámara integrada": "Sí"
+        },
+        "materiales_compatibles": [
+          "PLA",
+          "PETG",
+          "TPU",
+          "ABS",
+          "ASA",
+          "PC",
+          "PA (Nylon)"
+        ],
+        "ideal_para": [
+          "Profesionales creativos y diseñadores",
+          "Talleres técnicos y usuarios avanzados",
+          "Entornos educativos y makers spaces",
+          "Proyectos con materiales avanzados"
+        ]
+      }
+    },
+    {
+      "nombre": "Bambu Lab A1 Mini Combo",
+      "imagenes": [
+        "A1MC-5.webp",
+        "A1MC-2.webp",
+        "A1MC-1.webp",
+        "A1MC-3.webp",
+        "A1MC-4.webp"
+      ],
+      "descripcion_general": {
+        "titulo": "Impresora 3D FDM compacta con sistema AMS Lite multicolor integrado. Permite imprimir hasta 4 colores automáticamente con calibración totalmente automática.",
+        "especificaciones": {
+          "Tecnología": "FDM",
+          "Volumen de impresión": "180 × 180 × 180 mm",
+          "Velocidad máxima": "500 mm/s",
+          "Aceleración máxima": "10.000 mm/s²",
+          "Temperatura máxima de boquilla": "300 °C",
+          "Temperatura máxima de cama": "80 °C",
+          "Diámetro de filamento": "1.75 mm",
+          "Hotend": "All-metal, boquilla 0.4 mm (opciones: 0.2, 0.6, 0.8 mm)",
+          "Pantalla": "Touch IPS 2.4\"",
+          "Conectividad": "Wi-Fi, MicroSD",
+          "Sistema multicolor": "AMS Lite (4 ranuras)",
+          "Nivelación": "Automática",
+          "Dimensiones": "347 × 315 × 365 mm",
+          "Peso": "~5.5 kg"
+        },
+        "materiales_compatibles": [
+          "PLA",
+          "PETG",
+          "TPU",
+          "PVA"
+        ],
+        "ideal_para": [
+          "Usuarios principiantes que desean multicolor automático",
+          "Makers, diseñadores y creativos",
+          "Talleres u oficinas con espacio limitado",
+          "Prototipado rápido"
+        ]
+      }
+    },
+    {
+      "nombre": "Bambu Lab H2C Combo",
+      "imagenes": [
+        "H2CC-1.webp",
+        "H2CC-5.jpg",
+        "H2CC-3.webp",
+        "H2CC-4.webp",
+        "H2CC-2.webp"
+      ],
+      "descripcion_general": {
+        "titulo": "Impresora 3D FDM de alto rendimiento con sistema Vortek de cambio automático de boquillas. Soporta hasta 7 filamentos con AMS 2 Pro integrado para impresión multimaterial y multicolor.",
+        "especificaciones": {
+          "Tecnología": "FDM",
+          "Volumen de impresión": "330 × 320 × 325 mm",
+          "Velocidad máxima": "1.000 mm/s",
+          "Aceleración máxima": "20.000 mm/s²",
+          "Flujo máximo de hotend": "~40 mm³/s",
+          "Temperatura máxima de boquilla": "350 °C",
+          "Temperatura de cámara activa": "hasta ~65 °C",
+          "Temperatura máxima de cama": "120 °C",
+          "Diámetro de filamento": "1.75 mm",
+          "Boquillas compatibles": "0.2 / 0.4 / 0.6 / 0.8 mm",
+          "Sistema multiherramienta": "Vortek Hotend Change",
+          "AMS 2 Pro integrado": "Sí",
+          "Conectividad": "Wi-Fi / USB",
+          "Dimensiones": "492 × 514 × 626 mm",
+          "Peso": "~32.5 kg"
+        },
+        "materiales_compatibles": [
+          "PLA",
+          "PETG",
+          "TPU",
+          "ABS",
+          "ASA",
+          "PC",
+          "PA (Nylon)",
+          "PPS",
+          "Compuestos reforzados"
+        ],
+        "ideal_para": [
+          "Profesionales, estudios de diseño y talleres avanzados",
+          "Impresión multimaterial y multicolor real",
+          "Prototipos funcionales y piezas complejas",
+          "Empresas o educación técnica"
+        ]
+      }
+    },
+    {
+      "nombre": "Bambu Lab H2D Combo",
+      "imagenes": [
+        "H2DC-6.jpg",
+        "H2DC-5.webp",
+        "H2DC-4.webp",
+        "H2DC-3.webp",
+        "H2DC-2.webp",
+        "H2DC-1.webp"
+      ],
+      "descripcion_general": {
+        "titulo": "Impresora 3D profesional con doble extrusión y AMS 2 Pro. Dos cabezales independientes para impresión multicolor y multimaterial automatizada con gran volumen de trabajo.",
+        "especificaciones": {
+          "Tecnología": "FDM",
+          "Volumen de impresión": "350 × 320 × 325 mm",
+          "Doble extrusión": "Sí (dos cabezales independientes)",
+          "AMS 2 Pro integrado": "Sí",
+          "Temperatura máxima de boquilla": "350 °C",
+          "Temperatura de cámara activa": "hasta ~65 °C",
+          "Diámetro de filamento": "1.75 mm",
+          "Boquillas compatibles": "0.2 / 0.4 / 0.6 / 0.8 mm",
+          "Conectividad": "Wi-Fi / MicroSD",
+          "Peso impresora": "~20 kg",
+          "Peso AMS 2 Pro": "~3 kg",
+          "Dimensiones": "~500 × 500 × 700 mm (sin AMS)"
+        },
+        "materiales_compatibles": [
+          "PLA",
+          "PETG",
+          "TPU",
+          "PVA",
+          "ABS",
+          "ASA",
+          "PC",
+          "PA (Nylon)",
+          "Compuestos reforzados"
+        ],
+        "ideal_para": [
+          "Usuarios profesionales que buscan prototipos funcionales robustos",
+          "Makers avanzados con proyectos multicolor y multimaterial",
+          "Estudios de diseño y talleres con proyectos complejos",
+          "Producción ligera o fabricación personal avanzada"
+        ]
+      }
+    },
+    {
+      "nombre": "Bambu Lab H2S Combo",
+      "imagenes": [
+        "H2SC-4.webp",
+        "H2SC-5.webp",
+        "H2SC-1.webp",
+        "H2SC-2.webp",
+        "H2SC-3.webp",
+        "H2SC-6.jpg"
+      ],
+      "descripcion_general": {
+        "titulo": "Impresora 3D FDM de gran formato con AMS 2 Pro. Alta velocidad, gran volumen de impresión y capacidades avanzadas de multicolor y multimaterial para makers exigentes y producción ligera.",
+        "especificaciones": {
+          "Tecnología": "FDM",
+          "Volumen de impresión": "340 × 320 × 340 mm",
+          "Velocidad máxima": "1.000 mm/s",
+          "Aceleración máxima": "20.000 mm/s²",
+          "Temperatura máxima de boquilla": "350 °C",
+          "Temperatura de cámara activa": "hasta ~65 °C",
+          "Diámetro de filamento": "1.75 mm",
+          "Boquillas compatibles": "0.2 / 0.4 / 0.6 / 0.8 mm",
+          "Sistema multicolor": "AMS 2 Pro integrado",
+          "Conectividad": "Wi-Fi, MicroSD",
+          "Peso": "~30 kg",
+          "Dimensiones": "~492 × 514 × 626 mm"
+        },
+        "materiales_compatibles": [
+          "PLA",
+          "PLA+",
+          "PETG",
+          "ABS",
+          "ASA",
+          "PA (Nylon)",
+          "Compuestos de alto rendimiento"
+        ],
+        "ideal_para": [
+          "Profesionales y estudios con piezas grandes de calidad técnica",
+          "Makers y diseñadores con proyectos multicolor y multimaterial",
+          "Talleres y entornos de prototipado avanzado",
+          "Producción personalizada con alta fiabilidad"
+        ]
+      }
+    },
+    {
+      "nombre": "Bambu Lab P1S Combo",
+      "imagenes": [
+        "P1SC-4.png",
+        "P1SC-3.webp",
+        "P1SC-2.jpg",
+        "P1SC-5.png",
+        "P1SC-1.jpg"
+      ],
+      "descripcion_general": {
+        "titulo": "Impresora 3D FDM CoreXY con cámara cerrada y sistema AMS para impresión multicolor y multimaterial automatizada. Velocidad, fiabilidad y versatilidad sin complicaciones.",
+        "especificaciones": {
+          "Tecnología": "FDM",
+          "Volumen de impresión": "256 × 256 × 256 mm",
+          "Velocidad máxima": "500 mm/s",
+          "Temperatura máxima de boquilla": "300 °C",
+          "Temperatura máxima de cama": "100 °C",
+          "Diámetro de filamento": "1.75 mm",
+          "Hotend": "All-metal, boquilla 0.4 mm",
+          "Recinto": "Cerrado con ventilación y filtro de carbono activo",
+          "Conectividad": "Wi-Fi, MicroSD, Bambu Studio y app móvil",
+          "Cámara integrada": "Sí",
+          "Sistema multicolor": "AMS (4 bobinas)",
+          "Dimensiones sin AMS": "389 × 389 × 458 mm",
+          "Dimensiones con AMS": "389 × 389 × 585 mm"
+        },
+        "materiales_compatibles": [
+          "PLA",
+          "PETG",
+          "TPU",
+          "PVA",
+          "ABS",
+          "ASA",
+          "PA (Nylon)",
+          "PC"
+        ],
+        "ideal_para": [
+          "Usuarios que quieren multicolor sin complicaciones",
+          "Makers, diseñadores y talleres creativos",
+          "Impresión técnica y prototipos complejos",
+          "Educadores y pequeños centros de producción"
+        ]
+      }
+    },
+    {
+      "nombre": "Bambu Lab P2S Combo",
+      "imagenes": [
+        "P2SC-5.webp",
+        "P2SC-6.jpg",
+        "P2SC-4.jpg",
+        "P2SC-2.jpg",
+        "P2SC-1.jpg",
+        "P2SC-3.jpg"
+      ],
+      "descripcion_general": {
+        "titulo": "Impresora 3D FDM CoreXY con AMS 2 Pro integrado. Impresión multicolor y multimaterial automatizada, pantalla táctil de 5\" y secado activo de filamento.",
+        "especificaciones": {
+          "Tecnología": "FDM / CoreXY",
+          "Volumen de impresión": "256 × 256 × 256 mm",
+          "Velocidad máxima": "500 mm/s",
+          "Aceleración máxima": "20.000 mm/s²",
+          "Temperatura máxima de boquilla": "300 °C",
+          "Temperatura máxima de cama": "110 °C",
+          "Diámetro de filamento": "1.75 mm",
+          "Boquillas compatibles": "0.2 / 0.4 / 0.6 / 0.8 mm",
+          "Pantalla": "Touch 5\"",
+          "Conectividad": "Wi-Fi, USB",
+          "Filtro de carbón activo": "Sí",
+          "Sistema multicolor": "AMS 2 Pro integrado",
+          "Dimensiones": "~392 × 406 × 478 mm",
+          "Peso": "~14.9 kg"
+        },
+        "materiales_compatibles": [
+          "PLA",
+          "PETG",
+          "TPU",
+          "PVA",
+          "ABS",
+          "ASA",
+          "PC",
+          "Filamentos reforzados con fibras"
+        ],
+        "ideal_para": [
+          "Creativos, makers y diseñadores con proyectos multicolor",
+          "Profesionales y talleres con múltiples materiales",
+          "Entornos educativos y empresariales con automatización avanzada"
+        ]
+      }
+    },
+    {
+      "nombre": "Bambu Lab A1 Combo",
+      "imagenes": [
+        "A1C-3.webp",
+        "A1C-1.webp",
+        "A1C-2.webp",
+        "A1C-6.webp",
+        "A1C-4.webp",
+        "A1C-5.webp"
+      ],
+      "descripcion_general": {
+        "titulo": "Impresora 3D FDM con AMS Lite multicolor. Calibración completamente automática, alta velocidad y operación silenciosa (~48 dB) para uso doméstico o de oficina.",
+        "especificaciones": {
+          "Tecnología": "FDM",
+          "Volumen de impresión": "256 × 256 × 256 mm",
+          "Velocidad máxima": "500 mm/s",
+          "Aceleración máxima": "10.000 mm/s²",
+          "Temperatura máxima de boquilla": "300 °C",
+          "Temperatura máxima de cama": "100 °C",
+          "Diámetro de filamento": "1.75 mm",
+          "Hotend": "All-metal, boquilla 0.4 mm (opciones: 0.2, 0.6, 0.8 mm)",
+          "Pantalla": "Touch IPS 3.5\"",
+          "Conectividad": "Wi-Fi, MicroSD",
+          "Sistema multicolor": "AMS Lite (4 ranuras)",
+          "Consumo máximo": "350 W",
+          "Alimentación": "100–240 V 50/60 Hz",
+          "Dimensiones": "385 × 410 × 430 mm",
+          "Peso": "~8.3 kg"
+        },
+        "materiales_compatibles": [
+          "PLA",
+          "PETG",
+          "TPU",
+          "PVA"
+        ],
+        "ideal_para": [
+          "Makers y entusiastas que buscan alta velocidad con calidad",
+          "Talleres y estudios con piezas funcionales",
+          "Entornos educativos",
+          "Usuarios que valoran automatización y facilidad de uso"
+        ]
+      }
+    },
+    {
+      "nombre": "Bambu Lab H2D",
+      "imagenes": [
+        "H2D-1.webp",
+        "H2D-2.webp",
+        "H2D-3.webp"
+      ],
+      "descripcion_general": {
+        "titulo": "Impresora 3D FDM con doble extrusor y diseño cerrado para proyectos de gran tamaño y aplicaciones profesionales. Control térmico de cámara y soporte para módulos opcionales de láser y corte.",
+        "especificaciones": {
+          "Tecnología": "FDM",
+          "Volumen de impresión": "350 × 320 × 325 mm",
+          "Doble extrusión": "Sí",
+          "Temperatura máxima de boquilla": "350 °C",
+          "Temperatura de cámara activa": "hasta ~65 °C",
+          "Diámetro de filamento": "1.75 mm",
+          "Boquillas compatibles": "0.2 / 0.4 / 0.6 / 0.8 mm",
+          "Conectividad": "Wi-Fi, USB, Bambu Studio",
+          "Dimensiones": "492 × 514 × 626 mm",
+          "Peso": "~31 kg"
+        },
+        "materiales_compatibles": [
+          "PLA",
+          "PETG",
+          "TPU",
+          "PVA",
+          "ABS",
+          "ASA",
+          "PC",
+          "PA (Nylon)"
+        ],
+        "ideal_para": [
+          "Profesionales y estudios creativos con piezas grandes y detalladas",
+          "Makers avanzados con doble extrusión",
+          "Prototipado funcional y producción ligera"
+        ]
+      }
+    },
+    {
+      "nombre": "Bambu Lab A1",
+      "imagenes": [
+        "A1-2.webp",
+        "A1-3.webp",
+        "A1-4.webp",
+        "A1-1.webp"
+      ],
+      "descripcion_general": {
+        "titulo": "Impresora 3D FDM avanzada con calibración totalmente automática. Diseñada para makers, diseñadores, talleres educativos y entornos productivos que buscan calidad profesional en un equipo de escritorio.",
+        "especificaciones": {
+          "Tecnología": "FDM",
+          "Volumen de impresión": "256 × 256 × 256 mm",
+          "Velocidad máxima": "500 mm/s",
+          "Aceleración máxima": "10.000 mm/s²",
+          "Temperatura máxima de boquilla": "300 °C",
+          "Temperatura máxima de cama": "100 °C",
+          "Diámetro de filamento": "1.75 mm",
+          "Hotend": "All-metal, boquilla 0.4 mm (opciones: 0.2, 0.6, 0.8 mm)",
+          "Pantalla": "Táctil (2.4\" / 3.5\")",
+          "Conectividad": "Wi-Fi, MicroSD, Bambu-Bus",
+          "Dimensiones": "~385 × 410 × 430 mm",
+          "Peso": "~8.3 kg"
+        },
+        "materiales_compatibles": [
+          "PLA",
+          "PETG",
+          "TPU",
+          "PVA"
+        ],
+        "ideal_para": [
+          "Makers y entusiastas que buscan alta velocidad con resultados profesionales",
+          "Talleres y estudios con piezas funcionales rápidas",
+          "Entornos educativos y de prototipado"
+        ]
+      }
+    },
+    {
+      "nombre": "Bambu Lab A1 Mini",
+      "imagenes": [
+        "A1M-2.webp",
+        "A1M-1.webp"
+      ],
+      "descripcion_general": {
+        "titulo": "Impresora 3D FDM compacta y ligera con calibración automática. Plug-and-print desde el primer día, ideal para escritorios, oficinas o entornos educativos con espacio limitado.",
+        "especificaciones": {
+          "Tecnología": "FDM",
+          "Volumen de impresión": "180 × 180 × 180 mm",
+          "Velocidad máxima": "500 mm/s",
+          "Aceleración máxima": "10.000 mm/s²",
+          "Temperatura máxima de boquilla": "300 °C",
+          "Temperatura máxima de cama": "80 °C",
+          "Diámetro de filamento": "1.75 mm",
+          "Hotend": "All-metal, boquilla 0.4 mm (opciones: 0.2, 0.6, 0.8 mm)",
+          "Pantalla": "Touch IPS 2.4\"",
+          "Conectividad": "Wi-Fi, MicroSD",
+          "Dimensiones": "347 × 315 × 365 mm",
+          "Peso": "5.5 kg"
+        },
+        "materiales_compatibles": [
+          "PLA",
+          "PETG",
+          "TPU",
+          "PVA"
+        ],
+        "ideal_para": [
+          "Makers y creativos con espacio limitado",
+          "Principiantes y estudiantes",
+          "Talleres con limitación de espacio físico"
+        ]
+      }
+    },
+    {
+      "nombre": "Creality Ender-5 Max",
+      "imagenes": [
+        "ENDER5MAX-13.webp",
+        "ENDER5MAX-11.webp",
+        "ENDER5MAX-9.webp",
+        "ENDER5MAX-14.webp",
+        "ENDER5MAX-10.webp",
+        "ENDER5MAX-12.webp",
+        "ENDER5MAX-8.webp",
+        "ENDER5MAX-6.webp",
+        "ENDER5MAX-7.webp",
+        "ENDER5MAX-4.jpg",
+        "ENDER5MAX-3.jpg",
+        "ENDER5MAX-5.jpg",
+        "ENDER5MAX-2.jpg",
+        "ENDER5MAX-1.jpg"
+      ],
+      "descripcion_general": {
+        "titulo": "Impresora 3D FDM CoreXY de gran formato con marco metálico robusto. Volumen de impresión extra grande, alta velocidad y funciones automáticas para makers, talleres y usuarios avanzados.",
+        "especificaciones": {
+          "Tecnología": "FDM (CoreXY)",
+          "Volumen de impresión": "400 × 400 × 400 mm",
+          "Velocidad máxima": "700 mm/s",
+          "Aceleración máxima": "20.000 mm/s²",
+          "Temperatura máxima de boquilla": "300 °C",
+          "Temperatura máxima de cama": "100 °C",
+          "Diámetro de filamento": "1.75 mm",
+          "Extrusor": "Direct Drive",
+          "Nivelación": "Automática (36 puntos)",
+          "Eje Z": "Dual independiente",
+          "Pantalla": "Táctil ~4.3\"",
+          "Conectividad": "Wi-Fi / USB"
+        },
+        "materiales_compatibles": [
+          "PLA",
+          "Hyper PLA",
+          "PETG",
+          "TPU",
+          "ABS",
+          "ASA",
+          "PLA-CF",
+          "Compuestos"
+        ],
+        "ideal_para": [
+          "Creadores que necesitan espacio de impresión grande",
+          "Talleres y estudios con piezas grandes o en serie",
+          "Usuarios avanzados que buscan velocidad y precisión"
+        ]
+      }
+    },
+    {
+      "nombre": "Creality Hi",
+      "imagenes": [
+        "HI-4.jpg",
+        "HI-1.jpg",
+        "HI-2.jpg",
+        "HI-3.jpg"
+      ],
+      "descripcion_general": {
+        "titulo": "Impresora 3D FDM multicolor con sistema CFS integrado y cuerpo metálico. Calibración automática, cámara de monitoreo y soporte para hasta 16 colores con módulos adicionales.",
+        "especificaciones": {
+          "Tecnología": "FDM",
+          "Volumen de impresión": "260 × 260 × 300 mm",
+          "Velocidad máxima": "500 mm/s",
+          "Aceleración máxima": "12.000 mm/s²",
+          "Precisión de capa": "±0.1 mm (alturas 0.1–0.35 mm)",
+          "Temperatura máxima de boquilla": "~300 °C",
+          "Temperatura máxima de cama": "100 °C",
+          "Diámetro de filamento": "1.75 mm",
+          "Pantalla": "Táctil color 3.2\"",
+          "Conectividad": "USB / Wi-Fi / Creality Cloud",
+          "Sistema multicolor": "CFS (hasta 4 módulos, 16 colores)",
+          "Cámara integrada": "Sí"
+        },
+        "materiales_compatibles": [
+          "PLA",
+          "Hyper-PLA",
+          "PETG",
+          "ABS",
+          "PLA-CF",
+          "Flexible"
+        ],
+        "ideal_para": [
+          "Makers, creadores y diseñadores con proyectos multicolor",
+          "Usuarios con necesidad de automatización y monitoreo",
+          "Talleres con piezas medianas y múltiples colores"
+        ]
+      }
+    },
+    {
+      "nombre": "Creality Hi Combo",
+      "imagenes": [
+        "HIC-8.webp",
+        "HIC-5.jpg",
+        "HIC-4.jpg",
+        "HIC-6.jpg",
+        "HIC-10.webp",
+        "HIC-9.webp",
+        "HIC-2.jpg",
+        "HIC-7.webp",
+        "HIC-1.jpg",
+        "HIC-3.jpg"
+      ],
+      "descripcion_general": {
+        "titulo": "Impresora 3D FDM multicolor con sistema CFS integrado. Versión Combo con estructura metálica estable, calibración automática y gestión inteligente de múltiples filamentos.",
+        "especificaciones": {
+          "Tecnología": "FDM",
+          "Volumen de impresión": "260 × 260 × 300 mm",
+          "Velocidad máxima": "500 mm/s",
+          "Aceleración máxima": "12.000 mm/s²",
+          "Precisión de capa": "±0.1 mm (alturas 0.1–0.35 mm)",
+          "Temperatura máxima de boquilla": "~300 °C",
+          "Temperatura máxima de cama": "100 °C",
+          "Diámetro de filamento": "1.75 mm",
+          "Pantalla": "Táctil color 3.2\"",
+          "Conectividad": "USB / Wi-Fi / Creality Cloud",
+          "Sistema multicolor": "CFS (hasta 4 módulos, 16 colores)",
+          "Cámara integrada": "Sí"
+        },
+        "materiales_compatibles": [
+          "PLA",
+          "Hyper-PLA",
+          "PETG",
+          "ABS",
+          "PLA-CF",
+          "Flexible"
+        ],
+        "ideal_para": [
+          "Makers, creadores y diseñadores con proyectos multicolor y multimaterial",
+          "Usuarios con automatización y monitoreo integrados",
+          "Talleres con piezas medianas y múltiples colores"
+        ]
+      }
+    },
+    {
+      "nombre": "Creality K2 Plus Combo",
+      "imagenes": [
+        "K2PLUS-11.webp",
+        "K2PLUS-9.webp",
+        "K2PLUS-12.webp",
+        "K2PLUS-5.webp",
+        "K2PLUS-10.webp",
+        "K2PLUS-3.png",
+        "K2PLUS-4.png",
+        "K2PLUS-8.webp",
+        "K2PLUS-7.webp",
+        "K2PLUS-6.webp",
+        "K2PLUS-2.jpg",
+        "K2PLUS-1.png"
+      ],
+      "descripcion_general": {
+        "titulo": "Impresora 3D FDM CoreXY de gran volumen con sistema CFS multicolor. Alta velocidad, cámara calefactada, monitoreo con IA y conectividad por Wi-Fi y Ethernet.",
+        "especificaciones": {
+          "Tecnología": "FDM (CoreXY)",
+          "Volumen de impresión": "350 × 350 × 350 mm",
+          "Velocidad máxima": "600 mm/s",
+          "Aceleración máxima": "30.000 mm/s²",
+          "Temperatura máxima de boquilla": "350 °C",
+          "Temperatura de cámara": "hasta ~60 °C",
+          "Temperatura máxima de cama": "120 °C",
+          "Diámetro de filamento": "1.75 mm",
+          "Extrusor": "Direct Drive metálico",
+          "Nivelación": "Automática antidesplazamiento",
+          "Pantalla": "Táctil 4.3\"",
+          "Conectividad": "USB / Wi-Fi / Ethernet",
+          "Sistema multicolor": "CFS (hasta 16 colores)",
+          "Dimensiones con CFS": "495 × 515 × 916 mm",
+          "Peso": "~35 kg"
+        },
+        "materiales_compatibles": [
+          "PLA",
+          "PETG",
+          "TPU",
+          "ABS",
+          "ASA",
+          "PC",
+          "PA (Nylon)",
+          "Materiales reforzados con fibras"
+        ],
+        "ideal_para": [
+          "Profesionales y estudios con modelos grandes multicolor",
+          "Makers avanzados con proyectos multimaterial",
+          "Talleres, educación técnica y prototipado exigente"
+        ]
+      }
+    },
+    {
+      "nombre": "Creality K2 Combo",
+      "imagenes": [
+        "K2-7.webp",
+        "K2-2.jpg",
+        "K2-5.jpg",
+        "K2-8.webp",
+        "K2-9.webp",
+        "K2-3.jpg",
+        "K2-6.webp",
+        "K2-1.jpg",
+        "K2-4.jpg",
+        "K2-10.webp"
+      ],
+      "descripcion_general": {
+        "titulo": "Impresora 3D FDM de alto rendimiento con sistema CFS multicolor para makers y diseñadores. Formato compacto, alta velocidad y cámara con IA para monitoreo inteligente.",
+        "especificaciones": {
+          "Tecnología": "FDM",
+          "Volumen de impresión": "260 × 260 × 260 mm",
+          "Velocidad máxima": "600 mm/s",
+          "Aceleración máxima": "20.000 mm/s²",
+          "Temperatura máxima de boquilla": "300 °C",
+          "Temperatura máxima de cama": "100 °C",
+          "Diámetro de filamento": "1.75 mm",
+          "Extrusor": "Direct Drive",
+          "Pantalla": "Táctil 4\"",
+          "Conectividad": "USB, Wi-Fi",
+          "Cámara integrada": "Sí (con IA)",
+          "Sistema multicolor": "CFS (hasta 4 colores, expandible a 16)"
+        },
+        "materiales_compatibles": [
+          "PLA",
+          "PETG",
+          "ABS",
+          "PET",
+          "Compuestos"
+        ],
+        "ideal_para": [
+          "Makers y creativos con proyectos multicolor en formato compacto",
+          "Prototipado rápido y producción ligera",
+          "Estudiantes, talleres y estudios de diseño"
+        ]
+      }
+    },
+    {
+      "nombre": "Creality K2 Pro Combo",
+      "imagenes": [
+        "K2PRO-8.png",
+        "K2PRO-7.webp",
+        "K2PRO-9.png",
+        "K2PRO-4.jpg",
+        "K2PRO-3.jpg",
+        "K2PRO-10.png",
+        "K2PRO-5.webp",
+        "K2PRO-1.jpg",
+        "K2PRO-2.jpg",
+        "K2PRO-6.png"
+      ],
+      "descripcion_general": {
+        "titulo": "Impresora 3D FDM CoreXY cerrada con cámara calefactada y sistema CFS. Soporte para hasta 16 colores, almacenamiento interno de 32 GB, doble cámara con IA y servomotores de alta precisión.",
+        "especificaciones": {
+          "Tecnología": "FDM (CoreXY)",
+          "Volumen de impresión": "300 × 300 × 300 mm",
+          "Velocidad máxima": "600 mm/s",
+          "Aceleración máxima": "20.000 mm/s²",
+          "Temperatura máxima de boquilla": "300 °C",
+          "Temperatura máxima de cama": "110 °C",
+          "Temperatura de cámara": "hasta ~60 °C",
+          "Diámetro de filamento": "1.75 mm",
+          "Extrusor": "Direct Drive dual-gear todo metal",
+          "Pantalla": "Táctil 4\"",
+          "Conectividad": "USB / Wi-Fi / Ethernet",
+          "Almacenamiento interno": "32 GB",
+          "Sistema multicolor": "CFS (hasta 16 colores)",
+          "Cámara integrada": "Doble, con IA",
+          "Placa de impresión": "PEI flexible"
+        },
+        "materiales_compatibles": [
+          "PLA",
+          "PETG",
+          "ABS",
+          "ASA",
+          "PA-CF",
+          "Filamentos técnicos con cámara caliente"
+        ],
+        "ideal_para": [
+          "Makers y diseñadores con proyectos multicolor avanzados",
+          "Talleres y estudios con volumen generoso y alta fiabilidad",
+          "Prototipado rápido de piezas grandes y detalladas"
+        ]
+      }
+    },
+    {
+      "nombre": "Creality Ender Fast PLA",
+      "imagenes": [
+        "Rosa.webp",
+        "Rojo fuego.jpg",
+        "Gris.webp",
+        "Purpura.webp",
+        "Plateado.webp",
+        "Celeste.webp",
+        "Gris claro.webp",
+        "FASTPLA-2.webp",
+        "Pack 2kg Blanco y Negro.webp",
+        "FASTPLA.webp"
+      ],
+      "descripcion_general": {
+        "titulo": "Filamento PLA optimizado para impresión a alta velocidad (250 mm/s o más). Flujo estable, enfriamiento rápido y acabado limpio incluso en impresiones rápidas.",
+        "especificaciones": {
+          "Material": "PLA de alta velocidad",
+          "Diámetro": "1.75 mm",
+          "Tolerancia dimensional": "±0.03 mm",
+          "Peso por bobina": "1 kg",
+          "Temperatura de impresión": "190–230 °C",
+          "Temperatura de cama": "45–60 °C"
+        },
+        "materiales_compatibles": [
+          "Compatible con cualquier impresora FDM 1.75 mm"
+        ],
+        "ideal_para": [
+          "Usuarios que imprimen a alta velocidad (250 mm/s o más)",
+          "Makers que buscan reducir tiempos de producción",
+          "Talleres con piezas en serie",
+          "Usuarios de impresoras CoreXY modernas"
+        ]
+      }
+    },
+    {
+      "nombre": "Creality Ender PLA+",
+      "imagenes": [
+        "Beige.webp",
+        "Naranja.webp",
+        "Rojo.webp",
+        "Verde manzana.webp",
+        "Azul.webp",
+        "Blanco.jpg",
+        "Verde jade.webp",
+        "Negro.webp",
+        "Gris.webp"
+      ],
+      "descripcion_general": {
+        "titulo": "Filamento PLA mejorado con mayor resistencia mecánica y mejor adherencia entre capas respecto al PLA estándar. Ideal para piezas funcionales que requieren manipulación frecuente.",
+        "especificaciones": {
+          "Material": "PLA+ (ácido poliláctico mejorado)",
+          "Diámetro": "1.75 mm",
+          "Tolerancia dimensional": "±0.02 mm",
+          "Peso por bobina": "1 kg",
+          "Temperatura de impresión": "190–220 °C",
+          "Temperatura de cama": "50–60 °C"
+        },
+        "materiales_compatibles": [
+          "Compatible con cualquier impresora FDM 1.75 mm"
+        ],
+        "ideal_para": [
+          "Usuarios con piezas funcionales y resistentes",
+          "Prototipado rápido con manipulación frecuente",
+          "Talleres y producción ligera",
+          "Educadores y estudiantes"
+        ]
+      }
+    },
+    {
+      "nombre": "Creality Hyper PETG",
+      "imagenes": [
+        "Gris.webp",
+        "Blanco.webp"
+      ],
+      "descripcion_general": {
+        "titulo": "Filamento PETG de alta velocidad con resistencia mecánica superior, resistencia química y al agua. Ideal para piezas funcionales expuestas al uso o al exterior.",
+        "especificaciones": {
+          "Material": "PETG mejorado (Hyper)",
+          "Diámetro": "1.75 mm",
+          "Peso por bobina": "1 kg",
+          "Temperatura de impresión": "220–260 °C",
+          "Temperatura de cama": "70–80 °C",
+          "Velocidad recomendada": "hasta 300 mm/s"
+        },
+        "materiales_compatibles": [
+          "Compatible con cualquier impresora FDM 1.75 mm"
+        ],
+        "ideal_para": [
+          "Piezas funcionales con demanda mecánica",
+          "Talleres con necesidad de resistencia y durabilidad",
+          "Prototipos sujetos a desgaste o impacto",
+          "Piezas con exposición a humedad o ambiente exterior"
+        ]
+      }
+    },
+    {
+      "nombre": "Bambu Lab PLA Lite (con carrete)",
+      "imagenes": [
+        "Gris.webp",
+        "Rojo.webp",
+        "Verde.webp",
+        "Beige.jpg",
+        "Negro.webp",
+        "Azul.webp",
+        "Cian.webp",
+        "Naranja.webp",
+        "Amarillo.webp",
+        "Amarillo girasol.webp",
+        "Blanco.webp",
+        "PLALITE-1.png"
+      ],
+      "descripcion_general": {
+        "titulo": "Filamento PLA de uso diario con acabado mate refinado y chip RFID integrado. Compatible con el ecosistema Bambu Lab para reconocimiento automático de parámetros.",
+        "especificaciones": {
+          "Material": "PLA de alta pureza",
+          "Diámetro": "1.75 mm",
+          "Tolerancia dimensional": "±0.03 mm",
+          "Peso por bobina": "1 kg",
+          "Temperatura de impresión": "190–230 °C",
+          "Temperatura de cama": "35–60 °C",
+          "Acabado": "Mate refinado",
+          "Chip RFID": "Sí (versiones con carrete)"
+        },
+        "materiales_compatibles": [
+          "Compatible con cualquier impresora FDM 1.75 mm"
+        ],
+        "ideal_para": [
+          "Usuarios con piezas decorativas, prototipos o modelos funcionales",
+          "Makers principiantes",
+          "Talleres con impresión diaria",
+          "Usuarios del ecosistema Bambu Lab"
+        ]
+      }
+    },
+    {
+      "nombre": "Bambu Lab AMS HT",
+      "imagenes": [
+        "AMSHT-3.webp",
+        "AMSHT-1.webp",
+        "AMSHT-2.webp"
+      ],
+      "descripcion_general": {
+        "titulo": "Sistema automático de materiales con secado activo hasta 85 °C para filamentos técnicos e higroscópicos. Almacenamiento hermético, detección RFID y salida Bypass para flexibles.",
+        "especificaciones": {
+          "Tipo": "Sistema automático de materiales con secado activo",
+          "Capacidad": "1 bobina por módulo",
+          "Temperatura máxima de secado": "85 °C",
+          "Almacenamiento": "Cámara sellada antihumedad",
+          "Identificación de material": "RFID automática",
+          "Salida Bypass": "Sí",
+          "Integración de software": "Bambu Studio",
+          "Compatibilidad": "Impresoras Bambu Lab con soporte AMS"
+        },
+        "materiales_compatibles": [
+          "PA (Nylon)",
+          "PC (Policarbonato)",
+          "ASA",
+          "ABS técnico",
+          "PLA y PETG (almacenamiento seco)",
+          "Filamentos reforzados con fibra de carbono o vidrio"
+        ],
+        "ideal_para": [
+          "Usuarios con piezas funcionales y estructurales",
+          "Makers avanzados con Nylon, PC o compuestos",
+          "Talleres técnicos y producción ligera"
+        ]
+      }
+    },
+    {
+      "nombre": "Bambu Lab AMS 2 Pro",
+      "imagenes": [
+        "AMS2P-4.jpg",
+        "AMS2P-3.jpg",
+        "AMS2P-1.jpg",
+        "AMS2P-2.jpg"
+      ],
+      "descripcion_general": {
+        "titulo": "Sistema de gestión automática de materiales de alta gama para impresión multicolor y multimaterial. Hasta 4 bobinas simultáneas con detección RFID y cambio automático sin intervención manual.",
+        "especificaciones": {
+          "Tipo": "Sistema automático de materiales",
+          "Slots de filamento": "4 ranuras independientes",
+          "Identificación de material": "RFID automática",
+          "Cambio de filamento": "Automático durante la impresión",
+          "Integración de software": "Bambu Studio",
+          "Compatibilidad": "H2C, H2S, P2S y otros modelos Bambu Lab con soporte AMS 2 Pro"
+        },
+        "materiales_compatibles": [
+          "Todos los filamentos compatibles con la impresora asociada"
+        ],
+        "ideal_para": [
+          "Makers y diseñadores con proyectos multicolor y multimaterial",
+          "Talleres y producción ligera con cambio automático de materiales",
+          "Proyectos con soportes solubles o materiales combinados"
+        ]
+      },
+      "en_stock": true
+    },
+    {
+      "nombre": "Bambu Lab AMS",
+      "imagenes": [
+        "AMS-4.webp",
+        "AMS-2.webp",
+        "AMS-3.webp",
+        "AMS-1.webp"
+      ],
+      "descripcion_general": {
+        "titulo": "Sistema automático de materiales para impresión multicolor y multimaterial con hasta 4 filamentos simultáneos. Compatible con la serie X1, P1 y otros modelos Bambu Lab.",
+        "especificaciones": {
+          "Tipo": "Sistema automático de materiales",
+          "Slots de filamento": "4 ranuras por módulo",
+          "Identificación de material": "RFID automática",
+          "Cambio de filamento": "Automático, sin pausas",
+          "Expansión": "Múltiples módulos AMS en paralelo",
+          "Integración de software": "Bambu Studio",
+          "Compatibilidad": "Serie X1, P1 y otros modelos Bambu Lab con capacidad AMS"
+        },
+        "materiales_compatibles": [
+          "Todos los filamentos compatibles con la impresora asociada"
+        ],
+        "ideal_para": [
+          "Makers, diseñadores y creativos con proyectos multicolor",
+          "Talleres o espacios educativos con flujo automatizado",
+          "Proyectos con filamentos de soporte solubles o removibles"
+        ]
+      }
+    },
+    {
+      "nombre": "Bambu Lab AMS Lite",
+      "imagenes": [
+        "AMSLite-3.webp",
+        "AMSLite-2.webp",
+        "AMSLite-1.webp"
+      ],
+      "descripcion_general": {
+        "titulo": "Sistema automático de materiales multicolor para impresoras Bambu Lab compatibles (A1 Combo, A1 Mini Combo). Hasta 4 filamentos con detección RFID y cambio automático integrado.",
+        "especificaciones": {
+          "Tipo": "Sistema automático de materiales",
+          "Slots de filamento": "4 ranuras",
+          "Identificación de material": "RFID automática",
+          "Cambio de filamento": "Automático durante la impresión",
+          "Integración de software": "Bambu Studio",
+          "Compatibilidad": "A1 Combo, A1 Mini Combo y otros modelos Bambu Lab compatibles"
+        },
+        "materiales_compatibles": [
+          "Todos los filamentos compatibles con la impresora asociada"
+        ],
+        "ideal_para": [
+          "Usuarios de impresoras Bambu Lab que desean multicolor automático",
+          "Makers creativos con proyectos detallados y coloridos",
+          "Talleres y espacios educativos"
+        ]
+      }
+    },
+    {
+      "nombre": "Creality Space Pi",
+      "imagenes": [
+        "SPACEPI-2.jpg",
+        "SPACEPI-4.jpg",
+        "SPACEPI-3.jpg",
+        "SPACEPI-1.jpg"
+      ],
+      "descripcion_general": {
+        "titulo": "Secador de filamento compacto para una bobina con pantalla táctil LCD, calentamiento PTC uniforme 360° y temporizador hasta 48 h. Ideal para mantener el filamento seco antes y durante la impresión.",
+        "especificaciones": {
+          "Tipo": "Secador de filamento",
+          "Capacidad": "1 bobina",
+          "Rango de temperatura": "~45–70 °C",
+          "Tecnología de calentamiento": "PTC con circulación de aire 360°",
+          "Temporizador": "0–48 h",
+          "Control": "Pantalla táctil LCD 3.7\"",
+          "Diámetros compatibles": "1.75 mm / 2.85 mm",
+          "Memoria de ajustes": "Sí (tras cortes de energía)"
+        },
+        "materiales_compatibles": [
+          "PLA",
+          "PLA+",
+          "PETG",
+          "ABS",
+          "ASA",
+          "TPU",
+          "PA (Nylon)",
+          "Compuestos técnicos"
+        ],
+        "ideal_para": [
+          "Makers y usuarios individuales con materiales sensibles a humedad",
+          "Talleres pequeños con impresoras 3D diversas",
+          "Preparación de filamento antes de impresiones largas"
+        ]
+      }
+    },
+    {
+      "nombre": "Creality Space Pi Plus",
+      "imagenes": [
+        "SPACEPIPLUS-4.jpg",
+        "SPACEPIPLUS-3.jpg",
+        "SPACEPIPLUS-2.jpg",
+        "SPACEPIPLUS-1.jpg"
+      ],
+      "descripcion_general": {
+        "titulo": "Secador de filamento para 2 bobinas simultáneas con pantalla táctil, calentamiento PTC 360° y temporizador hasta 48 h. Reduce fallos por humedad en materiales comunes y técnicos.",
+        "especificaciones": {
+          "Tipo": "Secador de filamento",
+          "Capacidad": "2 bobinas de 1 kg simultáneas",
+          "Rango de temperatura": "45–70 °C",
+          "Tecnología de calentamiento": "PTC con circulación de aire 360°",
+          "Temporizador": "0–48 h",
+          "Control": "Pantalla táctil LCD",
+          "Diámetros compatibles": "1.75 mm / 2.85 mm"
+        },
+        "materiales_compatibles": [
+          "PLA",
+          "PETG",
+          "ABS",
+          "ASA",
+          "TPU",
+          "PC",
+          "PA (Nylon)",
+          "Compuestos reforzados"
+        ],
+        "ideal_para": [
+          "Usuarios con varios materiales que requieren control de humedad",
+          "Talleres y laboratorios con múltiples impresoras",
+          "Espacios con proyectos paralelos o multicolor"
+        ]
+      }
+    },
+    {
+      "nombre": "Creality Space Pi x4",
+      "imagenes": [
+        "SPACEPIX4-3.webp",
+        "SPACEPIX4-2.webp",
+        "SPACEPIX4-1.webp",
+        "SPACEPIX4-4.webp"
+      ],
+      "descripcion_general": {
+        "titulo": "Secador de filamento de alto rendimiento con doble cámara independiente para hasta 4 bobinas simultáneas. Alcanza 85 °C, ideal para materiales técnicos como Nylon y PC.",
+        "especificaciones": {
+          "Tipo": "Secador de filamento",
+          "Capacidad": "hasta 4 bobinas (2 por cámara)",
+          "Potencia nominal": "360 W (200 W + 200 W)",
+          "Rango de temperatura": "45–85 °C",
+          "Cámaras": "Doble, con control térmico independiente",
+          "Control": "Pantalla táctil 3.2\"",
+          "Diámetros compatibles": "1.75 mm / 2.85 mm",
+          "Bobinas compatibles": "1 kg / 2 kg",
+          "Dimensiones": "~382 × 290 × 270 mm",
+          "Peso": "5 kg"
+        },
+        "materiales_compatibles": [
+          "PLA",
+          "PETG",
+          "ABS",
+          "ASA",
+          "TPU",
+          "PC",
+          "PA",
+          "PAHT",
+          "PA-CF",
+          "Filamentos con fibras"
+        ],
+        "ideal_para": [
+          "Talleres con múltiples materiales técnicos",
+          "Usuarios que trabajan con Nylon, PC o compuestos",
+          "Flujos de trabajo multicolor o multimaterial"
+        ]
+      }
+    },
+    {
+      "nombre": "Escaner 3D CR-Scan Raptor",
+      "imagenes": [
+        "RAPTOR-10.jpg",
+        "RAPTOR-2.jpg",
+        "RAPTOR-6.jpg",
+        "RAPTOR-3.jpg",
+        "RAPTOR-5.jpg",
+        "RAPTOR-4.jpg",
+        "RAPTOR-9.jpg",
+        "RAPTOR-1.jpg",
+        "RAPTOR-7.jpg",
+        "RAPTOR-8.jpg"
+      ],
+      "descripcion_general": {
+        "titulo": "Escaner 3D portatil con laser azul de 7 lineas y luz estructurada infrarroja (NIR). Precision metrológica de hasta 0.02 mm, captura de color 24 bits y rango de escaneo desde 5 mm hasta 2000 mm.",
+        "especificaciones": {
+          "Tecnología": "Laser azul + luz estructurada infrarroja (NIR)",
+          "Precision": "hasta 0.02 mm (modo laser)",
+          "Velocidad de escaneo": "hasta 60 fps (laser) / ~20 fps (NIR)",
+          "Rango de escaneo": "5 mm – ~2000 mm",
+          "Captura de color": "24 bits",
+          "Resolucion de camara 3D": "~1920 × 1200",
+          "Interfaz": "USB-C / USB 3.0",
+          "Peso": "372 g",
+          "Dimensiones": "215 × 50 × 74 mm",
+          "Alimentación": "12 V, 2 A",
+          "Formatos de exportacion": "OBJ, STL, PLY"
+        },
+        "materiales_compatibles": [
+          "Objetos opacos y superficies complejas sin spray preparatorio",
+          "Superficies negras, metalicas y con texturas variables"
+        ],
+        "ideal_para": [
+          "Profesionales y makers que digitalizan modelos para impresion 3D",
+          "Talleres de ingenieria inversa y diseño de producto",
+          "Artistas y creativos con captura 3D con color",
+          "Laboratorios de prototipado"
+        ]
+      }
+    },
+    {
+      "nombre": "Creality Rodillo Giratorio Pro",
+      "imagenes": [
+        "ROTARY-3.webp",
+        "ROTARY-2.webp",
+        "ROTARY-1.webp"
+      ],
+      "descripcion_general": {
+        "titulo": "Accesorio rotatorio 3 en 1 para grabadoras laser. Incluye rodillo giratorio, mandibula de sujecion y plataforma de soporte para grabado 360° sobre objetos cilindricos, esfericos e irregulares.",
+        "especificaciones": {
+          "Tipo": "Accesorio rotativo para grabadoras laser",
+          "Funciones integradas": "Rodillo giratorio, mandibula de sujecion, plataforma de soporte",
+          "Rotacion": "360° continua",
+          "Sujecion": "Mordazas ajustables multifuncionales",
+          "Diametro de objetos": "desde ~10 mm hasta >100 mm",
+          "Instalacion": "Plug & Play",
+          "Software compatible": "LightBurn, LaserGRBL y otros con soporte de eje rotativo"
+        },
+        "materiales_compatibles": [
+          "Objetos cilindricos y esfericos: botellas, vasos, termos, anillos"
+        ],
+<<<<<<< HEAD:Backend/src/data/catalogo_productos.json
+        "ideal_para": [
+          "Usuarios de grabadoras laser con superficies curvas",
+          "Talleres y makers de personalizacion de productos",
+          "Proyectos de regalistica y merchandising con grabado rotacional"
+=======
+        "el_rotary_kit_pro_es_un_accesorio_rotativo_que_se_acopla_a_cortadoras_y_grabadoras_láser_compatibles_para": [
+          "✔ Permitir grabado rotacional de 360 ° sobre objetos cilíndricos y redondos.\n✔ Sujetar objetos de diferentes formas y tamaños mediante mordazas ajustables.\n✔ Simplificar el flujo de trabajo sin requerir ensamblaje complejo.\n✔ Integrarse con software comunes de grabado como LightBurn y LaserGRBL.",
+          "Este kit multipropósito transforma tu grabadora láser en una herramienta capaz de trabajar sobre botellas, vasos, termos, anillos y piezas con geometrías circulares de forma rápida y precisa.",
+          "⚙️ Características destacadas",
+          "🔄 Sistema rotatorio 3 en 1",
+          "Combina rodillo giratorio, mandíbula de sujeción y plataforma de soporte en un solo dispositivo, permitiendo un uso versátil y adaptable.",
+          "🤏 Mandíbulas ajustables",
+          "Mordazas multifuncionales que se ajustan a objetos con diferentes diámetros, desde piezas finas hasta objetos cilíndricos de mayor tamaño.",
+          "🌀 Rotación de 360 °",
+          "Permite grabar alrededor del eje del objeto sin interrupciones, ideal para grabados envolventes y detalles uniformes.",
+          "📦 Diseño Plug & Play",
+          "No requiere herramientas complejas ni montaje prolongado: simplemente colocá el kit en tu grabadora compatible y empezá a trabajar.",
+          "🧰 Alta compatibilidad",
+          "Compatible con la mayoría de grabadoras láser de la serie Falcon y otros modelos de Creality que soporten accesorios rotativos, integrándose con software de grabado estándar.",
+          "🎯 Beneficios para tu flujo de trabajo",
+          "✨ Mayor versatilidad: graba en formas cilíndricas y esféricas sin limitarte a superficies planas.\n✨ Trabajo preciso y uniforme: la rotación constante garantiza grabados consistentes.\n✨ Adaptable a distintos objetos: ideal para artículos promocionales, regalos personalizados y piezas decorativas.\n✨ Instalación rápida: diseño intuitivo que reduce tiempos de armado y preparación.",
+          "📊 Especificaciones técnicas",
+          "La siguiente tabla representa capacidades generales del accesorio rotatorio según la documentación de Creality y características comunes de kits rotatorios oficiales; verificá compatibilidad con tu modelo específico de máquina antes de usar.",
+          "Tipo de accesorio: Rodillo giratorio 3 en 1 para grabado láser.",
+          "Funciones integradas: Rodillo giratorio, mandíbula de sujeción, plataforma de soporte.",
+          "Rotación: 360 ° continua.",
+          "Sujeción de objetos: Mordazas ajustables multifuncionales.",
+          "Compatibilidad de diámetro: Objetos cilíndricos desde aproximadamente 10 mm hasta >100 mm (según configuración de mordazas).",
+          "Instalación: Plug & Play, sin ensamblaje complejo.",
+          "Software compatible: LightBurn, LaserGRBL y otros programas de grabado con soporte de eje rotativo.",
+          "💡 ¿Para quién es ideal?",
+          "✔ Usuarios de grabadoras láser que necesitan grabado en superficies curvas o cilíndricas.\n✔ Talleres y makers que personalizan productos (vasos, botellas, termos, anillos).\n✔ Proyectos de regalística y merchandising con grabado rotacional. \n✔ Flujo de trabajo profesional donde la precisión y consistencia son claves.\n✔ Usuarios que buscan ampliar las capacidades de su grabadora existente sin invertir en un equipo adicional."
+        ]
+      }
+    },
+    {
+      "nombre": "Creality Space Pi x4",
+      "imagenes": [
+        "SPACEPIX4-3.webp",
+        "SPACEPIX4-2.webp",
+        "SPACEPIX4-1.webp",
+        "SPACEPIX4-4.webp"
+      ],
+      "contenido": {
+        "descripcion_general": [
+          "Creality SpacePi X4 – Secador de Filamento 4 Bobinas con Doble Cámara y Secado Activo",
+          "El Creality SpacePi X4 es una estación de secado y almacenamiento de filamento pensada para talleres, makers exigentes y entornos de producción ligera que buscan mantener sus materiales siempre secos y listos para imprimir. Su diseño con doble cámara independiente permite secar hasta 4 bobinas simultáneamente, ofreciendo un control flexible de temperatura y un sistema eficiente de deshumidificación. Este equipo mejora la calidad de impresión, reduce fallos por humedad y facilita el manejo de materiales técnicos como Nylon, PC o copolímeros sensibles.",
+          "🔍 ¿Qué es Creality SpacePi X4?"
+        ],
+        "el_spacepi_x4_filament_dryer_es_un_sistema_de_secado_de_filamentos_de_alto_rendimiento_que": [
+          "✔ Permite secado de hasta 4 bobinas simultáneas\n✔ Usa dos cámaras con calentadores PTC independientes para control de temperatura por zona. \n✔ Alcanza temperaturas de hasta 85 °C, ideal para materiales técnicos.\n✔ Incorpora circulación de aire 360° y deshumidificación activa para un secado profundo.\n✔ Ofrece una pantalla táctil intuitiva para control y monitoreo.",
+          "A diferencia de secadores básicos, el SpacePi X4 combina secado, almacenamiento y control independiente de cámaras, optimizando el flujo de trabajo tanto para impresión multicolor como para materiales sensibles a la humedad.",
+          "⚙️ Características principales",
+          "🔥 Secado de alta temperatura",
+          "Doble calentador 200 W + 200 W PTC por cámara.",
+          "Rango de temperatura: 45 °C – 85 °C.",
+          "Adecuado para filamentos técnicos e ingeniería.",
+          "📦 Doble cámara independiente",
+          "Cada cámara tiene su propio control térmico.",
+          "Permite secar distintos materiales a diferentes temperaturas simultáneamente.",
+          "Modo cámara única para ahorro energético.",
+          "🌬 Sistema de deshumidificación avanzada",
+          "Circulación de aire 360° para secado uniforme.",
+          "Deshumidificación activa con regeneración automática de desecante.",
+          "🖥 Control y monitoreo eficientes",
+          "Pantalla touchscreen 3.2ʺ intuitiva.",
+          "Modos preestablecidos y ajustes manuales.",
+          "Indicadores de estado de secado y alertas.",
+          "🎯 Beneficios para tu flujo de trabajo",
+          "✨ Secado simultáneo de múltiples bobinas: maximiza la productividad y reduce tiempos de espera.\n✨ Control térmico optimizado: mejora la estabilidad dimensional y adhesión entre capas.\n✨ Reducción de fallos de impresión: minimiza stringing, obstrucciones y warping causados por humedad.\n✨ Ahorro energético: modo cámara única reduce consumo cuando no se requiere secado total.\n✨ Compatible con diversos materiales: desde PLA hasta nylons y filamentos técnicos exigentes.",
+          "🧵 Materiales compatibles"
+        ],
+        "pla,_petg,_abs,_asa": [
+          "TPU y filamentos flexibles",
+          "PC, PA, PAHT, PA-CF y otros materiales técnicos",
+          "Filamentos con copolímeros y fibras\nSoporta diámetros de 1,75 mm y 2,85 mm y bobinas de 1 kg o 2 kg con diámetro ≤200 mm y ancho ≤150 mm.",
+          "📊 Especificaciones técnicas",
+          "Capacidad de secado: Hasta 4 bobinas simultáneas (2 por cámara).",
+          "Potencia nominal: 360 W (200 W + 200 W).",
+          "Rango de temperatura: 45 °C – 85 °C.",
+          "Dimensiones externas: ~382 × 290 × 270 mm.",
+          "Peso neto: 5 kg",
+          "Control: Pantalla táctil 3.2ʺ.",
+          "Compatibilidad de bobinas: 1 kg / 2 kg, 1,75 mm / 2,85 mm.",
+          "💡 ¿Para quién es ideal?",
+          "✔ Talleres y laboratorios que imprimen con múltiples materiales.\n✔ Makers y profesionales que trabajan con nylons, PC o materiales técnicos.\n✔ Usuarios que necesitan secado profundo antes y durante la impresión.\n✔ Flujos de trabajo multicolor o multi-material en impresoras FDM.\n✔ Equipos que priorizan calidad de superficie y fiabilidad de piezas impresas."
+        ]
+      }
+    },
+    {
+      "nombre": "Bambu Lab AMS",
+      "imagenes": [
+        "AMS-4.webp",
+        "AMS-2.webp",
+        "AMS-3.webp",
+        "AMS-1.webp"
+      ],
+      "contenido": {
+        "descripcion_general": [
+          "Bambu Lab AMS – Sistema Automático de Materiales para impresión 3D multicolor y multimaterial",
+          "El Bambu Lab AMS (Automatic Material System) es un accesorio original de Bambu Lab que lleva la capacidad de tus impresoras 3D a otro nivel, permitiendo la impresión multicolor y multimaterial automatizada con gran comodidad, precisión y fiabilidad.",
+          "Este sistema es ideal para usuarios creativos, talleres técnicos y proyectos complejos que requieren cambios automáticos de filamento durante una única impresión, sin intervención manual ni pausas innecesarias. Con el AMS, tu impresora puede gestionar varias bobinas simultáneamente y realizar transiciones fluidas entre ellas, liberándote de los cambios manuales y ampliando las posibilidades de tus diseños.",
+          "🎨 ¿Qué hace el AMS?"
+        ],
+        "el_bambu_lab_ams_es_un_módulo_inteligente_que_se_acopla_a_impresoras_compatibles_(especialmente_en_las_series_x1,_p1_y_otros_modelos_preparados_para_ams)_y_permite": [
+          "✔ Impresión multicolor y multimaterial automatizada — Cambia entre hasta 4 filamentos diferentes de forma automática durante el proceso de impresión.\n✔ Cambio de filamento fluido y sin pausas — La unidad gestiona las transiciones internas sin detener la máquina.\n✔ Detección RFID de filamentos — Reconoce automáticamente los carretes cargados para aplicar perfiles adecuados.\n✔ Gestión de nudos y tensión de filamento — Ajusta la alimentación para evitar atascos o tirones, garantizando estabilidad de impresión.\n✔ Soporte para materiales de soporte solubles o removibles — Permite imprimir con filamentos de soporte como SNAP-AWAY o PVA para facilitar el post-procesado.",
+          "Esto hace que el proceso de impresión 3D sea más eficiente, creativo y menos manual, permitiendo explorar combinaciones de materiales y colores en una sola pieza sin interrupciones.",
+          "⚙️ Cómo funciona"
+        ],
+        "el_sistema_ams_se_compone_principalmente_de": [
+          "🔹 4 ranuras de filamento que pueden cargarse con diferentes bobinas simultáneamente.\n🔹 Motor inteligente por cada ranura, que alimenta o retrae el filamento según sea necesario.\n🔹 Hub central y buffer que integran los flujos de filamento y gestionan el cambio sin pausas perceptibles.",
+          "Además, puedes instalar múltiples AMS en paralelo (con accesorios adicionales como hub AMS) para ampliar aún más la cantidad de colores o materiales disponibles hasta una configuración avanzada con muchos carretes disponibles simultáneamente.",
+          "🔍 Ventajas clave",
+          "⭐ Impresión automática multicolor y multimaterial — Impresiones más creativas y complejas con menos intervención.\n⭐ Integración completa con software — Funciona en conjunto con Bambu Studio para perfiles y cambios automáticos.\n⭐ Menos interrupciones, más productividad — El AMS gestiona hasta 4 carretes sin detener el proceso de impresión.\n⭐ Mejor manejo de soportes y materiales técnicos — Permite usar soportes como PVA o SNAP-AWAY sin cambiar manualmente.\n⭐ Compatibilidad ampliable — Puedes usar varios AMS para gestionar más materiales o colores en impresoras avanzadas.",
+          "👥 ¿Para quién es ideal?",
+          "✔ Makers, diseñadores y creativos que quieren impresión 3D multicolor y multimaterial sin complicaciones.\n✔ Talleres o espacios educativos que requieren flujo de trabajo automatizado y eficiente.\n✔ Proyectos que combinan diferentes propiedades de filamento (color, flexibilidad, soporte soluble).\n✔ Usuarios que buscan resultados más complejos y funcionales en una sola impresión.",
+          "📦 Especificaciones generales",
+          "Compatible con sistemas: Serie X1, P1 y otros modelos Bambu Lab con capacidad AMS.",
+          "Slots de filamento: 4 ranuras por módulo.",
+          "Capacidad multicolor: hasta 4 colores/materiales sin interrupciones.",
+          "Expansión: Posibilidad de conectar múltiples módulos AMS para ampliar colores o materiales."
+>>>>>>> parent of 9c44a30 (Add / json, and catalogo with real products):Frontend/src/Data/catalogo_productos.json
+        ]
+      }
+    },
+    {
+      "nombre": "Creality Halot-X1 Combo",
+      "imagenes": [
+        "HX1C-4.webp",
+        "HX1C-3.webp",
+        "HX1C-1.jpg",
+        "HX1C-2.webp"
+      ],
+      "descripcion_general": {
+        "titulo": "Impresora 3D de resina LCD con pantalla monocromatica 16K de 10.1\". Alta velocidad de hasta 170 mm/h y sistema AFU de gestion automatica de resina para mayor productividad.",
+        "especificaciones": {
+          "Tecnologia de impresion": "LCD monocromatica UV (405 nm)",
+          "Pantalla": "10.1\" Mono LCD 16K (15.120 × 6.230 px)",
+          "Pixel": "14 × 19 µm",
+          "Volumen de impresion": "211.68 × 118.37 × 200 mm",
+          "Velocidad maxima": "170 mm/h",
+          "Sistema de resina": "AFU (alimentacion automatica)",
+          "Plataforma": "Pre-nivelada",
+          "Conectividad": "USB / Wi-Fi",
+          "Control": "Pantalla tactil + HALOT BOX",
+          "Dimensiones": "344 × 331 × 434 mm",
+          "Peso": "12.75 kg"
+        },
+        "materiales_compatibles": [
+          "Resinas UV rigidas para prototipos",
+          "Resinas para miniaturas y modelismo",
+          "Resinas engineering-grade",
+          "Resinas flexibles y de alta resistencia (405 nm)"
+        ],
+        "ideal_para": [
+          "Creativos que imprimen miniaturas y piezas de detalle",
+          "Talleres de prototipado con alta productividad",
+          "Profesionales con necesidad de automatizacion en resina"
+        ]
+      }
+    },
+    {
+      "nombre": "Creality Laser Falcon A1 Pro 20W",
+      "imagenes": [
+        "LFA1P-2.jpg",
+        "LFA1P-3.jpg",
+        "LFA1P-6.jpg",
+        "LFA1P-5.jpg",
+        "LFA1P-4.jpg",
+        "LFA1P-1.webp"
+      ],
+      "descripcion_general": {
+        "titulo": "Grabadora y cortadora laser de diodo de 20 W con diseno cerrado (Clase 1). Autofocus asistido por camara, pantalla tactil y conexion Wi-Fi para uso seguro en entornos domesticos, educativos o de taller.",
+        "especificaciones": {
+          "Tipo": "Grabadora y cortadora laser de diodo",
+          "Potencia optica del laser": "20 W",
+          "Tamaño de punto laser": "~0.03 mm",
+          "Area de trabajo": "358 × 268 mm",
+          "Velocidad maxima": "600 mm/s",
+          "Clase de seguridad": "Clase 1 (cerrado)",
+          "Autofocus": "Asistido por camara con IA",
+          "Pantalla": "Tactil",
+          "Conectividad": "Wi-Fi / USB",
+          "Ventilacion": "Filtracion y extraccion de humos interna"
+        },
+        "materiales_compatibles": [
+          "Madera y contrachapado",
+          "Acrilico y plasticos",
+          "Cuero y telas",
+          "Papel y carton",
+          "Superficies tratadas"
+        ],
+        "ideal_para": [
+          "Makers y entusiastas de grabado y corte laser",
+          "Pequenos negocios de personalizacion",
+          "Entornos educativos y makerspaces"
+        ]
+      }
+    },
+    {
+      "nombre": "Creality Laser Falcon Pro S 22W",
+      "imagenes": [
+        "LFPS-5.webp",
+        "LFPS-4.webp",
+        "LFPS-2.webp",
+        "LFPS-3.webp",
+        "LFPS-1.webp"
+      ],
+      "descripcion_general": {
+        "titulo": "Grabadora y cortadora laser de diodo de 22 W con diseno cerrado (Clase 1). Air-assist integrado, camara con autofocus y estructura de aluminio rigida para talleres y emprendimientos creativos.",
+        "especificaciones": {
+          "Tipo": "Grabadora y cortadora laser de diodo (~455 nm)",
+          "Potencia optica del laser": "22 W",
+          "Area de trabajo": "355 × 390 mm",
+          "Velocidad maxima": "~600 mm/s",
+          "Clase de seguridad": "Clase 1 (cerrado)",
+          "Autofocus": "Camara integrada con autofocus inteligente",
+          "Air-assist": "Integrado",
+          "Conectividad": "USB / tarjeta TF",
+          "Software compatible": "LightBurn / LaserGRBL / Creality Design Space",
+          "Estructura": "Aleacion de aluminio",
+          "Dimensiones": "664 × 570 × 328 mm",
+          "Peso": "~18 kg",
+          "Alimentacion": "100-240 V AC"
+        },
+        "materiales_compatibles": [
+          "Madera y contrachapado",
+          "Acrilico y plasticos",
+          "Cuero y telas",
+          "Papel y carton",
+          "Compuestos ligeros no metalicos"
+        ],
+        "ideal_para": [
+          "Makers y creativos con grabado y corte preciso",
+          "Talleres y pequenos negocios de personalizacion",
+          "Educacion y espacios makers"
+        ]
+      }
+    },
+    {
+      "nombre": "Creality Laser Falcon Pro S 40W",
+      "imagenes": [
+        "LFPS-5.webp",
+        "LFPS-2.webp",
+        "LFPS-3.webp",
+        "LFPS-4.webp",
+        "LFPS-1.webp"
+      ],
+      "descripcion_general": {
+        "titulo": "Grabadora y cortadora laser de diodo de 40 W con diseno cerrado (Clase 1). Air-assist integrado, camara con posicionamiento visual y alta potencia para cortes eficientes y grabados de alta resolucion.",
+        "especificaciones": {
+          "Tipo": "Grabadora y cortadora laser de diodo",
+          "Potencia optica del laser": "40 W",
+          "Tamaño de punto laser": "~0.08 × 0.10 mm",
+          "Area de trabajo": "~355 × 390 mm",
+          "Velocidad maxima": "~600 mm/s",
+          "Clase de seguridad": "Clase 1 (cerrado)",
+          "Camara integrada": "Si, con posicionamiento visual",
+          "Air-assist": "Integrado",
+          "Software compatible": "LightBurn / LaserGRBL / Falcon Design Space"
+        },
+        "materiales_compatibles": [
+          "Madera y contrachapado",
+          "Acrilico y plasticos",
+          "Cuero y telas",
+          "Papel y carton",
+          "Compuestos ligeros"
+        ],
+<<<<<<< HEAD:Backend/src/data/catalogo_productos.json
+        "ideal_para": [
+          "Makers, artesanos y diseñadores con alta demanda de potencia",
+          "Talleres y pequenos negocios de personalizacion por lotes",
+          "Entornos educativos y espacios makers profesionales"
+=======
+        "la_falcon2_pro_s_integra_varias_tecnologías_pensadas_para_mejorar_precisión,_productividad_y_experiencia_de_uso": [
+          "✔ Cámara integrada y auto-enfoque inteligente: Permiten posicionar el diseño con precisión y reducir errores de alineación.\n✔ Air-assist incorporado: Controla el flujo de aire para eliminar humo y rebabas, protegiendo ópticas y mejorando la calidad del corte.\n✔ Compatibilidad con software avanzado: Funciona con programas como LightBurn, LaserGRBL o Creality Design Space para diseño y control de trabajos desde PC/Mac.\n✔ Control sencillo por USB o tarjeta TF: Permite operar offline, sin depender de conexión constante a computadora.",
+          "Estas funciones simplifican el flujo desde el diseño hasta el proyecto final, reduciendo la curva de aprendizaje.",
+          "🛡️ Seguridad y diseño robusto"
+        ],
+        "este_modelo_incorpora_múltiples_sistemas_de_seguridad_y_diseño_pensado_para_entornos_de_trabajo_exigentes": [
+          "🛑 Certificación Clase 1 (seguridad ocular): El diseño cerrado protege al usuario de la exposición directa al láser.",
+          "🧯 Sensor de flujo de aire, detección de llama y mantenimiento de lente: Monitorean el estado de la máquina continuamente.",
+          "🚨 Botón de paro de emergencia y detector de tapa abierta: Detienen automáticamente la operación si se abre la cubierta o surge un riesgo.",
+          "🛠️ Estructura de aleación de aluminio rígida: Minimiza vibraciones y asegura movimientos estables incluso a altas velocidades.",
+          "Esto permite utilizar el equipo en estudios, talleres o espacios compartidos con tranquilidad.",
+          "🧰 Materiales compatibles"
+        ],
+        "la_falcon2_pro_s_22w_puede_trabajar_con_una_amplia_variedad_de_superficies_planas_(sin_reflexión_significativa),_lo_que_la_hace_extremadamente_versátil": [
+          "✔ Madera y contrachapado\n✔ Acrílico y plásticos\n✔ Cuero y telas\n✔ Papel y cartón\n✔ Materiales compuestos ligeros\n✔ Otros materiales no metálicos adecuados para láser de diodo",
+          "Esto la posiciona como una herramienta ideal para grabados decorativos, señalética, productos personalizados, prototipos funcionales y corte de piezas precisas.",
+          "📊 Especificaciones técnicas claves",
+          "Tecnología: Grabado y corte láser de diodo (≈455 nm)",
+          "Potencia óptica de láser: 22 W",
+          "Área de trabajo: 355 × 390 mm",
+          "Velocidad máxima: hasta ~600 mm/s",
+          "Clase de seguridad: Clase 1 (cerrado, seguro)",
+          "Auto-enfoque y cámara integrada: Sí",
+          "Air-assist integrado: Sí",
+          "Conectividad: USB, tarjeta TF, software compatible LightBurn / LaserGRBL / Design Space",
+          "Dimensiones aproximadas: 664 × 570 × 328 mm",
+          "Peso estimado: 18 kg",
+          "Fuente de alimentación: 100-240 V AC",
+          "🎯 ¿Para quién es ideal?",
+          "✔ Makers y creativos que quieren producir piezas personalizadas y grabados con detalles precisos.\n✔ Pequeños negocios y talleres que ofrecen servicios de corte y grabado por encargo.\n✔ Educación y espacios makers que necesitan una herramienta segura y profesional.\n✔ Proyectos técnicos o decorativos en materiales diversos, con control detallado de parámetros."
+>>>>>>> parent of 9c44a30 (Add / json, and catalogo with real products):Frontend/src/Data/catalogo_productos.json
+        ]
+      }
+    }
+  ]
+}
