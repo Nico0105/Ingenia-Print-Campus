@@ -553,6 +553,85 @@
   gap: 20px;
 }
 
+/* DOS COLUMNAS: IDEAL PARA Y MATERIALES COMPATIBLES */
+.product-specs-two-columns {
+  padding: 40px 48px;
+  background: var(--bg-soft);
+  border-top: 1px solid var(--border-soft);
+}
+
+.product-specs-two-columns h2 {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  margin-bottom: 24px;
+  color: var(--text-primary);
+}
+
+.specs-columns-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+}
+
+.spec-column {
+  background: #0f1117 !important;
+  border: 1px solid var(--border-soft);
+  border-radius: 8px;
+  padding: 24px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+.spec-column-title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--accent-orange);
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border-soft);
+}
+
+.ideal-para-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.ideal-para-item {
+  color: #ccc;
+  line-height: 1.6;
+  margin: 0;
+  font-size: 15px;
+}
+
+.materiales-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.materiales-list li {
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--text-primary);
+  font-size: 15px;
+}
+
+.materiales-list li:last-child {
+  border-bottom: none;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .specs-columns-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 .spec-description {
   background: #0f1117 !important;
   border: 1px solid var(--border-soft);

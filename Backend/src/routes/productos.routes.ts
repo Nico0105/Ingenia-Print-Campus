@@ -279,16 +279,20 @@ async function buildProducts(): Promise<any[]> {
       
       const images = getProductImages(item.categoria, item.subcarpeta, item.fullPath);
       
-      // Get description from DB or from docx file
+      // Get description from database - prioritize DB over docx
       let contenido: any = {};
       if (dbProduct && dbProduct.descripcion_general) {
         try {
-          contenido = JSON.parse(dbProduct.descripcion_general);
+          const parsed = JSON.parse(dbProduct.descripcion_general);
+          // Use DB content if it has actual data
+          if (parsed && (parsed.titulo || parsed.especificaciones)) {
+            contenido = parsed;
+          }
         } catch {}
       }
       
-      // If no description from DB, try to read from docx file
-      if (!contenido || !contenido.titulo) {
+      // Only read from docx if database has NO content
+      if (!contenido || (!contenido.titulo && Object.keys(contenido).length === 0)) {
         const docxContent = await getDescripcionFromDocx(item.fullPath);
         if (docxContent) {
           contenido = docxContent;
@@ -518,7 +522,10 @@ router.put("/:id", upload.array('imagenes'), async (req: Request, res: Response)
     if (!currentProducto && id >= 1000) {
       // Obtener los productos de las carpetas
       const products = await buildProducts();
-      const folderProduct = products.find((p) => p.id === id);
+      if (!products || products.length === 0) {
+        return res.status(404).json({ error: 'Producto no encontrado' });
+      }
+      const folderProduct = products.find((p) => p && p.id === id);
       
       if (folderProduct) {
         // Buscar si ya existe un producto en la DB con el mismo nombre (puede haber sido editado antes)

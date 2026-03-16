@@ -159,57 +159,36 @@ export default function Product() {
         </section>
       )}
 
-      {/* MATERIALES COMPATIBLES E IDEAL PARA */}
-      <section className="product-specs">
-        <h2>Características y Especificaciones</h2>
-        {/* Mostrar descripción general si existe */}
-        {descripcionGeneral && (
-          <div className="spec-description">
-            <p>{descripcionGeneral}</p>
+      {/* DOS COLUMNAS: IDEAL PARA Y MATERIALES COMPATIBLES */}
+      {(idealPara.length > 0 || materialesCompatibles.length > 0) && (
+        <section className="product-specs-two-columns">
+          <h2>Características Adicionales</h2>
+          <div className="specs-columns-grid">
+            {/* IDEAL PARA */}
+            {idealPara.length > 0 && (
+              <div className="spec-column">
+                <h3 className="spec-column-title">Ideal Para</h3>
+                <div className="ideal-para-list">
+                  {idealPara.map((item, j) => (
+                    <p key={j} className="ideal-para-item">{item}</p>
+                  ))}
+                </div>
+              </div>
+            )}
+            {/* MATERIALES COMPATIBLES */}
+            {materialesCompatibles.length > 0 && (
+              <div className="spec-column">
+                <h3 className="spec-column-title">Materiales Compatibles</h3>
+                <ul className="materiales-list">
+                  {materialesCompatibles.map((item, j) => (
+                    <li key={j}>{item}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
           </div>
-        )}
-        <div className="specs-sections-grid">
-          {/* Especificaciones técnicas */}
-          {Object.keys(especificaciones).length > 0 && (
-            <div className="spec-section">
-              <h3 className="spec-section-title">Especificaciones Técnicas</h3>
-              <ul className="specs-list">
-                {Object.entries(especificaciones).map(([key, value], idx) => (
-                  <li key={idx}><strong>{key}:</strong> {value}</li>
-                ))}
-              </ul>
-            </div>
-          )}
-          {/* Materiales Compatibles */}
-          {materialesCompatibles.length > 0 && (
-            <div className="spec-section">
-              <h3 className="spec-section-title">Materiales Compatibles</h3>
-              <ul>
-                {materialesCompatibles.map((item, j) => (
-                  <li key={j}>{item}</li>
-                ))}
-              </ul>
-            </div>
-          )}
-          {/* Ideal Para */}
-          {idealPara.length > 0 && (
-            <div className="spec-section">
-              <h3 className="spec-section-title">Ideal Para</h3>
-              <ul>
-                {idealPara.map((item, j) => (
-                  <li key={j}>{item}</li>
-                ))}
-              </ul>
-            </div>
-          )}
-          {/* Mensaje si no hay nada */}
-          {!descripcionGeneral && Object.keys(especificaciones).length === 0 && materialesCompatibles.length === 0 && idealPara.length === 0 && (
-            <div className="spec-section">
-              <p className="no-specs">Este producto no tiene características adicionales disponibles.</p>
-            </div>
-          )}
-        </div>
-      </section>
+        </section>
+      )}
 
       <RelatedProductsCarousel
         categoria={product.categoria}

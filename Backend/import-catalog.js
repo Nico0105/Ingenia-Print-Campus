@@ -141,7 +141,7 @@ for (const jsonProduct of jsonData.productos) {
     
     // Update database
     const descripcionGeneral = JSON.stringify({
-      titulo: parsedContent.titulo,
+      titulo: parsedContent.titulo || 'Producto de alta calidad',
       especificaciones: parsedContent.especificaciones,
       materiales_compatibles: parsedContent.materiales_compatibles,
       ideal_para: parsedContent.ideal_para
