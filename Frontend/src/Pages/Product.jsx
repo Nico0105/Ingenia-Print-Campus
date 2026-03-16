@@ -79,7 +79,7 @@ export default function Product() {
                 src={product.imagenes[mainImage]} 
                 alt={product.nombre} 
                 onError={(e) => {
-                  e.target.src = "https://via.placeholder.com/600x400?text=No+Image";
+                  e.target.src = "/images/Logo.png";
                 }}
               />
             ) : (
@@ -97,7 +97,7 @@ export default function Product() {
                   src={img} 
                   alt={`Thumbnail ${i + 1}`} 
                   onError={(e) => {
-                    e.target.src = "https://via.placeholder.com/150x100?text=No+Image";
+                    e.target.src = "/images/Logo.png";
                   }}
                 />
               </div>
@@ -160,35 +160,58 @@ export default function Product() {
       )}
 
       {/* MATERIALES COMPATIBLES E IDEAL PARA */}
-      {(materialesCompatibles.length > 0 || idealPara.length > 0) && (
-        <section className="product-specs">
-          <h2>Características y Especificaciones</h2>
-          <div className="specs-sections-grid">
-            {materialesCompatibles.length > 0 && (
-              <div className="spec-section">
-                <h3 className="spec-section-title">Materiales Compatibles</h3>
-                <ul>
-                  {materialesCompatibles.map((item, j) => (
-                    <li key={j}>{item}</li>
-                  ))}
-                </ul>
-              </div>
-            )}
-            {idealPara.length > 0 && (
-              <div className="spec-section">
-                <h3 className="spec-section-title">Ideal Para</h3>
-                <ul>
-                  {idealPara.map((item, j) => (
-                    <li key={j}>{item}</li>
-                  ))}
-                </ul>
-              </div>
-            )}
+      <section className="product-specs">
+        <h2>Características y Especificaciones</h2>
+        {/* Mostrar descripción general si existe */}
+        {descripcionGeneral && (
+          <div className="spec-description">
+            <p>{descripcionGeneral}</p>
           </div>
-        </section>
-      )}
+        )}
+        <div className="specs-sections-grid">
+          {/* Especificaciones técnicas */}
+          {Object.keys(especificaciones).length > 0 && (
+            <div className="spec-section">
+              <h3 className="spec-section-title">Especificaciones Técnicas</h3>
+              <ul className="specs-list">
+                {Object.entries(especificaciones).map(([key, value], idx) => (
+                  <li key={idx}><strong>{key}:</strong> {value}</li>
+                ))}
+              </ul>
+            </div>
+          )}
+          {/* Materiales Compatibles */}
+          {materialesCompatibles.length > 0 && (
+            <div className="spec-section">
+              <h3 className="spec-section-title">Materiales Compatibles</h3>
+              <ul>
+                {materialesCompatibles.map((item, j) => (
+                  <li key={j}>{item}</li>
+                ))}
+              </ul>
+            </div>
+          )}
+          {/* Ideal Para */}
+          {idealPara.length > 0 && (
+            <div className="spec-section">
+              <h3 className="spec-section-title">Ideal Para</h3>
+              <ul>
+                {idealPara.map((item, j) => (
+                  <li key={j}>{item}</li>
+                ))}
+              </ul>
+            </div>
+          )}
+          {/* Mensaje si no hay nada */}
+          {!descripcionGeneral && Object.keys(especificaciones).length === 0 && materialesCompatibles.length === 0 && idealPara.length === 0 && (
+            <div className="spec-section">
+              <p className="no-specs">Este producto no tiene características adicionales disponibles.</p>
+            </div>
+          )}
+        </div>
+      </section>
 
-      <RelatedProducts
+      <RelatedProductsCarousel
         categoria={product.categoria}
         currentId={product.id}
         navigate={navigate}
@@ -242,6 +265,53 @@ function RelatedProducts({ categoria, currentId, navigate }) {
             <h4>{p.nombre}</h4>
           </div>
         ))}
+      </div>
+    </section>
+  );
+}
+
+// Carousel de productos relacionados
+function RelatedProductsCarousel({ categoria, currentId, navigate }) {
+  const [related, setRelated] = useState([]);
+
+  useEffect(() => {
+    fetch(`${API_URL}/api/products`)
+      .then((res) => res.json())
+      .then((data) => {
+        // Get up to 8 related products from the same category
+        const filtered = data
+          .filter((p) => p && p.id && p.categoria === categoria && p.id !== currentId)
+          .slice(0, 8);
+        setRelated(filtered);
+      })
+      .catch((err) => console.error('Error fetching related products:', err));
+  }, [categoria, currentId]);
+
+  if (related.length === 0) {
+    return null;
+  }
+
+  return (
+    <section className="related-carousel">
+      <h2>Productos Relacionados</h2>
+      <div className="carousel-container">
+        <div className="carousel-track">
+          {related.map((product) => (
+            <div
+              key={product.id}
+              className="carousel-card"
+              onClick={() => navigate(`/product/${product.id}`)}
+            >
+              {product.imagenes && product.imagenes.length > 0 ? (
+                <img src={product.imagenes[0]} alt={product.nombre} />
+              ) : (
+                <div className="no-image">Sin imagen</div>
+              )}
+              <h4>{product.nombre}</h4>
+              <span className="category-tag">{product.categoria}</span>
+            </div>
+          ))}
+        </div>
       </div>
     </section>
   );

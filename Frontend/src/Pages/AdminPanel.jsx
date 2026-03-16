@@ -25,7 +25,8 @@ export default function AdminPanel() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!localStorage.getItem("adminLoggedIn")) {
+    const isLoggedIn = localStorage.getItem("token") || localStorage.getItem("adminLoggedIn");
+    if (!isLoggedIn) {
       navigate("/login-admin");
       return;
     }
@@ -35,7 +36,11 @@ export default function AdminPanel() {
   const fetchProducts = () => {
     fetch("http://localhost:5000/api/products")
       .then(res => res.json())
-      .then(data => setProducts(data))
+      .then(data => {
+        // Filter out null products
+        const validProducts = Array.isArray(data) ? data.filter(p => p && p.id) : [];
+        setProducts(validProducts);
+      })
       .catch(err => console.error(err));
   };
 
@@ -167,6 +172,7 @@ export default function AdminPanel() {
 
   const handleLogout = () => {
     localStorage.removeItem("adminLoggedIn");
+    localStorage.removeItem("token");
     navigate("/");
   };
 

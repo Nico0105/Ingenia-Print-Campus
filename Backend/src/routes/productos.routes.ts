@@ -2,6 +2,7 @@ import { Router, Request, Response } from "express";
 import fs from "fs";
 import path from "path";
 import multer from "multer";
+import mammoth from "mammoth";
 import { getProductoByNombre, getProductoById, getAllProductos, insertProducto, updateProducto, deleteProducto, toggleStock } from "../db";
 
 const router = Router();
@@ -10,7 +11,70 @@ const PRODUCTOS_BASE = path.join(__dirname, "../uploads/Productos");
 const BASE_URL = "http://localhost:5000";
 const IMAGE_EXTENSIONS = /\.(jpg|jpeg|png|webp|gif)$/i;
 
+// Normalize name for matching - remove extra spaces and convert to lowercase
+const normalizeName = (name: string) => name.toLowerCase().replace(/\s+/g, ' ').trim();
+
 const upload = multer({ dest: path.join(__dirname, "../uploads/temp") });
+
+// Read description from Description.docx file in product folder
+async function getDescripcionFromDocx(productPath: string): Promise<any | null> {
+  try {
+    const descPath = path.join(productPath, 'Descripción.docx');
+    if (!fs.existsSync(descPath)) {
+      return null;
+    }
+    
+    const result = await mammoth.extractRawText({ path: descPath });
+    const text = result.value;
+    
+    if (!text || text.trim().length === 0) {
+      return null;
+    }
+    
+    // Parse the text to extract structured information
+    // The docx files seem to have a specific format, so we'll try to parse it
+    const lines = text.split('\n').map(l => l.trim()).filter(l => l.length > 0);
+    
+    // Default structure
+    let titulo = lines[0] || '';
+    let especificaciones: Record<string, string> = {};
+    let materiales_compatibles: string[] = [];
+    let ideal_para: string[] = [];
+    
+    // Try to parse the content based on common patterns
+    let currentSection = '';
+    for (const line of lines) {
+      const lowerLine = line.toLowerCase();
+      
+      if (lowerLine.includes('especificacion') || lowerLine.includes('caracteristica') || lowerLine.includes('spec')) {
+        currentSection = 'especificaciones';
+      } else if (lowerLine.includes('material') || lowerLine.includes('filamento')) {
+        currentSection = 'materiales';
+      } else if (lowerLine.includes('ideal') || lowerLine.includes('para') || lowerLine.includes('uso')) {
+        currentSection = 'ideal';
+      } else if (currentSection === 'especificaciones' && line.includes(':')) {
+        const [key, ...valueParts] = line.split(':');
+        if (key && valueParts.length > 0) {
+          especificaciones[key.trim()] = valueParts.join(':').trim();
+        }
+      } else if (currentSection === 'materiales' && line.length > 2) {
+        materiales_compatibles.push(line);
+      } else if (currentSection === 'ideal' && line.length > 2) {
+        ideal_para.push(line);
+      }
+    }
+    
+    return {
+      titulo,
+      especificaciones,
+      materiales_compatibles,
+      ideal_para
+    };
+  } catch (err) {
+    console.error('Error reading docx:', err);
+    return null;
+  }
+}
 
 // Get categories and products from folder structure (handles nested folders)
 function getCategoriesFromFolders(): { categoria: string; subcarpeta: string; fullPath: string }[] {
@@ -160,23 +224,45 @@ async function buildProducts(): Promise<any[]> {
     const dbProducts = await getAllProductos();
     const dbProductsMap = new Map(dbProducts.map(p => [p.nombre, p]));
     
+    // Build map of folder paths to DB products (for tracking adopted folders)
+    // Use normalized (lowercase) keys for case-insensitive matching
+    const adoptedFoldersMap = new Map<string, any>();
+    for (const p of dbProducts) {
+      if (p.origen_carpeta) {
+        const normalizedPath = p.origen_carpeta.toLowerCase();
+        adoptedFoldersMap.set(normalizedPath, p);
+      }
+    }
+    console.log('Adopted folders:', adoptedFoldersMap.size);
+    
     // Track used IDs to avoid collisions - include DB IDs and generated IDs
     const usedIds = new Set<number>();
     
-    // Normalize name for matching - remove extra spaces and convert to lowercase
-    const normalizeName = (name: string) => name.toLowerCase().replace(/\s+/g, ' ').trim();
-    
-    // Build products array from folders
-    const products = folderProducts.map((item, index) => {
+    // Build products array from folders (async to read docx files)
+    const products = await Promise.all(folderProducts.map(async (item, index) => {
       // Extract just the folder name (last part of the path) for matching
       // Handle both backslash (Windows) and forward slash (Unix)
+      const folderPath = `${item.categoria}/${item.subcarpeta}`;
+      const normalizedFolderPath = folderPath.toLowerCase();
       const folderName = item.subcarpeta.split(/[\\/]/).pop() || item.subcarpeta;
       const normalizedFolder = normalizeName(folderName);
+      
+      // Check if this folder has been adopted by a DB product
+      // If so, skip loading this folder product (use DB product instead)
+      // Use normalized (lowercase) path for case-insensitive matching
+      if (adoptedFoldersMap.has(normalizedFolderPath)) {
+        const adoptedDbProduct = adoptedFoldersMap.get(normalizedFolderPath);
+        // Mark this DB ID as used so we don't add it again
+        usedIds.add(adoptedDbProduct.id);
+        console.log('Skipping adopted folder:', folderPath, '- using DB product ID:', adoptedDbProduct.id);
+        // Return null to indicate this folder should be skipped
+        return null;
+      }
       
       // Try to find by exact folder name match first
       let dbProduct = dbProductsMap.get(folderName);
       
-      // Try with normalized name
+      // Try with normalized name (case-insensitive exact match)
       if (!dbProduct) {
         for (const [name, product] of dbProductsMap) {
           if (normalizeName(name) === normalizedFolder) {
@@ -187,55 +273,127 @@ async function buildProducts(): Promise<any[]> {
         }
       }
       
-      // If still not found, try partial matching
-      if (!dbProduct) {
-        for (const [name, product] of dbProductsMap) {
-          // Skip if this DB product has already been used
-          if (usedIds.has(product.id)) continue;
-          
-          const normalizedName = normalizeName(name);
-          
-          // Check for exact match or partial match
-          const isMatch = normalizedFolder === normalizedName || 
-                         normalizedFolder.includes(normalizedName) || 
-                         normalizedName.includes(normalizedFolder);
-          
-          // Require minimum length to avoid false positives
-          if (isMatch && normalizedName.length >= 3 && normalizedFolder.length >= 3) {
-            dbProduct = product;
-            console.log('Found partial match:', folderName, '=', name);
-            break;
-          }
-        }
-      }
+      // NOTE: Removed partial matching because it causes issues when editing product names
+      // If a product name is changed, partial matching would still match with the old folder name
+      // This would create duplicates or wrong associations
       
       const images = getProductImages(item.categoria, item.subcarpeta, item.fullPath);
       
+      // Get description from DB or from docx file
+      let contenido: any = {};
+      if (dbProduct && dbProduct.descripcion_general) {
+        try {
+          contenido = JSON.parse(dbProduct.descripcion_general);
+        } catch {}
+      }
+      
+      // If no description from DB, try to read from docx file
+      if (!contenido || !contenido.titulo) {
+        const docxContent = await getDescripcionFromDocx(item.fullPath);
+        if (docxContent) {
+          contenido = docxContent;
+        }
+      }
+      
       // Generate unique ID: use DB id if available and not already used
       let productId: number;
+      let productName = folderName; // Default to folder name
+      
       if (dbProduct && dbProduct.id && !usedIds.has(dbProduct.id)) {
         productId = dbProduct.id;
         usedIds.add(productId);
+        // Use DB name if available, otherwise use folder name
+        productName = dbProduct.nombre || folderName;
       } else {
-        // Use negative index starting from -1 to avoid collision with positive DB IDs
-        // Keep decrementing until we find an unused ID
-        productId = -1 - index;
+        // Use IDs starting from 1000 for folder-only products (no DB match)
+        // These are products that exist in folders but not in database
+        productId = 1000 + index;
         while (usedIds.has(productId)) {
-          productId--;
+          productId++;
         }
         usedIds.add(productId);
       }
-      
+
       return {
         id: productId,
-        nombre: folderName,
+        nombre: productName,
         categoria: categoryDisplayNames[item.categoria] || item.categoria,
         subcategoria: null,
         imagenes: images.length > 0 ? images : [`${BASE_URL}/images/Logo.png`],
-        contenido: dbProduct ? JSON.parse(dbProduct.descripcion_general || '{}') : {},
+        contenido,
         en_stock: dbProduct ? dbProduct.en_stock === 1 : true,
       };
-    });
+    }));
+    
+    // Filter out null products (adopted folders) and add to final array
+    const filteredProducts: any[] = [];
+    for (const p of products) {
+      if (p !== null) {
+        filteredProducts.push(p);
+      }
+    }
+    
+    // Also add products that exist only in database (created via admin, no folder)
+    const matchedDbProductIds = new Set<number>();
+    const folderProductNames = new Set<string>();
+    
+    // Get all folder product names
+    for (const item of folderProducts) {
+      const folderName = item.subcarpeta.split(/[\\/]/).pop() || item.subcarpeta;
+      folderProductNames.add(normalizeName(folderName));
+    }
+    
+    // Mark which DB products have been matched to folders
+    for (const p of filteredProducts) {
+      if (p.id > 0) {
+        matchedDbProductIds.add(p.id);
+      }
+    }
+    
+    // Add DB products that have origen_carpeta (these were filtered out as null)
+    // We need to add them back because they're the "adopted" version
+    for (const dbProduct of dbProducts) {
+      if (dbProduct.origen_carpeta) {
+        // Extract category from the folder path (e.g., "Accesorios/Bambu Lab AMS" -> "Accesorios")
+        const folderCategory = dbProduct.origen_carpeta.split('/')[0];
+        
+        let contenido: any = {};
+        if (dbProduct.descripcion_general) {
+          try {
+            contenido = JSON.parse(dbProduct.descripcion_general);
+          } catch {}
+        }
+        
+        products.push({
+          id: dbProduct.id,
+          nombre: dbProduct.nombre,
+          categoria: folderCategory || dbProduct.categoria || 'Sin categoría',
+          subcategoria: null,
+          imagenes: dbProduct.imagenes ? JSON.parse(dbProduct.imagenes) : [`${BASE_URL}/images/Logo.png`],
+          contenido,
+          en_stock: dbProduct.en_stock === 1,
+        });
+      } else {
+        // NEW PRODUCT: Product created directly in DB (no folder, no origen_carpeta)
+        // Add it directly to the results
+        let contenido: any = {};
+        if (dbProduct.descripcion_general) {
+          try {
+            contenido = JSON.parse(dbProduct.descripcion_general);
+          } catch {}
+        }
+        
+        products.push({
+          id: dbProduct.id,
+          nombre: dbProduct.nombre,
+          categoria: dbProduct.categoria || 'Sin categoría',
+          subcategoria: null,
+          imagenes: dbProduct.imagenes ? JSON.parse(dbProduct.imagenes) : [`${BASE_URL}/images/Logo.png`],
+          contenido,
+          en_stock: dbProduct.en_stock === 1,
+        });
+      }
+    }
     
     return products;
   } catch (err) {
@@ -266,7 +424,9 @@ router.get("/:id", async (req: Request, res: Response) => {
     }
 
     const products = await buildProducts();
-    const product = products.find((p) => p.id === id);
+    // Filter out null products before finding
+    const validProducts = products.filter(p => p && p.id);
+    const product = validProducts.find((p) => p.id === id);
 
     if (!product) {
       res.status(404).json({ error: "Producto no encontrado" });
@@ -350,7 +510,45 @@ router.put("/:id", upload.array('imagenes'), async (req: Request, res: Response)
     const files = req.files as Express.Multer.File[];
 
     // Buscar producto directamente en la DB por ID
-    const currentProducto = await getProductoById(id);
+    let currentProducto = await getProductoById(id);
+    
+    // Si el producto no está en DB pero el ID >= 1000, es un producto de carpeta
+    // Por lo tanto necesitamos crearlo en la base de datos
+    let dbId = id; // Usar este ID para las operaciones de DB
+    if (!currentProducto && id >= 1000) {
+      // Obtener los productos de las carpetas
+      const products = await buildProducts();
+      const folderProduct = products.find((p) => p.id === id);
+      
+      if (folderProduct) {
+        // Buscar si ya existe un producto en la DB con el mismo nombre (puede haber sido editado antes)
+        const dbProducts = await getAllProductos();
+        const existingDbProduct = dbProducts.find((p: any) => 
+          normalizeName(p.nombre || '') === normalizeName(folderProduct.nombre)
+        );
+        
+        if (existingDbProduct) {
+          // Ya existe en DB - usar ese ID para actualizar
+          dbId = existingDbProduct.id;
+          currentProducto = existingDbProduct;
+          console.log('Producto ya existe en DB con ID:', dbId, '- actualizando en lugar de crear nuevo');
+        } else {
+          // Crear nueva entrada en la base de datos
+          const newDbId = await insertProducto({
+            nombre: folderProduct.nombre,
+            categoria: folderProduct.categoria,
+            imagenes: folderProduct.imagenes,
+            descripcion_general: JSON.stringify(folderProduct.contenido || {}),
+            en_stock: folderProduct.en_stock
+          });
+          // Usar el nuevo ID de la base de datos
+          dbId = newDbId;
+          currentProducto = await getProductoById(newDbId);
+          console.log('Creado producto en DB con ID:', newDbId, 'para producto de carpeta:', id);
+        }
+      }
+    }
+    
     if (!currentProducto) {
       res.status(404).json({ error: "Producto no encontrado" });
       return;
@@ -379,6 +577,7 @@ router.put("/:id", upload.array('imagenes'), async (req: Request, res: Response)
       nombre: nombre || currentProducto.nombre,
       categoria: categoria || currentProducto.categoria,
       imagenes,
+      en_stock: currentProducto.en_stock, // Preserve current stock status
       descripcion_general: {
         titulo: titulo || (JSON.parse(currentProducto.descripcion_general || '{}').titulo) || '',
         especificaciones: (() => {
@@ -395,7 +594,7 @@ router.put("/:id", upload.array('imagenes'), async (req: Request, res: Response)
         })()
       }
     };
-    await updateProducto(id, updatedProduct);
+    await updateProducto(dbId, updatedProduct);
 
     res.json({ message: "Producto actualizado" });
   } catch (error) {
@@ -415,13 +614,23 @@ router.put("/:id/stock", async (req: Request, res: Response) => {
     }
 
     const products = await buildProducts();
-    const product = products.find((p) => p.id === id);
+    // Filter out null products before finding to avoid errors
+    const validProducts = products.filter(p => p && p.id);
+    const product = validProducts.find((p) => p.id === id);
     if (!product) {
       res.status(404).json({ error: "Producto no encontrado" });
       return;
     }
 
-    await toggleStock(product.nombre);
+    // Check if product exists in database
+    const dbProduct = await getProductoById(id);
+    if (!dbProduct) {
+      // Product is from folder only - can't toggle stock
+      res.status(400).json({ error: "No se puede cambiar stock de productos de carpeta" });
+      return;
+    }
+
+    await toggleStock(dbProduct.nombre);
 
     res.json({ message: "Stock actualizado" });
   } catch (error) {
@@ -429,6 +638,40 @@ router.put("/:id/stock", async (req: Request, res: Response) => {
     res.status(500).json({ error: "Error actualizando stock" });
   }
 });
+
+// Función para eliminar carpeta de producto
+function deleteProductFolder(nombre: string, categoria: string): boolean {
+  try {
+    // Buscar la carpeta del producto en todas las categorías
+    const categorias = ['Impresoras FDM', 'Impresoras de resina', 'Grabadoras Láser', 'Filamentos', 'Accesorios'];
+    
+    for (const cat of categorias) {
+      const productPath = path.join(PRODUCTOS_BASE, cat, nombre);
+      if (fs.existsSync(productPath)) {
+        fs.rmSync(productPath, { recursive: true, force: true });
+        console.log('Carpeta eliminada:', productPath);
+        return true;
+      }
+      // También buscar en subcarpetas
+      const catPath = path.join(PRODUCTOS_BASE, cat);
+      if (fs.existsSync(catPath)) {
+        const subdirs = fs.readdirSync(catPath).filter(f => fs.statSync(path.join(catPath, f)).isDirectory());
+        for (const subdir of subdirs) {
+          const subProductPath = path.join(catPath, subdir, nombre);
+          if (fs.existsSync(subProductPath)) {
+            fs.rmSync(subProductPath, { recursive: true, force: true });
+            console.log('Carpeta eliminada (subcarpeta):', subProductPath);
+            return true;
+          }
+        }
+      }
+    }
+    return false;
+  } catch (err) {
+    console.error('Error eliminando carpeta:', err);
+    return false;
+  }
+}
 
 // DELETE /api/products/:id - Eliminar producto
 router.delete("/:id", async (req: Request, res: Response) => {
@@ -439,16 +682,35 @@ router.delete("/:id", async (req: Request, res: Response) => {
       return;
     }
 
-    // Buscar producto directamente en la DB por ID
-    const product = await getProductoById(id);
-    if (!product) {
+    // Primero buscar en buildProducts (que tiene todos los productos合并)
+    const products = await buildProducts();
+    // Filter out null products before finding
+    const validProducts = products.filter(p => p && p.id);
+    const productToDelete = validProducts.find((p) => p.id === id);
+    
+    if (!productToDelete) {
       res.status(404).json({ error: "Producto no encontrado" });
       return;
     }
 
-    console.log('Delete - Producto encontrado:', product.nombre);
-    await deleteProducto(product.nombre);
+    console.log('Delete - Producto encontrado:', productToDelete.nombre, 'categoría:', productToDelete.categoria);
+    
+    // Ahora buscar en la base de datos por nombre
+    const dbProduct = await getProductoByNombre(productToDelete.nombre);
+    
+    if (!dbProduct) {
+      // Producto solo existe en carpeta, no en DB - eliminar la carpeta
+      console.log('Delete - Producto solo en carpeta, eliminando carpeta:', productToDelete.nombre);
+      const folderDeleted = deleteProductFolder(productToDelete.nombre, productToDelete.categoria);
+      if (folderDeleted) {
+        res.json({ message: "Producto eliminado (carpeta)" });
+      } else {
+        res.status(404).json({ error: "Producto no encontrado en carpeta" });
+      }
+      return;
+    }
 
+    await deleteProducto(dbProduct.nombre);
     res.json({ message: "Producto eliminado" });
   } catch (error) {
     console.error("Error eliminando producto:", error);

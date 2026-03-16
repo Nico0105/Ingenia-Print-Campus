@@ -8,13 +8,31 @@ export default function LoginAdmin() {
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (username === "admin" && password === "admin") {
-      localStorage.setItem("adminLoggedIn", "true");
-      navigate("/admin");
-    } else {
-      setError("Credenciales incorrectas");
+    setError("");
+    
+    try {
+      const response = await fetch('http://localhost:5000/api/auth/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ username, password })
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        localStorage.setItem('token', data.token || 'logged_in');
+        localStorage.setItem('adminLoggedIn', 'true');
+        navigate("/admin");
+      } else {
+        setError(data.message || "Credenciales incorrectas");
+      }
+    } catch (err) {
+      console.error('Login error:', err);
+      setError("Error al conectar con el servidor");
     }
   };
 

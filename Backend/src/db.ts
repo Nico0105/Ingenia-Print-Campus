@@ -1,9 +1,17 @@
 import sqlite3 from 'sqlite3';
 import path from 'path';
+import bcrypt from 'bcrypt';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 const DB_PATH = path.join(__dirname, '../data/productos.db');
 
-const db = new sqlite3.Database(DB_PATH, (err) => {
+// Get admin credentials from environment variables with fallbacks
+const ADMIN_USERNAME = process.env.ADMIN_USERNAME || 'admin';
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'admin123';
+
+export const db = new sqlite3.Database(DB_PATH, (err) => {
   if (err) {
     console.error('Error opening database:', err.message);
   } else {
@@ -21,9 +29,17 @@ function initDB() {
       descripcion_general TEXT,
       en_stock INTEGER DEFAULT 1,
       categoria TEXT DEFAULT 'Sin categoría',
-      subcategoria TEXT
+      subcategoria TEXT,
+      origen_carpeta TEXT
     )
   `);
+  
+  // Add origen_carpeta column if it doesn't exist (for existing databases)
+  db.run(`
+    ALTER TABLE productos ADD COLUMN origen_carpeta TEXT
+  `, (err: any) => {
+    // Ignore error if column already exists
+  });
   
   // Crear tabla de administradores
   db.run(`
@@ -36,11 +52,35 @@ function initDB() {
     )
   `);
   
-  // Insertar admin por defecto si no existe
-  db.get('SELECT id FROM admins WHERE username = ?', ['admin'], (err, row) => {
+  // Insertar admin por defecto si no existe (usando hash de contraseña)
+  db.get('SELECT id FROM admins WHERE username = ?', [ADMIN_USERNAME], async (err, row) => {
     if (!row) {
-      db.run('INSERT INTO admins (username, password, email) VALUES (?, ?, ?)', 
-        ['admin', 'admin123', 'admin@ingenia.com']);
+      try {
+        const hashedPassword = await bcrypt.hash(ADMIN_PASSWORD, 10);
+        db.run('INSERT INTO admins (username, password, email) VALUES (?, ?, ?)', 
+          [ADMIN_USERNAME, hashedPassword, 'admin@ingenia.com']);
+        console.log('Admin user created with credentials: ' + ADMIN_USERNAME + ' / ' + ADMIN_PASSWORD);
+      } catch (hashErr) {
+        console.error('Error hashing password:', hashErr);
+      }
+    }
+  });
+  
+  // Verificar que el admin existe
+  db.get('SELECT * FROM admins WHERE username = ?', [ADMIN_USERNAME], async (err, row) => {
+    if (err) {
+      console.error('Error checking admin:', err);
+    } else if (!row) {
+      console.log('Admin not found, inserting...');
+      try {
+        const hashedPassword = await bcrypt.hash(ADMIN_PASSWORD, 10);
+        db.run('INSERT INTO admins (username, password, email) VALUES (?, ?, ?)', 
+          [ADMIN_USERNAME, hashedPassword, 'admin@ingenia.com']);
+      } catch (hashErr) {
+        console.error('Error hashing password:', hashErr);
+      }
+    } else {
+      console.log('Admin user exists:', row);
     }
   });
 }
@@ -74,10 +114,10 @@ export function getAllProductos(): Promise<any[]> {
 
 export function insertProducto(producto: any): Promise<number> {
   return new Promise((resolve, reject) => {
-    const { nombre, imagenes, descripcion_general, en_stock = true } = producto;
+    const { nombre, imagenes, descripcion_general, en_stock = true, origen_carpeta } = producto;
     db.run(
-      'INSERT OR REPLACE INTO productos (nombre, imagenes, descripcion_general, en_stock) VALUES (?, ?, ?, ?)',
-      [nombre, JSON.stringify(imagenes), JSON.stringify(descripcion_general), en_stock ? 1 : 0],
+      'INSERT OR REPLACE INTO productos (nombre, imagenes, descripcion_general, en_stock, origen_carpeta) VALUES (?, ?, ?, ?, ?)',
+      [nombre, JSON.stringify(imagenes), JSON.stringify(descripcion_general), en_stock ? 1 : 0, origen_carpeta || null],
       function(err) {
         if (err) reject(err);
         else resolve(this.lastID);
@@ -129,4 +169,13 @@ export function getAdminByUsername(username: string): Promise<any | null> {
       else resolve(row || null);
     });
   });
+}
+
+export async function verifyPassword(plainPassword: string, hashedPassword: string): Promise<boolean> {
+  try {
+    return await bcrypt.compare(plainPassword, hashedPassword);
+  } catch (error) {
+    console.error('Error comparing passwords:', error);
+    return false;
+  }
 }

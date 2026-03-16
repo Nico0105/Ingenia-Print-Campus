@@ -44,13 +44,14 @@ export default function Login() {
             });
 
             const data = await response.json();
+            console.log('Login response:', data);
 
             if (data.success) {
                 console.log('Login exitoso:', data);
-                localStorage.setItem('token', data.token);
-                navigate('/dashboard');
+                localStorage.setItem('token', data.token || 'logged_in');
+                navigate('/admin');
             } else {
-                alert(data.message);
+                alert(data.message || 'Credenciales incorrectas');
             }
         } catch (error) {
             console.error('Error:', error);

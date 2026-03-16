@@ -26,15 +26,16 @@ export default function Catalogo() {
   }, []);
 
   // Categorías dinámicas desde los datos
+  const validProducts = (allProducts || []).filter(p => p && p.categoria);
   const categorias = [
     { id: "all", name: "Todos los Productos" },
-    ...Array.from(new Set((allProducts || []).map((p) => p.categoria))).map((cat) => ({
+    ...Array.from(new Set(validProducts.map((p) => p.categoria))).map((cat) => ({
       id: cat,
       name: cat,
     })),
   ];
 
-  const filteredProducts = allProducts.filter((product) => {
+  const filteredProducts = validProducts.filter((product) => {
     const categoryMatch = activeCategory === "all" || product.categoria === activeCategory;
     return categoryMatch;
   });
@@ -91,10 +92,10 @@ export default function Catalogo() {
               <div className="product-card" key={product.id}>
                 <div className="product-image">
                   <img 
-                    src={product.imagenes && product.imagenes[0] ? product.imagenes[0] : "https://via.placeholder.com/300x200?text=No+Image"} 
+                    src={product.imagenes && product.imagenes[0] ? product.imagenes[0] : "/images/Logo.png"} 
                     alt={product.nombre} 
                     onError={(e) => {
-                      e.target.src = "https://via.placeholder.com/300x200?text=No+Image";
+                      e.target.src = "/images/Logo.png";
                     }}
                   />
                 </div>

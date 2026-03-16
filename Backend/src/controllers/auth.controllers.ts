@@ -1,6 +1,11 @@
 import { Request, Response } from 'express';
+import jwt from 'jsonwebtoken';
 import { LoginRequest, LoginResponse } from '../types';
-import { getAdminByUsername } from '../db';
+import { getAdminByUsername, verifyPassword } from '../db';
+
+// Get JWT secret from environment variables
+const JWT_SECRET = process.env.JWT_SECRET || 'your-super-secret-jwt-key-change-in-production';
+const JWT_EXPIRES_IN = '24h';
 
 export const login = async (req: Request, res: Response): Promise<void> => {
     try {
@@ -18,7 +23,7 @@ export const login = async (req: Request, res: Response): Promise<void> => {
         // Buscar usuario en la base de datos
         const user = await getAdminByUsername(username);
 
-        if (!user || user.password !== password) {
+        if (!user) {
             res.status(401).json({
                 success: false,
                 message: 'Credenciales inválidas'
@@ -26,10 +31,28 @@ export const login = async (req: Request, res: Response): Promise<void> => {
             return;
         }
 
+        // Verificar contraseña usando bcrypt
+        const isPasswordValid = await verifyPassword(password, user.password);
+        if (!isPasswordValid) {
+            res.status(401).json({
+                success: false,
+                message: 'Credenciales inválidas'
+            } as LoginResponse);
+            return;
+        }
+
+        // Generar token JWT
+        const token = jwt.sign(
+            { id: user.id, username: user.username },
+            JWT_SECRET,
+            { expiresIn: JWT_EXPIRES_IN }
+        );
+
         // Login exitoso
         res.json({
             success: true,
             message: 'Login exitoso',
+            token: token,
             user: {
                 id: user.id,
                 username: user.username

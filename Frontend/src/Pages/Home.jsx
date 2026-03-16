@@ -77,10 +77,10 @@ export default function Home() {
               <div className="card" key={product.id}>
                 <div className="card-image">
                   <img 
-                    src={product.imagenes && product.imagenes[0] ? product.imagenes[0] : 'https://via.placeholder.com/300x200?text=No+Image'} 
+                    src={product.imagenes && product.imagenes[0] ? product.imagenes[0] : '/images/Logo.png'} 
                     alt={product.nombre} 
                     onError={(e) => {
-                      e.target.src = 'https://via.placeholder.com/300x200?text=No+Image';
+                      e.target.src = '/images/Logo.png';
                     }}
                   />
                 </div>
