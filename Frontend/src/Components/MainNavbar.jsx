@@ -57,8 +57,6 @@ export default function MainNavbar() {
         <button className={`nav-btn ${pathname === "/Garantia" ? "active" : ""}`} onClick={() => go("/Garantia")}>Garantía</button>
       </div>
 
-      <button className="campus-btn" onClick={() => go('/login')}>CAMPUS</button>
-
       {/* Hamburger (visible on tablet/mobile) */}
       <button
         className={`hamburger ${menuOpen ? 'open' : ''}`}
@@ -77,7 +75,6 @@ export default function MainNavbar() {
           <button className={`nav-btn ${pathname === "/Nosotros" ? "active" : ""}`} onClick={() => go("/Nosotros")}>Nosotros</button>
           <button className={`nav-btn ${pathname === "/Curso" ? "active" : ""}`} onClick={() => go("/Curso")}>Cursos</button>
           <button className={`nav-btn ${pathname === "/Garantia" ? "active" : ""}`} onClick={() => go("/Garantia")}>Garantía</button>
-          <button className="nav-btn campus-mobile" onClick={() => go('/login')}>CAMPUS</button>
         </div>
       </div>
     </nav>
