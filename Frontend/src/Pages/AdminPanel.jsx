@@ -83,9 +83,10 @@ export default function AdminPanel() {
       imagenes: [],
       titulo: product.contenido?.titulo || "",
       especificaciones: product.contenido?.especificaciones || {
-        Tecnologia: "",
-        "Volumen de impresión": "",
+        "Tecnología": "",
+        "Volumen": "",
         "Velocidad máxima": "",
+        "Aceleración máxima": "",
         "Temperatura máxima de boquilla": "",
         "Temperatura máxima de cama": ""
       },
