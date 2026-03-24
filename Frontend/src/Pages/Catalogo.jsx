@@ -5,6 +5,15 @@ import Footer from "../Components/Footer";
 import { useNavigate } from "react-router-dom";
 import { API_URL } from "../config";
 
+// ✅ Normaliza imagenes para que siempre sea un array
+function parseImagenes(imagenes) {
+  if (Array.isArray(imagenes)) return imagenes;
+  if (typeof imagenes === 'string') {
+    try { return JSON.parse(imagenes); } catch { return []; }
+  }
+  return [];
+}
+
 export default function Catalogo() {
   const navigate = useNavigate();
   const [allProducts, setAllProducts] = useState([]);
@@ -14,18 +23,21 @@ export default function Catalogo() {
   useEffect(() => {
     fetch(`${API_URL}/api/products`)
       .then((res) => res.json())
-      .then((data) => { 
-      console.log("DATA:", data, Array.isArray(data));
-      setAllProducts(Array.isArray(data) ? data : []);
-      setLoading(false);
-    })
+      .then((data) => {
+        const parsed = Array.isArray(data)
+          ? data
+              .filter(p => p != null)
+              .map((p) => ({ ...p, imagenes: parseImagenes(p.imagenes) }))
+          : [];
+        setAllProducts(parsed);
+        setLoading(false);
+      })
       .catch((err) => {
         console.error("Error cargando productos:", err);
         setLoading(false);
       });
   }, []);
 
-  // Categorías dinámicas desde los datos
   const validProducts = (allProducts || []).filter(p => p && p.categoria);
   const categorias = [
     { id: "all", name: "Todos los Productos" },
@@ -36,8 +48,7 @@ export default function Catalogo() {
   ];
 
   const filteredProducts = validProducts.filter((product) => {
-    const categoryMatch = activeCategory === "all" || product.categoria === activeCategory;
-    return categoryMatch;
+    return activeCategory === "all" || product.categoria === activeCategory;
   });
 
   if (loading) {
@@ -51,12 +62,10 @@ export default function Catalogo() {
 
   return (
     <div className="catalogo">
-      {/* NAVBAR */}
       <header className="catalogo-header">
         <MainNavbar />
       </header>
 
-      {/* MAIN CONTENT */}
       <main className="catalogo-main">
         {/* SIDEBAR FILTERS */}
         <aside className="catalogo-sidebar">
@@ -75,7 +84,7 @@ export default function Catalogo() {
             </div>
           </div>
 
-          <button className="reset-filters" onClick={() => { setActiveCategory("all"); }}>
+          <button className="reset-filters" onClick={() => setActiveCategory("all")}>
             Limpiar Filtros
           </button>
         </aside>
@@ -91,25 +100,26 @@ export default function Catalogo() {
             {filteredProducts.map((product) => (
               <div className="product-card" key={product.id}>
                 <div className="product-image">
-                  <img 
-                    src={product.imagenes && product.imagenes[0] ? product.imagenes[0] : "/images/Logo.png"} 
-                    alt={product.nombre} 
-                    onError={(e) => {
-                      e.target.src = "/images/Logo.png";
-                    }}
+                  <img
+                    src={product.imagenes[0] || "/images/Logo.png"}
+                    alt={product.nombre}
+                    onError={(e) => { e.target.src = "/images/Logo.png"; }}
                   />
                 </div>
 
                 <div className="product-info">
                   <h4 className="product-name">{product.nombre}</h4>
                   <p className="product-category">{product.categoria}</p>
-
                   <p className="product-description">
                     {product.contenido?.titulo || "Consulte por este producto"}
                   </p>
-
                   <div className="product-footer">
-                    <button className="btn-add-cart" onClick={() => navigate(`/product/${product.id}`)}>Consultar</button>
+                    <button
+                      className="btn-add-cart"
+                      onClick={() => navigate(`/product/${product.id}`)}
+                    >
+                      Consultar
+                    </button>
                   </div>
                 </div>
               </div>
@@ -117,6 +127,7 @@ export default function Catalogo() {
           </div>
         </section>
       </main>
+
       <Footer />
     </div>
   );

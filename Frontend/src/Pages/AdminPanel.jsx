@@ -44,10 +44,28 @@ export default function AdminPanel() {
       .catch(err => console.error(err));
   };
 
-  const handleToggleStock = (id) => {
-    fetch(`http://localhost:5000/api/products/${id}/stock`, { method: "PUT" })
-      .then(() => fetchProducts());
-  };
+ const handleToggleStock = (id) => {
+  const product = products.find(p => p.id === id);
+
+  fetch(`http://localhost:5000/api/products/${id}/stock`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ en_stock: !product.en_stock }),
+  })
+    .then(response => {
+      if (!response.ok) {
+        return response.json().then(err => {
+          throw new Error(err.message || `Error HTTP: ${response.status}`);
+        });
+      }
+      return response.json();
+    })
+    .then(() => fetchProducts())
+    .catch(err => {
+      console.error('Error cambiando stock:', err);
+      alert('Error cambiando stock: ' + err.message);
+    });
+};
 
   const handleDelete = (id) => {
     if (window.confirm("¿Eliminar producto?")) {

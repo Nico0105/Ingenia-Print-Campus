@@ -7,7 +7,6 @@ dotenv.config();
 
 const DB_PATH = path.join(__dirname, '../data/productos.db');
 
-// Get admin credentials from environment variables with fallbacks
 const ADMIN_USERNAME = process.env.ADMIN_USERNAME || 'admin';
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'admin123';
 
@@ -33,15 +32,12 @@ function initDB() {
       origen_carpeta TEXT
     )
   `);
-  
-  // Add origen_carpeta column if it doesn't exist (for existing databases)
-  db.run(`
-    ALTER TABLE productos ADD COLUMN origen_carpeta TEXT
-  `, (err: any) => {
-    // Ignore error if column already exists
+
+  // Agregar columna origen_carpeta si no existe (para DBs existentes)
+  db.run(`ALTER TABLE productos ADD COLUMN origen_carpeta TEXT`, (err: any) => {
+    // Ignorar error si ya existe
   });
-  
-  // Crear tabla de administradores
+
   db.run(`
     CREATE TABLE IF NOT EXISTS admins (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -51,36 +47,18 @@ function initDB() {
       created_at DATETIME DEFAULT CURRENT_TIMESTAMP
     )
   `);
-  
-  // Insertar admin por defecto si no existe (usando hash de contraseña)
+
+  // Crear admin por defecto si no existe
   db.get('SELECT id FROM admins WHERE username = ?', [ADMIN_USERNAME], async (err, row) => {
     if (!row) {
       try {
         const hashedPassword = await bcrypt.hash(ADMIN_PASSWORD, 10);
-        db.run('INSERT INTO admins (username, password, email) VALUES (?, ?, ?)', 
+        db.run('INSERT INTO admins (username, password, email) VALUES (?, ?, ?)',
           [ADMIN_USERNAME, hashedPassword, 'admin@ingenia.com']);
-        console.log('Admin user created with credentials: ' + ADMIN_USERNAME + ' / ' + ADMIN_PASSWORD);
+        console.log('Admin creado:', ADMIN_USERNAME);
       } catch (hashErr) {
         console.error('Error hashing password:', hashErr);
       }
-    }
-  });
-  
-  // Verificar que el admin existe
-  db.get('SELECT * FROM admins WHERE username = ?', [ADMIN_USERNAME], async (err, row) => {
-    if (err) {
-      console.error('Error checking admin:', err);
-    } else if (!row) {
-      console.log('Admin not found, inserting...');
-      try {
-        const hashedPassword = await bcrypt.hash(ADMIN_PASSWORD, 10);
-        db.run('INSERT INTO admins (username, password, email) VALUES (?, ?, ?)', 
-          [ADMIN_USERNAME, hashedPassword, 'admin@ingenia.com']);
-      } catch (hashErr) {
-        console.error('Error hashing password:', hashErr);
-      }
-    } else {
-      console.log('Admin user exists:', row);
     }
   });
 }
@@ -114,10 +92,18 @@ export function getAllProductos(): Promise<any[]> {
 
 export function insertProducto(producto: any): Promise<number> {
   return new Promise((resolve, reject) => {
-    const { nombre, imagenes, descripcion_general, en_stock = true, origen_carpeta } = producto;
+    // ✅ categoria incluida en la query
+    const { nombre, imagenes, descripcion_general, en_stock = true, origen_carpeta, categoria } = producto;
     db.run(
-      'INSERT OR REPLACE INTO productos (nombre, imagenes, descripcion_general, en_stock, origen_carpeta) VALUES (?, ?, ?, ?, ?)',
-      [nombre, JSON.stringify(imagenes), JSON.stringify(descripcion_general), en_stock ? 1 : 0, origen_carpeta || null],
+      'INSERT OR REPLACE INTO productos (nombre, imagenes, descripcion_general, en_stock, origen_carpeta, categoria) VALUES (?, ?, ?, ?, ?, ?)',
+      [
+        nombre,
+        JSON.stringify(imagenes),
+        JSON.stringify(descripcion_general),
+        en_stock ? 1 : 0,
+        origen_carpeta || null,
+        categoria || 'Sin categoría'
+      ],
       function(err) {
         if (err) reject(err);
         else resolve(this.lastID);
@@ -149,11 +135,12 @@ export function deleteProducto(nombre: string): Promise<void> {
   });
 }
 
-export function toggleStock(nombre: string): Promise<void> {
+// ✅ toggleStock por ID en lugar de nombre (más seguro y preciso)
+export function toggleStock(id: number): Promise<void> {
   return new Promise((resolve, reject) => {
     db.run(
-      'UPDATE productos SET en_stock = 1 - en_stock WHERE nombre = ?',
-      [nombre],
+      'UPDATE productos SET en_stock = 1 - en_stock WHERE id = ?',
+      [id],
       (err) => {
         if (err) reject(err);
         else resolve();

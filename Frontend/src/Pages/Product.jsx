@@ -15,6 +15,17 @@ export default function Product() {
     fetch(`${API_URL}/api/products/${productId}`)
       .then((res) => res.json())
       .then((data) => {
+        // ✅ Asegurarse de que imagenes siempre sea un array
+        if (data && typeof data.imagenes === 'string') {
+          try {
+            data.imagenes = JSON.parse(data.imagenes);
+          } catch {
+            data.imagenes = [];
+          }
+        }
+        if (!Array.isArray(data?.imagenes)) {
+          data.imagenes = [];
+        }
         setProduct(data);
         setLoading(false);
       })
@@ -75,9 +86,9 @@ export default function Product() {
         <section className="product-gallery">
           <div className="main-image">
             {product.imagenes && product.imagenes.length > 0 ? (
-              <img 
-                src={product.imagenes[mainImage]} 
-                alt={product.nombre} 
+              <img
+                src={product.imagenes[mainImage]}
+                alt={product.nombre}
                 onError={(e) => {
                   e.target.src = "/images/Logo.png";
                 }}
@@ -93,9 +104,9 @@ export default function Product() {
                 className={`thumbnail ${mainImage === i ? "active" : ""}`}
                 onClick={() => setMainImage(i)}
               >
-                <img 
-                  src={img} 
-                  alt={`Thumbnail ${i + 1}`} 
+                <img
+                  src={img}
+                  alt={`Thumbnail ${i + 1}`}
                   onError={(e) => {
                     e.target.src = "/images/Logo.png";
                   }}
@@ -208,7 +219,7 @@ function RelatedProducts({ categoria, currentId, navigate }) {
 
   useEffect(() => {
     const controller = new AbortController();
-    
+
     fetch(`${API_URL}/api/products`, { signal: controller.signal })
       .then((res) => res.json())
       .then((data) => {
@@ -222,7 +233,7 @@ function RelatedProducts({ categoria, currentId, navigate }) {
           console.error('Error fetching related products:', err);
         }
       });
-    
+
     return () => controller.abort();
   }, [categoria, currentId]);
 
@@ -257,9 +268,15 @@ function RelatedProductsCarousel({ categoria, currentId, navigate }) {
     fetch(`${API_URL}/api/products`)
       .then((res) => res.json())
       .then((data) => {
-        // Get up to 8 related products from the same category
         const filtered = data
           .filter((p) => p && p.id && p.categoria === categoria && p.id !== currentId)
+          // ✅ Fix imagenes como string en productos relacionados
+          .map((p) => ({
+            ...p,
+            imagenes: typeof p.imagenes === 'string'
+              ? (() => { try { return JSON.parse(p.imagenes); } catch { return []; } })()
+              : (Array.isArray(p.imagenes) ? p.imagenes : [])
+          }))
           .slice(0, 8);
         setRelated(filtered);
       })
