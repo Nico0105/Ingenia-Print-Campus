@@ -11,13 +11,13 @@ export default function AdminPanel() {
     subcategoria: "",
     imagenes: [],
     titulo: "",
-    especificaciones: {
-      Tecnologia: "",
-      "Volumen de impresión": "",
-      "Velocidad máxima": "",
-      "Temperatura máxima de boquilla": "",
-      "Temperatura máxima de cama": ""
-    },
+    especificaciones: [
+      { key: "Tecnología", value: "" },
+      { key: "Volumen de impresión", value: "" },
+      { key: "Velocidad máxima", value: "" },
+      { key: "Temperatura máxima de boquilla", value: "" },
+      { key: "Temperatura máxima de cama", value: "" }
+    ],
     materiales_compatibles: [""],
     ideal_para: [""]
   });
@@ -82,14 +82,18 @@ export default function AdminPanel() {
       subcategoria: product.subcategoria || "",
       imagenes: [],
       titulo: product.contenido?.titulo || "",
-      especificaciones: product.contenido?.especificaciones || {
-        "Tecnología": "",
-        "Volumen": "",
-        "Velocidad máxima": "",
-        "Aceleración máxima": "",
-        "Temperatura máxima de boquilla": "",
-        "Temperatura máxima de cama": ""
-      },
+      especificaciones: product.contenido?.especificaciones
+      ? Object.entries(product.contenido.especificaciones).map(([key, value]) => ({
+          key,
+          value
+        }))
+      : [
+          { key: "Tecnología", value: "" },
+          { key: "Volumen de impresión", value: "" },
+          { key: "Velocidad máxima", value: "" },
+          { key: "Temperatura máxima de boquilla", value: "" },
+          { key: "Temperatura máxima de cama", value: "" }
+        ],
       materiales_compatibles: product.contenido?.materiales_compatibles?.length > 0 ? product.contenido.materiales_compatibles : [""],
       ideal_para: product.contenido?.ideal_para?.length > 0 ? product.contenido.ideal_para : [""]
     });
@@ -98,11 +102,15 @@ export default function AdminPanel() {
   const handleSave = (e) => {
     e.preventDefault();
     const formData = new FormData();
+    const specsObject = {};
+    form.especificaciones.forEach(spec => {
+      if (spec.key) specsObject[spec.key] = spec.value;
+    });
     formData.append('nombre', form.nombre);
     formData.append('categoria', form.categoria);
     formData.append('subcategoria', form.subcategoria);
     formData.append('titulo', form.titulo);
-    formData.append('especificaciones', JSON.stringify(form.especificaciones));
+    formData.append('especificaciones', JSON.stringify(specsObject));
     formData.append('materiales_compatibles', JSON.stringify(form.materiales_compatibles.filter(m => m)));
     formData.append('ideal_para', JSON.stringify(form.ideal_para.filter(i => i)));
 
@@ -138,13 +146,13 @@ export default function AdminPanel() {
       subcategoria: "",
       imagenes: [],
       titulo: "",
-      especificaciones: {
-        Tecnologia: "",
-        "Volumen de impresión": "",
-        "Velocidad máxima": "",
-        "Temperatura máxima de boquilla": "",
-        "Temperatura máxima de cama": ""
-      },
+      especificaciones: [
+        { key: "Tecnología", value: "" },
+        { key: "Volumen de impresión", value: "" },
+        { key: "Velocidad máxima", value: "" },
+        { key: "Temperatura máxima de boquilla", value: "" },
+        { key: "Temperatura máxima de cama", value: "" }
+      ],
       materiales_compatibles: [""],
       ideal_para: [""]
     });
@@ -157,7 +165,13 @@ export default function AdminPanel() {
     formData.append('categoria', form.categoria);
     formData.append('subcategoria', form.subcategoria);
     formData.append('titulo', form.titulo);
-    formData.append('especificaciones', JSON.stringify(form.especificaciones));
+
+    const specsObject = {};
+    form.especificaciones.forEach(spec => {
+      if (spec.key) specsObject[spec.key] = spec.value;
+    });
+
+    formData.append('especificaciones', JSON.stringify(specsObject));   
     formData.append('materiales_compatibles', JSON.stringify(form.materiales_compatibles.filter(m => m)));
     formData.append('ideal_para', JSON.stringify(form.ideal_para.filter(i => i)));
 
@@ -263,21 +277,57 @@ export default function AdminPanel() {
                   />
                 </div>
                 <h4>Especificaciones:</h4>
-                <div className="specs-grid">
-                  {Object.keys(form.especificaciones).map(key => (
-                    <div key={key} className="form-group">
-                      <label>{key}:</label>
-                      <input
-                        type="text"
-                        value={form.especificaciones[key]}
-                        onChange={(e) => setForm({
-                          ...form,
-                          especificaciones: { ...form.especificaciones, [key]: e.target.value }
-                        })}
-                      />
-                    </div>
-                  ))}
-                </div>
+                {form.especificaciones.map((spec, index) => (
+                  <div key={index} className="dynamic-field">
+
+                    <input
+                      type="text"
+                      placeholder="Nombre"
+                      value={spec.key}
+                      onChange={(e) => {
+                        const newSpecs = [...form.especificaciones];
+                        newSpecs[index].key = e.target.value;
+                        setForm({ ...form, especificaciones: newSpecs });
+                      }}
+                    />
+
+                    <input
+                      type="text"
+                      placeholder="Valor"
+                      value={spec.value}
+                      onChange={(e) => {
+                        const newSpecs = [...form.especificaciones];
+                        newSpecs[index].value = e.target.value;
+                        setForm({ ...form, especificaciones: newSpecs });
+                      }}
+                    />
+
+                    {form.especificaciones.length > 1 && (
+                      <button
+                        type="button"
+                        onClick={() => {
+                          const newSpecs = form.especificaciones.filter((_, i) => i !== index);
+                          setForm({ ...form, especificaciones: newSpecs });
+                        }}
+                      >
+                        ×
+                      </button>
+                    )}
+                  </div>
+                ))}
+
+                <button
+                  type="button"
+                  className="add-field-btn"
+                  onClick={() =>
+                    setForm({
+                      ...form,
+                      especificaciones: [...form.especificaciones, { key: "", value: "" }]
+                    })
+                  }
+                >
+                  + Agregar especificación
+                </button>
                 <h4>Materiales Compatibles:</h4>
                 {form.materiales_compatibles.map((mat, index) => (
                   <div key={index} className="dynamic-field">
@@ -407,21 +457,57 @@ export default function AdminPanel() {
                       />
                     </div>
                     <h4>Especificaciones:</h4>
-                    <div className="specs-grid">
-                      {Object.keys(form.especificaciones).map(key => (
-                        <div key={key} className="form-group">
-                          <label>{key}:</label>
-                          <input
-                            type="text"
-                            value={form.especificaciones[key]}
-                            onChange={(e) => setForm({
-                              ...form,
-                              especificaciones: { ...form.especificaciones, [key]: e.target.value }
-                            })}
-                          />
-                        </div>
-                      ))}
-                    </div>
+                    {form.especificaciones.map((spec, index) => (
+                      <div key={index} className="dynamic-field">
+
+                        <input
+                          type="text"
+                          placeholder="Nombre"
+                          value={spec.key}
+                          onChange={(e) => {
+                            const newSpecs = [...form.especificaciones];
+                            newSpecs[index].key = e.target.value;
+                            setForm({ ...form, especificaciones: newSpecs });
+                          }}
+                        />
+
+                        <input
+                          type="text"
+                          placeholder="Valor"
+                          value={spec.value}
+                          onChange={(e) => {
+                            const newSpecs = [...form.especificaciones];
+                            newSpecs[index].value = e.target.value;
+                            setForm({ ...form, especificaciones: newSpecs });
+                          }}
+                        />
+
+                        {form.especificaciones.length > 1 && (
+                          <button
+                            type="button"
+                            onClick={() => {
+                              const newSpecs = form.especificaciones.filter((_, i) => i !== index);
+                              setForm({ ...form, especificaciones: newSpecs });
+                            }}
+                          >
+                            ×
+                          </button>
+                        )}
+                      </div>
+                    ))}
+
+                    <button
+                      type="button"
+                      className="add-field-btn"
+                      onClick={() =>
+                        setForm({
+                          ...form,
+                          especificaciones: [...form.especificaciones, { key: "", value: "" }]
+                        })
+                      }
+                    >
+                      + Agregar especificación
+                    </button>
                     <h4>Materiales Compatibles:</h4>
                     {form.materiales_compatibles.map((mat, index) => (
                       <div key={index} className="dynamic-field">
