@@ -180,7 +180,7 @@ export default function AdminPanel() {
       formData.append('imagenes', file);
     }
 
-    fetch("${API_URL}/api/products", {
+    fetch(`${API_URL}/api/products`, {
       method: "POST",
       body: formData
     })
