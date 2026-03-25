@@ -1,7 +1,7 @@
 import dotenv from 'dotenv';
 dotenv.config();
 import { Pool } from 'pg';
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
 
 const ADMIN_USERNAME = process.env.ADMIN_USERNAME!;
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD!;

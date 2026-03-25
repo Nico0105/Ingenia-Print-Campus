@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
 import { LoginRequest, LoginResponse } from '../types';
 import { getAdminByUsername, verifyPassword } from '../db';
+import bcrypt from 'bcryptjs';
 
 // Get JWT secret from environment variables
 const JWT_SECRET = process.env.JWT_SECRET || 'your-super-secret-jwt-key-change-in-production';
