@@ -8,7 +8,7 @@ import { getProductoByNombre, getProductoById, getAllProductos, insertProducto, 
 const router = Router();
 
 const PRODUCTOS_BASE = path.join(__dirname, "../uploads/Productos");
-const BASE_URL = "http://localhost:5000";
+const BASE_URL = process.env.BASE_URL || "http://localhost:5000";
 const IMAGE_EXTENSIONS = /\.(jpg|jpeg|png|webp|gif)$/i;
 
 // ✅ Normaliza quitando espacios, mayúsculas Y acentos para comparaciones robustas

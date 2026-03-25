@@ -1,11 +1,15 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.login = void 0;
-// Usuarios de ejemplo (luego conectarás una DB)
-const users = [
-    { id: '1', username: 'admin', password: 'admin123', email: 'admin@ingenia.com' }
-];
-const login = (req, res) => {
+const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
+const db_1 = require("../db");
+// Get JWT secret from environment variables
+const JWT_SECRET = process.env.JWT_SECRET || 'your-super-secret-jwt-key-change-in-production';
+const JWT_EXPIRES_IN = '24h';
+const login = async (req, res) => {
     try {
         const { username, password } = req.body;
         // Validación básica
@@ -16,19 +20,31 @@ const login = (req, res) => {
             });
             return;
         }
-        // Buscar usuario
-        const user = users.find(u => u.username === username);
-        if (!user || user.password !== password) {
+        // Buscar usuario en la base de datos
+        const user = await (0, db_1.getAdminByUsername)(username);
+        if (!user) {
             res.status(401).json({
                 success: false,
                 message: 'Credenciales inválidas'
             });
             return;
         }
+        // Verificar contraseña usando bcrypt
+        const isPasswordValid = await (0, db_1.verifyPassword)(password, user.password);
+        if (!isPasswordValid) {
+            res.status(401).json({
+                success: false,
+                message: 'Credenciales inválidas'
+            });
+            return;
+        }
+        // Generar token JWT
+        const token = jsonwebtoken_1.default.sign({ id: user.id, username: user.username }, JWT_SECRET, { expiresIn: JWT_EXPIRES_IN });
         // Login exitoso
         res.json({
             success: true,
             message: 'Login exitoso',
+            token: token,
             user: {
                 id: user.id,
                 username: user.username
