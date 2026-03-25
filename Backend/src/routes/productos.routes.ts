@@ -1,7 +1,7 @@
 import { Router, Request, Response } from "express";
 import fs from "fs";
 import path from "path";
-import multer from "multer";
+import { upload } from '../cloudinary';
 import mammoth from "mammoth";
 import { getProductoByNombre, getProductoById, getAllProductos, insertProducto, updateProducto, deleteProducto, toggleStock } from "../db";
 
@@ -20,7 +20,6 @@ const normalizeName = (name: string) =>
     .normalize('NFD')
     .replace(/[\u0300-\u036f]/g, '');
 
-const upload = multer({ dest: path.join(__dirname, "../uploads/temp") });
 
 async function getDescripcionFromDocx(productPath: string): Promise<any | null> {
   try {

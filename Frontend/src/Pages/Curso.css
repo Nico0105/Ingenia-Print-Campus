@@ -1,0 +1,698 @@
+@import url('https://fonts.googleapis.com/css2?family=Teko:wght@300..700&family=Space+Mono:wght@400;700&display=swap');
+
+.cursos {
+  --bg-primary: #05060a;
+  --bg-soft: #0f1117;
+  --text-primary: #ffffff;
+  --text-muted: #9ca3af;
+  --border-soft: rgba(255, 255, 255, 0.1);
+  --accent-orange: #d97706;
+  --accent-orange-dark: #b45309;
+  --accent-orange-glow: rgba(217, 119, 6, 0.3);
+  --accent-blue: #1e40af;
+  --accent-blue-dark: #1e3a8a;
+  --accent-blue-glow: rgba(30, 64, 175, 0.3);
+  --gradient-tech: linear-gradient(135deg, #1e40af 0%, #d97706 100%);
+  --gradient-tech-soft: linear-gradient(135deg, rgba(30, 64, 175, 0.2) 0%, rgba(217, 119, 6, 0.2) 100%);
+
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: 'Teko', sans-serif;
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+/* ── GRID BACKGROUND ── */
+.cursos .grid-bg {
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(30, 64, 175, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(30, 64, 175, 0.04) 1px, transparent 1px);
+  background-size: 60px 60px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── HERO ── */
+.cursos .curso-hero {
+  position: relative;
+  z-index: 1;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 120px 60px 80px;
+  overflow: hidden;
+}
+
+.cursos .curso-hero-orb-blue {
+  position: absolute;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(30, 64, 175, 0.25) 0%, transparent 70%);
+  top: -100px;
+  left: -200px;
+  border-radius: 50%;
+  pointer-events: none;
+  animation: cursoFloatBlue 8s ease-in-out infinite;
+}
+
+.cursos .curso-hero-orb-orange {
+  position: absolute;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(217, 119, 6, 0.2) 0%, transparent 70%);
+  bottom: 0;
+  right: -100px;
+  border-radius: 50%;
+  pointer-events: none;
+  animation: cursoFloatOrange 6s ease-in-out infinite;
+}
+
+@keyframes cursoFloatBlue {
+  0%, 100% { transform: translateY(0px) translateX(0px); }
+  50%       { transform: translateY(30px) translateX(20px); }
+}
+
+@keyframes cursoFloatOrange {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-25px); }
+}
+
+.cursos .curso-hero-label {
+  font-family: 'Space Mono', monospace;
+  font-size: 15px;
+  letter-spacing: 4px;
+  color: var(--accent-orange);
+  text-transform: uppercase;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  opacity: 0;
+  animation: cursoFadeUp 0.8s ease forwards 0.2s;
+}
+
+.cursos .curso-hero-label::before {
+  content: '';
+  display: inline-block;
+  width: 32px;
+  height: 1px;
+  background: var(--accent-orange);
+}
+
+.cursos .curso-hero-title {
+  font-family: 'Teko', sans-serif;
+  font-weight: 600;
+  font-size: clamp(52px, 9vw, 110px);
+  line-height: 0.95;
+  letter-spacing: 1px;
+  margin-bottom: 24px;
+  opacity: 0;
+  animation: cursoFadeUp 0.9s ease forwards 0.4s;
+}
+
+.cursos .curso-hero-title span {
+  display: block;
+  background: var(--gradient-tech);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.cursos .curso-hero-desc {
+  max-width: 520px;
+  font-family: 'Space Mono', monospace;
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1.8;
+  color: var(--text-muted);
+  margin-bottom: 40px;
+  opacity: 0;
+  animation: cursoFadeUp 1s ease forwards 0.6s;
+}
+
+.cursos .curso-hero-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: 'Space Mono', monospace;
+  font-size: 15px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text-primary);
+  background: var(--gradient-tech);
+  padding: 12px 28px;
+  border: none;
+  cursor: pointer;
+  clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
+  transition: opacity 0.3s, transform 0.3s;
+  opacity: 0;
+  animation: cursoFadeUp 1s ease forwards 0.8s;
+}
+
+.cursos .curso-hero-cta:hover {
+  opacity: 0.85;
+  transform: translateY(-2px);
+}
+
+.cursos .curso-scroll-line {
+  position: absolute;
+  bottom: 40px;
+  left: 60px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  font-family: 'Space Mono', monospace;
+  font-size: 15px;
+  letter-spacing: 3px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  opacity: 0;
+  animation: cursoFadeUp 1s ease forwards 1.2s;
+}
+
+.cursos .curso-scroll-bar {
+  width: 60px;
+  height: 1px;
+  background: var(--gradient-tech);
+  position: relative;
+  overflow: hidden;
+}
+
+.cursos .curso-scroll-bar::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: white;
+  animation: cursoScanLine 2s linear infinite;
+}
+
+@keyframes cursoScanLine {
+  0%   { left: -100%; }
+  100% { left: 100%; }
+}
+
+@keyframes cursoFadeUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── INCLUDED BANNER ── */
+.cursos .curso-included-banner {
+  position: relative;
+  z-index: 1;
+  margin: 80px 60px;
+  padding: 64px 80px;
+  background: var(--gradient-tech-soft);
+  border: 1px solid rgba(217, 119, 6, 0.2);
+  overflow: hidden;
+  clip-path: polygon(0 0, calc(100% - 24px) 0, 100% 24px, 100% 100%, 24px 100%, 0 calc(100% - 24px));
+}
+
+.cursos .curso-included-banner h2 {
+  font-family: 'Teko', sans-serif;
+  font-size: 48px;
+  font-weight: 600;
+  margin-bottom: 16px;
+  background: var(--gradient-tech);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.cursos .curso-included-banner p {
+  font-family: 'Space Mono', monospace;
+  font-size: 15px;
+  color: var(--text-muted);
+  line-height: 1.8;
+  max-width: 600px;
+  margin-bottom: 40px;
+}
+
+.cursos .included-highlights {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+}
+
+.cursos .highlight {
+  background: rgba(0, 10, 33, 0.5);
+  padding: 20px;
+  border-left: 2px solid var(--accent-orange);
+  backdrop-filter: blur(10px);
+}
+
+.cursos .highlight strong {
+  display: block;
+  font-family: 'Teko', sans-serif;
+  font-size: 20px;
+  color: var(--accent-orange);
+  margin-bottom: 8px;
+}
+
+.cursos .highlight span {
+  font-family: 'Space Mono', monospace;
+  font-size: 15px;
+  color: var(--text-muted);
+  display: block;
+}
+
+/* ── SECTION BASE ── */
+.cursos .curso-section {
+  position: relative;
+  z-index: 1;
+  padding: 100px 60px;
+}
+
+.cursos .curso-section-label {
+  font-family: 'Space Mono', monospace;
+  font-size: 15px;
+  letter-spacing: 4px;
+  color: var(--accent-orange);
+  text-transform: uppercase;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.cursos .curso-section-label::before {
+  content: '';
+  width: 24px;
+  height: 1px;
+  background: var(--accent-orange);
+  flex-shrink: 0;
+}
+
+.cursos .curso-section-title {
+  font-family: 'Teko', sans-serif;
+  font-weight: 600;
+  font-size: clamp(32px, 5vw, 60px);
+  letter-spacing: 1px;
+  line-height: 1;
+}
+
+/* ── CURSOS GRID ── */
+.cursos .cursos-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+  margin-top: 48px;
+}
+
+.cursos .curso-card {
+  background: var(--bg-soft);
+  border: 1px solid var(--border-soft);
+  padding: 40px 36px;
+  position: relative;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.5s ease, transform 0.5s ease, border-color 0.3s;
+}
+
+.cursos .curso-card.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.cursos .curso-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--gradient-tech);
+  transform: scaleX(0);
+  transition: transform 0.4s ease;
+  transform-origin: left;
+}
+
+.cursos .curso-card:hover::before { transform: scaleX(1); }
+.cursos .curso-card:hover { border-color: rgba(217, 119, 6, 0.3); }
+
+.cursos .curso-header {
+  margin-bottom: 24px;
+}
+
+.cursos .curso-title {
+  font-family: 'Teko', sans-serif;
+  font-weight: 600;
+  font-size: 26px;
+  margin-bottom: 12px;
+  color: var(--text-primary);
+}
+
+.cursos .curso-meta {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.cursos .curso-duration {
+  font-family: 'Space Mono', monospace;
+  font-size: 15px;
+  color: var(--accent-orange);
+  letter-spacing: 1px;
+}
+
+.cursos .curso-level {
+  font-family: 'Space Mono', monospace;
+  font-size: 15px;
+  padding: 4px 12px;
+  border-radius: 4px;
+  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.cursos .curso-level.principiante {
+  background: rgba(30, 64, 175, 0.2);
+  color: #60a5fa;
+}
+
+.cursos .curso-level.intermedio {
+  background: rgba(217, 119, 6, 0.2);
+  color: var(--accent-orange);
+}
+
+.cursos .curso-topics {
+  list-style: none;
+  padding: 0;
+}
+
+.cursos .curso-topics li {
+  font-family: 'Space Mono', monospace;
+  font-size: 15px;
+  color: var(--text-muted);
+  margin-bottom: 12px;
+  padding-left: 20px;
+  position: relative;
+  line-height: 1.6;
+}
+
+.cursos .curso-topics li::before {
+  content: '→';
+  position: absolute;
+  left: 0;
+  color: var(--accent-orange);
+}
+
+/* ── BENEFICIOS GRID ── */
+.cursos .beneficios-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-top: 48px;
+}
+
+.cursos .beneficio-card {
+  background: var(--bg-soft);
+  border: 1px solid var(--border-soft);
+  padding: 36px 32px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.5s ease, transform 0.5s ease, border-color 0.3s;
+}
+
+.cursos .beneficio-card.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.cursos .beneficio-card:hover { border-color: rgba(217, 119, 6, 0.3); }
+
+.cursos .beneficio-icon {
+  font-size: 36px;
+  margin-bottom: 16px;
+  color: var(--accent-orange);
+  font-weight: 700;
+}
+
+.cursos .beneficio-title {
+  font-family: 'Teko', sans-serif;
+  font-weight: 600;
+  font-size: 20px;
+  margin-bottom: 12px;
+  color: var(--text-primary);
+}
+
+.cursos .beneficio-desc {
+  font-family: 'Space Mono', monospace;
+  font-size: 15px;
+  color: var(--text-muted);
+  line-height: 1.7;
+}
+
+/* ── CÓMO FUNCIONA ── */
+.cursos .pasos-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  margin-top: 48px;
+}
+
+.cursos .paso {
+  background: var(--bg-soft);
+  border: 1px solid var(--border-soft);
+  padding: 40px 32px;
+  position: relative;
+  text-align: center;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.5s ease, transform 0.5s ease, border-color 0.3s;
+}
+
+.cursos .paso.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.cursos .paso::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--gradient-tech);
+  transform: scaleX(0);
+  transition: transform 0.4s ease;
+  transform-origin: left;
+}
+
+.cursos .paso:hover::before { transform: scaleX(1); }
+.cursos .paso:hover { border-color: rgba(217, 119, 6, 0.3); }
+
+.cursos .paso-number {
+  font-family: 'Teko', sans-serif;
+  font-size: 48px;
+  font-weight: 700;
+  color: var(--accent-orange);
+  margin-bottom: 16px;
+  line-height: 1;
+}
+
+.cursos .paso-title {
+  font-family: 'Teko', sans-serif;
+  font-weight: 600;
+  font-size: 22px;
+  margin-bottom: 16px;
+  color: var(--text-primary);
+  letter-spacing: 0.5px;
+}
+
+.cursos .paso-desc {
+  font-family: 'Space Mono', monospace;
+  font-size: 15px;
+  color: var(--text-muted);
+  line-height: 1.7;
+}
+
+.cursos .paso-flecha {
+  display: none;
+}
+
+/* ── TESTIMONIOS ── */
+.cursos .testimonios-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-top: 48px;
+}
+
+.cursos .testimonio-card {
+  background: var(--bg-soft);
+  border: 1px solid var(--border-soft);
+  padding: 32px;
+  position: relative;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.cursos .testimonio-card.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.cursos .testimonio-text {
+  font-family: 'Space Mono', monospace;
+  font-size: 15px;
+  color: var(--text-muted);
+  line-height: 1.9;
+  margin-bottom: 24px;
+  font-style: italic;
+}
+
+.cursos .testimonio-author {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.cursos .testimonio-avatar {
+  width: 40px;
+  height: 40px;
+  background: var(--gradient-tech);
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.cursos .testimonio-name {
+  font-family: 'Teko', sans-serif;
+  font-weight: 600;
+  font-size: 15px;
+  color: var(--text-primary);
+}
+
+.cursos .testimonio-role {
+  font-family: 'Space Mono', monospace;
+  font-size: 15px;
+  color: var(--accent-orange);
+  letter-spacing: 1px;
+}
+
+/* ── DIVIDER ── */
+.cursos .curso-divider {
+  position: relative;
+  z-index: 1;
+  height: 1px;
+  margin: 0 60px;
+  background: linear-gradient(90deg, transparent, var(--accent-blue), var(--accent-orange), transparent);
+  opacity: 0.3;
+}
+
+/* ── CTA FINAL ── */
+.cursos .curso-cta-final {
+  position: relative;
+  z-index: 1;
+  padding: 100px 60px;
+  text-align: center;
+}
+
+.cursos .curso-cta-final h2 {
+  font-family: 'Teko', sans-serif;
+  font-size: clamp(32px, 5vw, 60px);
+  font-weight: 600;
+  margin-bottom: 16px;
+  background: var(--gradient-tech);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.cursos .curso-cta-final p {
+  font-family: 'Space Mono', monospace;
+  font-size: 15px;
+  color: var(--text-muted);
+  max-width: 600px;
+  margin: 0 auto 40px;
+}
+
+.cursos .cta-button {
+  font-family: 'Space Mono', monospace;
+  font-size: 15px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text-primary);
+  background: var(--gradient-tech);
+  padding: 12px 36px;
+  border: none;
+  cursor: pointer;
+  clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
+  transition: opacity 0.3s, transform 0.3s;
+}
+
+.cursos .cta-button:hover {
+  opacity: 0.85;
+  transform: translateY(-2px);
+}
+
+/* ── FOOTER ── */
+.cursos .curso-footer {
+  position: relative;
+  z-index: 1;
+  padding: 48px 60px;
+  border-top: 1px solid var(--border-soft);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 100px;
+}
+
+.cursos .curso-footer-logo {
+  font-family: 'Teko', sans-serif;
+  font-weight: 600;
+  font-size: 18px;
+  letter-spacing: 3px;
+  background: var(--gradient-tech);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1;
+}
+
+.cursos .curso-footer-copy {
+  font-family: 'Space Mono', monospace;
+  font-size: 15px;
+  color: rgba(156, 163, 175, 0.4);
+  letter-spacing: 2px;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 1024px) {
+  .cursos .curso-hero { padding: 110px 30px 80px; }
+  .cursos .curso-section { padding: 72px 30px; }
+  .cursos .cursos-grid { grid-template-columns: 1fr; }
+  .cursos .beneficios-grid { grid-template-columns: repeat(2, 1fr); }
+  .cursos .testimonios-grid { grid-template-columns: repeat(2, 1fr); }
+  .cursos .curso-included-banner { margin: 0 30px; }
+  .cursos .curso-footer { padding: 32px 30px; }
+  .cursos .curso-divider { margin: 0 30px; }
+  .cursos .included-highlights { grid-template-columns: repeat(2, 1fr); }
+  .cursos .pasos-container { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 768px) {
+  .cursos .beneficios-grid { grid-template-columns: 1fr; }
+  .cursos .testimonios-grid { grid-template-columns: 1fr; }
+  .cursos .pasos-container { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 640px) {
+  .cursos .curso-hero-title { font-size: 48px; }
+  .cursos .curso-included-banner { padding: 32px 24px; }
+  .cursos .included-highlights { grid-template-columns: 1fr; }
+}
