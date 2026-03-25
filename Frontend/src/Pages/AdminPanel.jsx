@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import "./AdminPanel.css";
+import { API_URL } from "../config";
 
 export default function AdminPanel() {
   const [products, setProducts] = useState([]);
@@ -34,7 +35,7 @@ export default function AdminPanel() {
   }, [navigate]);
 
   const fetchProducts = () => {
-    fetch("http://localhost:5000/api/products")
+    fetch(`${API_URL}/api/products`)
       .then(res => res.json())
       .then(data => {
         // Filter out null products
@@ -47,7 +48,7 @@ export default function AdminPanel() {
  const handleToggleStock = (id) => {
   const product = products.find(p => p.id === id);
 
-  fetch(`http://localhost:5000/api/products/${id}/stock`, {
+  fetch(`${API_URL}/api/products/${id}/stock`, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ en_stock: !product.en_stock }),
@@ -69,7 +70,7 @@ export default function AdminPanel() {
 
   const handleDelete = (id) => {
     if (window.confirm("¿Eliminar producto?")) {
-      fetch(`http://localhost:5000/api/products/${id}`, { method: "DELETE" })
+      fetch(`${API_URL}/api/products/${id}`, { method: "DELETE" })
         .then(() => fetchProducts());
     }
   };
@@ -118,7 +119,7 @@ export default function AdminPanel() {
       formData.append('imagenes', file);
     }
 
-    fetch(`http://localhost:5000/api/products/${editingId}`, {
+    fetch(`${API_URL}/api/products/${editingId}`, {
       method: "PUT",
       body: formData
     })
@@ -179,7 +180,7 @@ export default function AdminPanel() {
       formData.append('imagenes', file);
     }
 
-    fetch("http://localhost:5000/api/products", {
+    fetch("${API_URL}/api/products", {
       method: "POST",
       body: formData
     })
