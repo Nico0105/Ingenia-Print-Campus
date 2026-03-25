@@ -1,4 +1,3 @@
-@ -1,350 +0,0 @@
 import { useState, useEffect, useRef } from "react";
 import "./Curso.css";
 import MainNavbar from "../Components/MainNavbar";
