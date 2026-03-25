@@ -13,17 +13,15 @@ exports.deleteProducto = deleteProducto;
 exports.toggleStock = toggleStock;
 exports.getAdminByUsername = getAdminByUsername;
 exports.verifyPassword = verifyPassword;
-const pg_1 = require("pg");
-const bcrypt_1 = __importDefault(require("bcrypt"));
 const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config();
-const ADMIN_USERNAME = process.env.ADMIN_USERNAME || 'admin';
-const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'admin123';
+const pg_1 = require("pg");
+const bcrypt_1 = __importDefault(require("bcrypt"));
+const ADMIN_USERNAME = process.env.ADMIN_USERNAME;
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD;
 exports.db = new pg_1.Pool({
     connectionString: process.env.DATABASE_URL,
-    ssl: process.env.NODE_ENV === 'production'
-        ? { rejectUnauthorized: false }
-        : false
+    ssl: { rejectUnauthorized: false }
 });
 async function initDB() {
     await exports.db.query(`

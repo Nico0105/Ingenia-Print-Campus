@@ -3,17 +3,15 @@ dotenv.config();
 import { Pool } from 'pg';
 import bcrypt from 'bcrypt';
 
-const ADMIN_USERNAME = process.env.ADMIN_USERNAME || 'admin';
-const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'admin123';
+const ADMIN_USERNAME = process.env.ADMIN_USERNAME!;
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD!;
 
-console.log('DATABASE_URL:', process.env.DATABASE_URL);
 
 export const db = new Pool({
   connectionString: process.env.DATABASE_URL,
   ssl: { rejectUnauthorized: false }
 });
 
-console.log('DATABASE_URL:', process.env.DATABASE_URL);
 
 async function initDB() {
   await db.query(`
