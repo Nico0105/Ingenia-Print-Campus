@@ -458,8 +458,9 @@ router.put("/:id", upload.array('imagenes'), async (req: Request, res: Response)
 
     res.json({ message: "Producto actualizado" });
   } catch (error) {
-    console.error("Error actualizando producto:", JSON.stringify(error, null, 2), (error as Error).message, (error as Error).stack);
-    res.status(500).json({ error: "Error actualizando producto: " + (error as Error).message });
+    console.error("Error actualizando producto RAW:", String(error));
+    console.error("Error actualizando producto STRINGIFY:", JSON.stringify(error));
+    res.status(500).json({ error: String(error) });
   }
 });
 
