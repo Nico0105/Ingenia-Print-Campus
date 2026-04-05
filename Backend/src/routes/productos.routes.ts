@@ -414,10 +414,16 @@ router.put("/:id", upload.array('imagenes'), async (req: Request, res: Response)
       return;
     }
 
-    let imagenes: { url: string; public_id: string }[] = [];
+   let imagenes: { url: string; public_id: string }[] = [];
     try {
       const parsed = JSON.parse(currentProducto.imagenes || '[]');
-      imagenes = Array.isArray(parsed) ? parsed : [];
+      if (Array.isArray(parsed)) {
+        imagenes = parsed.map((img: any) =>
+          typeof img === 'string'
+            ? { url: img, public_id: '' }
+            : img
+        );
+      }
     } catch { imagenes = []; }
 
     if (files && files.length > 0) {
