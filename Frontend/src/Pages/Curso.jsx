@@ -56,33 +56,33 @@ const cursosData = [
 const beneficiosData = [
   {
     icon: "✓",
-    title: "100% Incluidos",
-    desc: "Con la compra de cualquier impresora, todos los cursos están incluidos sin costo adicional.",
+    title: "Guía Inicial",
+    desc: "Primeros Pasos con tu impresora 3D Un recorrido claro y ordenado para entender como funciona tu equipo, como configurarlo correctamente y como empezar a imprimir con confianza desde cero. Especialmente pensando para quienes estan dando sus primeros pasos",
   },
   {
     icon: "✓",
-    title: "Clases en Vivo",
-    desc: "Sesiones semanales con instructores certificados vía Zoom. Acceso a grabaciones permanente.",
+    title: "Documentacion tecnica clara",
+    desc: "Material organizado para entender mejor la impresion 3D en la practica: Configuracion, Materiales, errores comunes, flujo de trabajo, buenas practicas",
   },
   {
     icon: "✓",
-    title: "Comunidad Activa",
-    desc: "Conectá con otros usuarios, comparte proyectos y resuelve dudas en nuestro Discord privado.",
+    title: "Comunidad Ingenia",
+    desc: "Un espacio para compartir proyectos, hacer consultas y aprender junto a otras personas que tambien estan empezando o desarrollar sus ideas",
   },
   {
     icon: "✓",
-    title: "Soporte Técnico",
-    desc: "Acceso prioritario a nuestro equipo técnico para consultas sobre tu impresora.",
+    title: "Asistente IA especializado en impresion 3D",
+    desc: "Un chat inteligente entrenando para ayudarte con dudas tecnicas, configuraciones y problemas habituales durante el uso de tu impresora. Disponible cuando lo necesites",
   },
   {
     icon: "✓",
-    title: "Materiales Digitales",
-    desc: "Guías PDF, plantillas CAD, archivos STL y modelos listos para imprimir.",
+    title: "Calculadora de costos de impresion",
+    desc: "Una herramienta pensada para estimar correctamente el costo real de cada pieza. Ideal si queres emprender o profesionalizar tu producción.",
   },
   {
     icon: "✓",
-    title: "Certificado",
-    desc: "Obtén un certificado digital al completar cada curso para usar en tu portafolio.",
+    title: "Herrameientas de gestión",
+    desc: "Un entorno para organizar desde un mismo lugar: Impresoras, Filamentos, Stock, Clientes, Presupuestos",
   },
 ];
 
@@ -310,9 +310,8 @@ export default function Cursos() {
         <div className="pasos-container">
           {[
             { number: "01", title: "Compra tu impresora", desc: "Elige el modelo que mejor se ajuste a tus necesidades en nuestro catálogo." },
-            { number: "02", title: "Recibe credenciales", desc: "Al llegar tu impresora, accederás a tu plataforma de cursos vía email." },
-            { number: "03", title: "Comienza a aprender", desc: "Accede a clases en vivo, materiales descargables y comunidad de soporte." },
-            { number: "04", title: "Domina tu equipo", desc: "Completa cursos, obtén certificados y crea tus propios proyectos." },
+            { number: "02", title: "Recibe credenciales", desc: "Con tu compra activamos tu acceso al Campus Ingenia." },
+            { number: "03", title: "Comienza a aprender", desc: "Accede a la guia inicial, herramientas, comunidad y soporte para dar tus primeros pasos con confianza" },
           ].map((p, i) => (
             <PasoCard key={i} paso={p} delay={i * 0.08} />
           ))}
