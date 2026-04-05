@@ -125,7 +125,9 @@ export default function AdminPanel() {
     })
       .then(res => {
         if (!res.ok) {
-          throw new Error('Error en la solicitud');
+          return res.json().then(err => {
+            throw new Error(JSON.stringify(err));
+          });
         }
         return res;
       })
