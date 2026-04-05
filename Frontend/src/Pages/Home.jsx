@@ -51,7 +51,7 @@ export default function Home() {
        <section className="hero">
 
         <div className="hero-content">
-          <span className="badge">Industrial Manufacturing 4.0</span>
+          <span className="badge">IMPRESORAS 3D</span>
           <h2 className="hero-title">
             INGENIA PRINT <br />
             <span>Ideas que toman forma</span>
