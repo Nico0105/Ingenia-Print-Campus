@@ -31,6 +31,12 @@ app.get('/', (req: Request, res: Response) => {
   res.json({ message: 'API de Ingenia Print Campus funcionando! 🚀' });
 });
 
+// Error handler global para multer y otros errores
+app.use((err: any, req: Request, res: Response, next: any) => {
+  console.error('Error global:', err.message, err.stack);
+  res.status(500).json({ error: err.message || 'Error interno del servidor' });
+});
+
 app.listen(PORT, () => {
   console.log(`🚀 Servidor corriendo en http://localhost:${PORT}`);
 });
