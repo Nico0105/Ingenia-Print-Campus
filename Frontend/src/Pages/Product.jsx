@@ -17,15 +17,19 @@ export default function Product() {
       .then((data) => {
         // ✅ Asegurarse de que imagenes siempre sea un array
         if (data && typeof data.imagenes === 'string') {
-          try {
-            data.imagenes = JSON.parse(data.imagenes);
-          } catch {
-            data.imagenes = [];
-          }
+        try {
+          data.imagenes = JSON.parse(data.imagenes);
+        } catch {
+          data.imagenes = [];
+        }
         }
         if (!Array.isArray(data?.imagenes)) {
           data.imagenes = [];
         }
+        // Extraer URL si son objetos { url, public_id }
+        data.imagenes = data.imagenes.map((img) =>
+          typeof img === 'string' ? img : img.url
+        );
         setProduct(data);
         setLoading(false);
       })
@@ -273,9 +277,12 @@ function RelatedProductsCarousel({ categoria, currentId, navigate }) {
           // ✅ Fix imagenes como string en productos relacionados
           .map((p) => ({
             ...p,
-            imagenes: typeof p.imagenes === 'string'
+            imagenes: (() => {
+            let imgs = typeof p.imagenes === 'string'
               ? (() => { try { return JSON.parse(p.imagenes); } catch { return []; } })()
-              : (Array.isArray(p.imagenes) ? p.imagenes : [])
+              : (Array.isArray(p.imagenes) ? p.imagenes : []);
+            return imgs.map((img) => typeof img === 'string' ? img : img.url);
+          })()
           }))
           .slice(0, 8);
         setRelated(filtered);
