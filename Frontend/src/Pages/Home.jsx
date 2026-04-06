@@ -21,9 +21,17 @@ export default function Home() {
 
   useEffect(() => {
     fetch(`${API_URL}/api/products`)
-      .then(res => res.json())
-      .then(data => setProducts(data.slice(0, 4)))
-      .catch(err => console.error('Error fetching products:', err));
+    .then(res => res.json())
+    .then(data => {
+      const parsed = data.slice(0, 4).map(p => ({
+        ...p,
+        imagenes: Array.isArray(p.imagenes)
+          ? p.imagenes.map(img => typeof img === 'string' ? img : img.url).filter(Boolean)
+          : []
+      }));
+      setProducts(parsed);
+    })
+    .catch(err => console.error('Error fetching products:', err));
   }, []);
 
   return (
@@ -77,10 +85,10 @@ export default function Home() {
               <div className="card" key={product.id}>
                 <div className="card-image">
                   <img 
-                    src={product.imagenes && product.imagenes[0] ? product.imagenes[0] : '/images/Logo.png'} 
+                    src={product.imagenes && product.imagenes[0] ? product.imagenes[0] : 'https://res.cloudinary.com/dvjmdhlac/image/upload/v1775435437/Logo_Principal_gq4gtt.png'} 
                     alt={product.nombre} 
                     onError={(e) => {
-                      e.target.src = '/images/Logo.png';
+                      e.target.src = 'https://res.cloudinary.com/dvjmdhlac/image/upload/v1775435437/Logo_Principal_gq4gtt.png';
                     }}
                   />
                 </div>
