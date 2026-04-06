@@ -223,9 +223,10 @@ export default function Nosotros() {
           LO QUE DISEÑÁS
         </h1>
         <p className="nos-hero-desc">
-          Desde 2018 llevamos la impresión 3D de vanguardia a manos de ingenieros,
-          diseñadores, makers y empresas de toda Argentina. Más que vender equipos:
-          construimos el futuro de la manufactura aditiva.
+          Ingenia Print nació con una idea clara: que la impresion 3D y las tecnologías de fabricacion personal sean accesibles, comprensibles y útiles para más personas.
+        </p>
+        <p className="nos-hero-desc">
+          Nuestro acercamiento a este mundo empezó como un hobby, con impresoras propias y muchas horas de aprendizaje desde casa. Con el tiempo, esa curiosidad se transformó en una pasión por la tecnología y por compartir conocimiento. Así nació Ingenia Print, a comienzos de 2023.
         </p>
         <button className="nos-hero-cta" onClick={handleCatalogo}>Conocé nuestro catálogo →</button>
         <div className="nos-scroll-line">

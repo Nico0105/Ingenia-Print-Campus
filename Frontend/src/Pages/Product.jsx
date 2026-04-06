@@ -68,7 +68,7 @@ export default function Product() {
     const message = encodeURIComponent(
       `Hola, me gustaría consultar disponibilidad y más información sobre: ${product.nombre}`
     );
-    window.open(`https://wa.me/541134406167?text=${message}`, "_blank");
+    window.open(`https://wa.me/541149455926?text=${message}`, "_blank");
   };
 
   return (
@@ -274,7 +274,6 @@ function RelatedProductsCarousel({ categoria, currentId, navigate }) {
       .then((data) => {
         const filtered = data
           .filter((p) => p && p.id && p.categoria === categoria && p.id !== currentId)
-          // ✅ Fix imagenes como string en productos relacionados
           .map((p) => ({
             ...p,
             imagenes: (() => {

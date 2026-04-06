@@ -64,19 +64,19 @@ const SERVICES = [
     number: '01',
     icon: <HeadsetIcon />,
     title: 'Asesoramiento técnico especializado',
-    desc: 'Un experto analiza tu situación en detalle para detectar el origen exacto del problema.',
+    desc: 'Para detectar y resolver cualquier problema, nuestro equipo de soporte te guía paso a paso con soluciones claras y efectivas.',
   },
   {
     number: '02',
     icon: <BoxIcon />,
     title: 'Reposición sin costo',
-    desc: 'Si la pieza es defectuosa de fábrica, la reponemos sin cargo alguno para vos.',
+    desc: 'De la pieza defectuosa, la reponemos sin cargo si corresponde',
   },
   {
     number: '03',
     icon: <WrenchIcon />,
     title: 'Servicio técnico de reparación',
-    desc: 'Cuando es necesario, reparamos la impresora para dejarla funcionando perfectamente.',
+    desc: 'Reparamos la impresora para dejarla funcionando perfectamente cuando sea necesario.',
   },
 ];
 
@@ -190,10 +190,9 @@ export default function Garantia() {
               La garantía no cubre
             </div>
             <ul className="garantia-exclusion-list">
-              <li>Daños por uso o cuidado inadecuado del equipo</li>
+              <li>Daños derivados de un uso o cuidado inadecuado del equipo</li>
               <li>Visitas técnicas a domicilio</li>
-              <li>Falta de mantenimiento o limpieza</li>
-              <li>Uso en condiciones inadecuadas</li>
+              <li>Falta de mantenimiento o limpieza o uso en condiciones inadecuadas</li>
               <li>Destapado del hotend</li>
             </ul>
           </div>
@@ -224,7 +223,7 @@ export default function Garantia() {
             alguien que te acompañe. No hay bots — hablás con personas reales.
           </p>
           <a
-            href="https://wa.me/541134406167?text=Hola%20Ingenia%20Print!%20Tengo%20una%20consulta%20sobre%20la%20garantía."
+            href="https://wa.me/541149455926?text=Hola%20Ingenia%20Print!%20Tengo%20una%20consulta%20sobre%20la%20garantía."
             className="garantia-cta-btn"
             target="_blank"
             rel="noopener noreferrer"
