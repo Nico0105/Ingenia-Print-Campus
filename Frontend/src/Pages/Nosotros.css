@@ -34,8 +34,6 @@
   z-index: 0;
 }
 
-
-
 /* ── HERO ── */
 .nosotros .nos-hero {
   position: relative;
@@ -84,7 +82,7 @@
 
 .nosotros .nos-hero-label {
   font-family: 'Space Mono', monospace;
-  font-size: 15px;            /* Labels pequeños — se mantienen en Mono */
+  font-size: 15px;
   letter-spacing: 4px;
   color: var(--accent-orange);
   text-transform: uppercase;
@@ -107,7 +105,7 @@
 .nosotros .nos-hero-title {
   font-family: 'Teko', sans-serif;
   font-weight: 600;
-  font-size: clamp(52px, 9vw, 110px);   /* Teko es visualmente ~20% más grande — reducido */
+  font-size: clamp(52px, 9vw, 110px);
   line-height: 0.95;
   letter-spacing: 1px;
   margin-bottom: 24px;
@@ -125,7 +123,7 @@
 
 .nosotros .nos-hero-desc {
   max-width: 520px;
-  font-family: 'Space Mono', monospace;   /* Descripción en Mono para contraste */
+  font-family: 'Space Mono', monospace;
   font-size: 15px;
   font-weight: 400;
   line-height: 1.8;
@@ -234,7 +232,7 @@
 .nosotros .nos-section-title {
   font-family: 'Teko', sans-serif;
   font-weight: 600;
-  font-size: clamp(32px, 5vw, 60px);    /* Reducido respecto al original */
+  font-size: clamp(32px, 5vw, 60px);
   letter-spacing: 1px;
   line-height: 1;
 }
@@ -315,7 +313,7 @@
 .nosotros .nos-timeline-title {
   font-family: 'Teko', sans-serif;
   font-weight: 600;
-  font-size: 20px;           /* Teko 20px ≈ Rajdhani 18px visualmente */
+  font-size: 20px;
   color: var(--text-primary);
   margin-bottom: 4px;
   letter-spacing: 0.5px;
@@ -372,7 +370,7 @@
 .nosotros .nos-stat-number {
   font-family: 'Teko', sans-serif;
   font-weight: 600;
-  font-size: 56px;           /* Reducido de 72px — Teko es más voluminosa */
+  font-size: 56px;
   line-height: 1;
   background: var(--gradient-tech);
   -webkit-background-clip: text;
@@ -384,7 +382,7 @@
 .nosotros .nos-stat-suffix {
   font-family: 'Teko', sans-serif;
   font-weight: 500;
-  font-size: 30px;           /* Reducido de 40px */
+  font-size: 30px;
   background: var(--gradient-tech);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -409,18 +407,11 @@
   line-height: 1.6;
 }
 
-/* ── VALORES ── */
-.nosotros .nos-valores-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 24px;
-  margin-top: 48px;
-}
-
+/* ── VALORES (CAROUSEL) ── */
 .nosotros .nos-valor-card {
   background: var(--bg-soft);
   border: 1px solid var(--border-soft);
-  padding: 36px 32px;
+  padding: 36px 28px;
   position: relative;
   overflow: hidden;
   clip-path: polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 16px 100%, 0 calc(100% - 16px));
@@ -428,6 +419,7 @@
   transform: translateY(24px);
   transition: opacity 0.6s ease, transform 0.6s ease;
   cursor: default;
+  flex-shrink: 0;
 }
 
 .nosotros .nos-valor-card.visible {
@@ -447,7 +439,7 @@
 .nosotros .nos-valor-card:hover::after { opacity: 1; }
 
 .nosotros .nos-valor-icon {
-  font-size: 26px;           /* Reducido de 32px */
+  font-size: 26px;
   margin-bottom: 16px;
   display: block;
 }
@@ -458,7 +450,7 @@
   right: 24px;
   font-family: 'Teko', sans-serif;
   font-weight: 700;
-  font-size: 40px;           /* Reducido de 48px */
+  font-size: 40px;
   color: rgba(255, 255, 255, 0.04);
   line-height: 1;
   pointer-events: none;
@@ -467,7 +459,7 @@
 .nosotros .nos-valor-title {
   font-family: 'Teko', sans-serif;
   font-weight: 600;
-  font-size: 22px;           /* Reducido de 28px — Teko igual visualmente */
+  font-size: 22px;
   letter-spacing: 1px;
   margin-bottom: 10px;
   position: relative;
@@ -499,6 +491,73 @@
 
 .nosotros .nos-valor-card:hover .nos-valor-accent { transform: scaleX(1); }
 
+/* ── CAROUSEL ── */
+.nosotros .nos-carousel-wrapper {
+  position: relative;
+  margin-top: 48px;
+  padding: 0 56px;
+}
+
+.nosotros .nos-carousel-track-outer {
+  overflow: hidden;
+}
+
+.nosotros .nos-carousel-track {
+  display: flex;
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.nosotros .nos-carousel-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-60%);
+  background: var(--bg-soft);
+  border: 1px solid var(--border-soft);
+  color: var(--text-primary);
+  width: 40px;
+  height: 40px;
+  font-size: 22px;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px));
+  transition: background 0.2s, border-color 0.2s;
+  z-index: 2;
+}
+
+.nosotros .nos-carousel-btn:hover {
+  background: rgba(217, 119, 6, 0.15);
+  border-color: rgba(217, 119, 6, 0.4);
+}
+
+.nosotros .nos-carousel-prev { left: 0; }
+.nosotros .nos-carousel-next { right: 0; }
+
+.nosotros .nos-carousel-dots {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 32px;
+}
+
+.nosotros .nos-carousel-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--border-soft);
+  border: none;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.3s;
+  padding: 0;
+}
+
+.nosotros .nos-carousel-dot.active {
+  background: var(--accent-orange);
+  transform: scale(1.4);
+}
+
 /* ── MISIÓN BANNER ── */
 .nosotros .nos-mision-banner {
   position: relative;
@@ -518,7 +577,7 @@
   left: 40px;
   font-family: 'Teko', sans-serif;
   font-weight: 700;
-  font-size: 200px;          /* Reducido de 240px */
+  font-size: 200px;
   color: rgba(217, 119, 6, 0.06);
   line-height: 1;
   pointer-events: none;
@@ -536,7 +595,7 @@
 .nosotros .nos-mision-text {
   font-family: 'Teko', sans-serif;
   font-weight: 500;
-  font-size: clamp(22px, 3.2vw, 40px);  /* Reducido de clamp(28px, 4vw, 52px) */
+  font-size: clamp(22px, 3.2vw, 40px);
   letter-spacing: 0.5px;
   line-height: 1.2;
   max-width: 800px;
@@ -576,7 +635,7 @@
 .nosotros .nos-footer-logo {
   font-family: 'Teko', sans-serif;
   font-weight: 600;
-  font-size: 18px;           /* Reducido de 22px */
+  font-size: 18px;
   letter-spacing: 3px;
   background: var(--gradient-tech);
   -webkit-background-clip: text;
@@ -598,15 +657,15 @@
   .nosotros .nos-section        { padding: 72px 30px; }
   .nosotros .nos-historia-inner { grid-template-columns: 1fr; gap: 48px; }
   .nosotros .nos-stats-grid     { grid-template-columns: repeat(2, 1fr); }
-  .nosotros .nos-valores-grid   { grid-template-columns: repeat(2, 1fr); }
   .nosotros .nos-mision-banner  { margin: 0 30px; padding: 40px; }
   .nosotros .nos-footer         { padding: 32px 30px; }
   .nosotros .nos-divider        { margin: 0 30px; }
+  .nosotros .nos-carousel-wrapper { padding: 0 44px; }
 }
 
 @media (max-width: 640px) {
   .nosotros .nos-stats-grid    { grid-template-columns: 1fr; }
-  .nosotros .nos-valores-grid  { grid-template-columns: 1fr; }
   .nosotros .nos-hero-title    { font-size: 48px; }
   .nosotros .nos-mision-banner { padding: 32px 24px; }
+  .nosotros .nos-carousel-wrapper { padding: 0 36px; }
 }

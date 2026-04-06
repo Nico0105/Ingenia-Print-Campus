@@ -8,24 +8,24 @@ import { useNavigate } from "react-router-dom";
 
 const timelineData = [
   {
-    year: "2018",
+    year: "2023",
     title: "Los inicios",
-    desc: "Nace Ingenia Print con la primera impresora ensamblada en un taller en Buenos Aires.",
+    desc: "Nace Ingenia Print con la primera impresora comprada para fabricar.",
   },
   {
-    year: "2020",
+    year: "2024",
     title: "Expansión de catálogo",
     desc: "Incorporamos equipos industriales FDM y resina UV para profesionales y estudios.",
   },
   {
-    year: "2022",
+    year: "2025",
     title: "Distribución nacional",
-    desc: "Alcanzamos las 23 provincias con red propia de técnicos certificados.",
+    desc: "Alcanzamos las 23 provincias con envíos y a todo el país.",
   },
   {
-    year: "2024",
+    year: "2026",
     title: "Liderazgo regional",
-    desc: "Referentes en impresión 3D para LATAM: más de 3.000 clientes activos.",
+    desc: "Referentes en impresión 3D para Argentina más de 3.000 clientes activos.",
   },
 ];
 
@@ -34,10 +34,10 @@ const statsData = [
     number: 3000,
     suffix: "+",
     label: "Clientes activos",
-    desc: "Empresas, estudios y makers en toda la región",
+    desc: "Empresas, estudios y makers en toda la región que confían en nosotros",
   },
   {
-    number: 6,
+    number: 3,
     suffix: "años",
     label: "En el mercado",
     desc: "Construyendo expertise en manufactura aditiva",
@@ -59,23 +59,23 @@ const statsData = [
 const valoresData = [
   {
     icon: "⬡",
-    title: "Innovación continua",
-    desc: "Actualizamos nuestro catálogo con la tecnología más avanzada del mercado global. No vendemos lo de ayer.",
+    title: "Asesoramiento antes de la compra",
+    desc: "No vendemos máquinas, vendemos soluciones. Te ayudamos a elegir el equipo que realmente necesitas, no el más caro.",
   },
   {
     icon: "◈",
-    title: "Precisión técnica",
-    desc: "Cada máquina pasa por control de calidad antes de llegar al cliente. La tolerancia cero al error es nuestra norma.",
+    title: "Acompañamiento durante la instalación",
+    desc: "Cada cliente recibe soporte personalizado durante la instalación y puesta en marcha, para asegurar que todo funcione desde el primer día.",
   },
   {
     icon: "⬟",
-    title: "Soporte real",
-    desc: "Técnicos humanos, no bots. Acompañamos desde la instalación hasta el primer prototipo terminado.",
+    title: "Respondemos dudas reales",
+    desc: "Soporte técnico en tiempo real, sin bots ni respuestas automáticas. Hablás con personas reales que entienden tu problema.",
   },
   {
     icon: "◇",
-    title: "Comunidad maker",
-    desc: "Fomentamos el ecosistema local: talleres, capacitaciones y foros para creadores y empresas.",
+    title: "Ayudamos a entender",
+    desc: "Como usar cada equipo según el objetivo de cada cliente, no solo cómo funciona. Queremos que saques el máximo provecho a tu inversión.",
   },
   {
     icon: "⬠",
@@ -84,12 +84,12 @@ const valoresData = [
   },
   {
     icon: "◉",
-    title: "Sustentabilidad",
-    desc: "Filamentos reciclados, embalaje responsable y plan de retiro de equipos obsoletos.",
+    title: "Durabilidad y calidad",
+    desc: "Promovemos prácticas responsables y materiales de calidad para que tus creaciones duren y sean seguras",
   },
 ];
 
-// ── HOOKS & SUB-COMPONENTS ────────────────────────────────────────────────────
+// ── HOOKS ─────────────────────────────────────────────────────────────────────
 
 function useInView(ref, options = {}) {
   const [inView, setInView] = useState(false);
@@ -111,6 +111,22 @@ function useInView(ref, options = {}) {
 
   return inView;
 }
+
+function useVisible() {
+  const [visible, setVisible] = useState(3);
+  useEffect(() => {
+    const update = () =>
+      setVisible(
+        window.innerWidth < 640 ? 1 : window.innerWidth < 1024 ? 2 : 3
+      );
+    update();
+    window.addEventListener("resize", update);
+    return () => window.removeEventListener("resize", update);
+  }, []);
+  return visible;
+}
+
+// ── SUB-COMPONENTS ────────────────────────────────────────────────────────────
 
 function Counter({ target, suffix }) {
   const [count, setCount] = useState(0);
@@ -176,7 +192,7 @@ function StatCard({ stat, delay }) {
   );
 }
 
-function ValorCard({ v, idx }) {
+function ValorCard({ v, idx, visible = 3 }) {
   const ref = useRef(null);
   const inView = useInView(ref);
 
@@ -184,7 +200,11 @@ function ValorCard({ v, idx }) {
     <div
       ref={ref}
       className={`nos-valor-card${inView ? " visible" : ""}`}
-      style={{ transitionDelay: `${(idx % 3) * 0.12}s` }}
+      style={{
+        transitionDelay: `${(idx % visible) * 0.12}s`,
+        flex: `0 0 calc(100% / ${visible})`,
+        boxSizing: "border-box",
+      }}
     >
       <span className="nos-valor-num">0{idx + 1}</span>
       <span className="nos-valor-icon">{v.icon}</span>
@@ -195,15 +215,82 @@ function ValorCard({ v, idx }) {
   );
 }
 
+function ValoresCarousel({ valores }) {
+  const [current, setCurrent] = useState(0);
+  const [animating, setAnimating] = useState(false);
+  const visible = useVisible();
+  const total = valores.length;
+  const maxIndex = total - visible;
+
+  const go = (dir) => {
+    if (animating) return;
+    setAnimating(true);
+    setCurrent((prev) => {
+      const next = prev + dir;
+      if (next < 0) return maxIndex;
+      if (next > maxIndex) return 0;
+      return next;
+    });
+    setTimeout(() => setAnimating(false), 400);
+  };
+
+  // Si al cambiar visible el current queda fuera de rango, lo corregimos
+  useEffect(() => {
+    setCurrent((prev) => Math.min(prev, maxIndex));
+  }, [visible, maxIndex]);
+
+  return (
+    <div className="nos-carousel-wrapper">
+      <button
+        className="nos-carousel-btn nos-carousel-prev"
+        onClick={() => go(-1)}
+        aria-label="Anterior"
+      >
+        ‹
+      </button>
+
+      <div className="nos-carousel-track-outer">
+        <div
+          className="nos-carousel-track"
+          style={{
+            transform: `translateX(calc(-${current} * (100% / ${visible})))`,
+          }}
+        >
+          {valores.map((v, i) => (
+            <ValorCard key={i} v={v} idx={i} visible={visible} />
+          ))}
+        </div>
+      </div>
+
+      <button
+        className="nos-carousel-btn nos-carousel-next"
+        onClick={() => go(1)}
+        aria-label="Siguiente"
+      >
+        ›
+      </button>
+
+      <div className="nos-carousel-dots">
+        {Array.from({ length: maxIndex + 1 }).map((_, i) => (
+          <button
+            key={i}
+            className={`nos-carousel-dot${i === current ? " active" : ""}`}
+            onClick={() => setCurrent(i)}
+          />
+        ))}
+      </div>
+    </div>
+  );
+}
+
 // ── MAIN COMPONENT ────────────────────────────────────────────────────────────
 
 export default function Nosotros() {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
-    const handleCatalogo = () => {
-        navigate('/catalogo')
-    }
-
+  const handleCatalogo = () => {
+    navigate("/catalogo");
+  };
 
   return (
     <div className="nosotros">
@@ -222,13 +309,9 @@ export default function Nosotros() {
           <span>REALIDAD</span>
           LO QUE DISEÑÁS
         </h1>
-        <p className="nos-hero-desc">
-          Ingenia Print nació con una idea clara: que la impresion 3D y las tecnologías de fabricacion personal sean accesibles, comprensibles y útiles para más personas.
-        </p>
-        <p className="nos-hero-desc">
-          Nuestro acercamiento a este mundo empezó como un hobby, con impresoras propias y muchas horas de aprendizaje desde casa. Con el tiempo, esa curiosidad se transformó en una pasión por la tecnología y por compartir conocimiento. Así nació Ingenia Print, a comienzos de 2023.
-        </p>
-        <button className="nos-hero-cta" onClick={handleCatalogo}>Conocé nuestro catálogo →</button>
+        <button className="nos-hero-cta" onClick={handleCatalogo}>
+          Conocé nuestro catálogo →
+        </button>
         <div className="nos-scroll-line">
           <div className="nos-scroll-bar" />
           Scroll para explorar
@@ -242,18 +325,40 @@ export default function Nosotros() {
         <div className="nos-historia-inner">
           <div className="nos-historia-text">
             <p>
-              Todo comenzó con una impresora ensamblada en un garaje y una pregunta simple:
-              <strong> ¿por qué en Argentina es tan difícil acceder a tecnología de fabricación digital de calidad?</strong>
+              <strong>Ingenia Print</strong> nació con una idea clara: que la
+              impresion 3D y las tecnologías de fabricacion personal sean
+              accesibles, comprensibles y útiles para más personas. Nuestro
+              acercamiento a este mundo empezó como un hobby, con impresoras
+              propias y muchas horas de aprendizaje desde casa. Con el tiempo,
+              esa curiosidad se transformó en una pasión por la tecnología y por
+              compartir conocimiento. Así nació Ingenia Print, a comienzos de
+              2023.
             </p>
             <p>
-              Fundada en Buenos Aires en 2018, Ingenia Print nació para cerrar esa brecha.
-              Empezamos importando, probando y aprendiendo cada equipo que vendemos,
-              hasta conocerlo de adentro hacia afuera.
+              Hoy acompañamos a personas que quieren empezar desde cero, a
+              familia interesadas en herramientas educativas, a perfiles
+              creativos y a quienes buscan desarrollar proyectos o
+              emprendimientos con estas tecnologás.
             </p>
             <p>
-              Hoy somos el punto de referencia para quienes necesitan{" "}
-              <strong>precisión, soporte real y tecnología que no quede obsoleta al mes siguiente</strong>.
-              No vendemos cajas: vendemos herramientas para crear.
+              Trabajamos con{" "}
+              <strong>
+                impresoras 3D, filamentos, accesorios, grabadoras láser y
+                herramientas relacionadas con este universo
+              </strong>
+              , siempre priorizando algo fundamental: el acompañamiento real.
+            </p>
+            <p>
+              Sabemos que muchas personas llegan a la impresión 3D con
+              información desordenada o sin saber por dónde empezar. Nuestro
+              objetivo es justamente ese: ordenar, explicar y acompañar cada
+              paso del proceso para que la tecnología deje de parecer lejana o
+              compleja y se convierta en una herramienta posible.
+            </p>
+            <p>
+              Creemos que este tipo de tecnologías abren muchas puertas. Y que
+              entenderlas bien puede marcar la diferencia entre frustrarse… o
+              descubrir todo lo que pueden hacer por vos.
             </p>
           </div>
 
@@ -274,7 +379,8 @@ export default function Nosotros() {
         <div className="nos-mision-tag">// Nuestra misión</div>
         <div className="nos-mision-text">
           Democratizar la fabricación aditiva para que{" "}
-          <span>cualquier idea, sin importar su escala</span>, pueda volverse un objeto real.
+          <span>cualquier idea, sin importar su escala</span>, pueda volverse un
+          objeto real.
         </div>
       </div>
 
@@ -296,12 +402,8 @@ export default function Nosotros() {
       {/* VALORES */}
       <section className="nos-section nos-historia" id="valores">
         <div className="nos-section-label">Valores</div>
-        <h2 className="nos-section-title">LOS PILARES DE INGENIA</h2>
-        <div className="nos-valores-grid">
-          {valoresData.map((v, i) => (
-            <ValorCard key={i} v={v} idx={i} />
-          ))}
-        </div>
+        <h2 className="nos-section-title">NUESTRA FORMA DE TRABAJAR</h2>
+        <ValoresCarousel valores={valoresData} />
       </section>
 
       {/* FOOTER */}

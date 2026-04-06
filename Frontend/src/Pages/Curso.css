@@ -236,7 +236,7 @@
 
 .cursos .included-highlights {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 24px;
 }
 
@@ -244,7 +244,6 @@
   background: rgba(0, 10, 33, 0.5);
   padding: 20px;
   border-left: 2px solid var(--accent-orange);
-  backdrop-filter: blur(10px);
 }
 
 .cursos .highlight strong {
@@ -295,134 +294,103 @@
   font-size: clamp(32px, 5vw, 60px);
   letter-spacing: 1px;
   line-height: 1;
+  margin-bottom: 0;
 }
 
-/* ── CURSOS GRID ── */
-.cursos .cursos-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 24px;
+/* ── CAROUSEL COMPARTIDO ── */
+.cursos .curso-carousel-wrapper {
+  position: relative;
   margin-top: 48px;
+  padding: 0 56px;
 }
 
-.cursos .curso-card {
+.cursos .curso-carousel-track-outer {
+  overflow: hidden;
+}
+
+.cursos .curso-carousel-track {
+  display: flex;
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.cursos .curso-carousel-btn {
   background: var(--bg-soft);
   border: 1px solid var(--border-soft);
-  padding: 40px 36px;
-  position: relative;
-  overflow: hidden;
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.5s ease, transform 0.5s ease, border-color 0.3s;
-}
-
-.cursos .curso-card.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.cursos .curso-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 2px;
-  background: var(--gradient-tech);
-  transform: scaleX(0);
-  transition: transform 0.4s ease;
-  transform-origin: left;
-}
-
-.cursos .curso-card:hover::before { transform: scaleX(1); }
-.cursos .curso-card:hover { border-color: rgba(217, 119, 6, 0.3); }
-
-.cursos .curso-header {
-  margin-bottom: 24px;
-}
-
-.cursos .curso-title {
-  font-family: 'Teko', sans-serif;
-  font-weight: 600;
-  font-size: 26px;
-  margin-bottom: 12px;
   color: var(--text-primary);
-}
-
-.cursos .curso-meta {
+  width: 40px;
+  height: 40px;
+  font-size: 22px;
+  cursor: pointer;
   display: flex;
-  gap: 16px;
   align-items: center;
-  flex-wrap: wrap;
+  justify-content: center;
+  clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px));
+  transition: background 0.2s, border-color 0.2s;
+  flex-shrink: 0;
 }
 
-.cursos .curso-duration {
-  font-family: 'Space Mono', monospace;
-  font-size: 15px;
-  color: var(--accent-orange);
-  letter-spacing: 1px;
+.cursos .curso-carousel-btn:hover {
+  background: rgba(217, 119, 6, 0.15);
+  border-color: rgba(217, 119, 6, 0.4);
 }
 
-.cursos .curso-level {
-  font-family: 'Space Mono', monospace;
-  font-size: 15px;
-  padding: 4px 12px;
-  border-radius: 4px;
-  text-transform: uppercase;
-  font-weight: 700;
-  letter-spacing: 1px;
+.cursos .curso-carousel-wrapper .curso-carousel-prev {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-60%);
+  z-index: 2;
 }
 
-.cursos .curso-level.principiante {
-  background: rgba(30, 64, 175, 0.2);
-  color: #60a5fa;
+.cursos .curso-carousel-wrapper .curso-carousel-next {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translateY(-60%);
+  z-index: 2;
 }
 
-.cursos .curso-level.intermedio {
-  background: rgba(217, 119, 6, 0.2);
-  color: var(--accent-orange);
+.cursos .curso-carousel-dots {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
 }
 
-.cursos .curso-topics {
-  list-style: none;
+.cursos .curso-carousel-wrapper .curso-carousel-dots {
+  margin-top: 32px;
+}
+
+.cursos .curso-carousel-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--border-soft);
+  border: none;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.3s;
   padding: 0;
 }
 
-.cursos .curso-topics li {
-  font-family: 'Space Mono', monospace;
-  font-size: 15px;
-  color: var(--text-muted);
-  margin-bottom: 12px;
-  padding-left: 20px;
-  position: relative;
-  line-height: 1.6;
+.cursos .curso-carousel-dot.active {
+  background: var(--accent-orange);
+  transform: scale(1.4);
 }
 
-.cursos .curso-topics li::before {
-  content: '→';
-  position: absolute;
-  left: 0;
-  color: var(--accent-orange);
-}
-
-/* ── BENEFICIOS GRID ── */
-.cursos .beneficios-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 24px;
-  margin-top: 48px;
-}
-
+/* ── BENEFICIOS CAROUSEL ── */
 .cursos .beneficio-card {
   background: var(--bg-soft);
   border: 1px solid var(--border-soft);
-  padding: 36px 32px;
+  padding: 36px 28px;
   text-align: center;
   position: relative;
   overflow: hidden;
+  flex-shrink: 0;
+  box-sizing: border-box;
   opacity: 0;
   transform: translateY(20px);
   transition: opacity 0.5s ease, transform 0.5s ease, border-color 0.3s;
+  margin: 0 10px;
 }
 
 .cursos .beneficio-card.visible {
@@ -432,8 +400,21 @@
 
 .cursos .beneficio-card:hover { border-color: rgba(217, 119, 6, 0.3); }
 
+.cursos .beneficio-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: var(--gradient-tech);
+  transform: scaleX(0);
+  transition: transform 0.4s ease;
+  transform-origin: left;
+}
+
+.cursos .beneficio-card:hover::before { transform: scaleX(1); }
+
 .cursos .beneficio-icon {
-  font-size: 36px;
+  font-size: 28px;
   margin-bottom: 16px;
   color: var(--accent-orange);
   font-weight: 700;
@@ -445,27 +426,35 @@
   font-size: 20px;
   margin-bottom: 12px;
   color: var(--text-primary);
+  letter-spacing: 0.5px;
 }
 
 .cursos .beneficio-desc {
   font-family: 'Space Mono', monospace;
-  font-size: 15px;
+  font-size: 14px;
   color: var(--text-muted);
   line-height: 1.7;
 }
 
-/* ── CÓMO FUNCIONA ── */
+/* ── PASOS ── */
 .cursos .pasos-container {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 24px;
+  display: flex;
+  align-items: stretch;
+  gap: 0;
   margin-top: 48px;
 }
 
+.cursos .paso-wrapper {
+  display: flex;
+  align-items: center;
+  flex: 1;
+}
+
 .cursos .paso {
+  flex: 1;
   background: var(--bg-soft);
   border: 1px solid var(--border-soft);
-  padding: 40px 32px;
+  padding: 40px 28px;
   position: relative;
   text-align: center;
   opacity: 0;
@@ -481,9 +470,7 @@
 .cursos .paso::before {
   content: '';
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
+  top: 0; left: 0; right: 0;
   height: 2px;
   background: var(--gradient-tech);
   transform: scaleX(0);
@@ -494,77 +481,98 @@
 .cursos .paso:hover::before { transform: scaleX(1); }
 .cursos .paso:hover { border-color: rgba(217, 119, 6, 0.3); }
 
+.cursos .paso-connector {
+  font-size: 20px;
+  color: var(--accent-orange);
+  opacity: 0.5;
+  padding: 0 8px;
+  flex-shrink: 0;
+}
+
 .cursos .paso-number {
   font-family: 'Teko', sans-serif;
   font-size: 48px;
   font-weight: 700;
   color: var(--accent-orange);
-  margin-bottom: 16px;
+  margin-bottom: 12px;
   line-height: 1;
 }
 
 .cursos .paso-title {
   font-family: 'Teko', sans-serif;
   font-weight: 600;
-  font-size: 22px;
-  margin-bottom: 16px;
+  font-size: 20px;
+  margin-bottom: 12px;
   color: var(--text-primary);
   letter-spacing: 0.5px;
 }
 
 .cursos .paso-desc {
   font-family: 'Space Mono', monospace;
-  font-size: 15px;
+  font-size: 13px;
   color: var(--text-muted);
   line-height: 1.7;
 }
 
-.cursos .paso-flecha {
-  display: none;
-}
-
-/* ── TESTIMONIOS ── */
-.cursos .testimonios-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 24px;
+/* ── TESTIMONIOS CAROUSEL ── */
+.cursos .testimonios-carousel {
   margin-top: 48px;
 }
 
-.cursos .testimonio-card {
+.cursos .testimonio-featured {
   background: var(--bg-soft);
   border: 1px solid var(--border-soft);
-  padding: 32px;
+  padding: 56px 64px;
   position: relative;
   overflow: hidden;
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.5s ease, transform 0.5s ease;
+  clip-path: polygon(0 0, calc(100% - 20px) 0, 100% 20px, 100% 100%, 20px 100%, 0 calc(100% - 20px));
+  min-height: 260px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: border-color 0.4s;
 }
 
-.cursos .testimonio-card.visible {
-  opacity: 1;
-  transform: translateY(0);
+.cursos .testimonio-featured:hover {
+  border-color: rgba(217, 119, 6, 0.3);
 }
 
-.cursos .testimonio-text {
+.cursos .testimonio-quote-mark {
+  position: absolute;
+  top: -10px;
+  left: 40px;
+  font-family: 'Teko', sans-serif;
+  font-size: 180px;
+  font-weight: 700;
+  color: rgba(217, 119, 6, 0.06);
+  line-height: 1;
+  pointer-events: none;
+  user-select: none;
+}
+
+.cursos .testimonio-featured-text {
   font-family: 'Space Mono', monospace;
-  font-size: 15px;
+  font-size: 16px;
   color: var(--text-muted);
   line-height: 1.9;
-  margin-bottom: 24px;
   font-style: italic;
+  margin-bottom: 32px;
+  position: relative;
+  z-index: 1;
+  max-width: 800px;
 }
 
-.cursos .testimonio-author {
+.cursos .testimonio-featured-author {
   display: flex;
-  gap: 12px;
+  gap: 14px;
   align-items: center;
+  position: relative;
+  z-index: 1;
 }
 
 .cursos .testimonio-avatar {
-  width: 40px;
-  height: 40px;
+  width: 44px;
+  height: 44px;
   background: var(--gradient-tech);
   border-radius: 50%;
   flex-shrink: 0;
@@ -573,15 +581,88 @@
 .cursos .testimonio-name {
   font-family: 'Teko', sans-serif;
   font-weight: 600;
-  font-size: 15px;
+  font-size: 18px;
   color: var(--text-primary);
+  letter-spacing: 0.5px;
 }
 
 .cursos .testimonio-role {
   font-family: 'Space Mono', monospace;
-  font-size: 15px;
+  font-size: 13px;
   color: var(--accent-orange);
   letter-spacing: 1px;
+}
+
+.cursos .testimonios-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 28px;
+}
+
+.cursos .testimonios-thumbs {
+  display: flex;
+  gap: 12px;
+  margin-top: 24px;
+  justify-content: center;
+}
+
+.cursos .testimonio-thumb {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--bg-soft);
+  border: 1px solid var(--border-soft);
+  padding: 12px 16px;
+  cursor: pointer;
+  transition: border-color 0.3s, background 0.3s;
+  flex: 1;
+  max-width: 220px;
+}
+
+.cursos .testimonio-thumb:hover,
+.cursos .testimonio-thumb.active {
+  border-color: rgba(217, 119, 6, 0.5);
+  background: rgba(217, 119, 6, 0.05);
+}
+
+.cursos .testimonio-thumb-avatar {
+  width: 32px;
+  height: 32px;
+  background: var(--gradient-tech);
+  border-radius: 50%;
+  flex-shrink: 0;
+  opacity: 0.6;
+}
+
+.cursos .testimonio-thumb.active .testimonio-thumb-avatar {
+  opacity: 1;
+}
+
+.cursos .testimonio-thumb-name {
+  font-family: 'Teko', sans-serif;
+  font-size: 15px;
+  color: var(--text-muted);
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-align: left;
+}
+
+.cursos .testimonio-thumb.active .testimonio-thumb-name {
+  color: var(--text-primary);
+}
+
+.cursos .testimonio-thumb-role {
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  color: var(--accent-orange);
+  opacity: 0.6;
+  text-align: left;
+}
+
+.cursos .testimonio-thumb.active .testimonio-thumb-role {
+  opacity: 1;
 }
 
 /* ── DIVIDER ── */
@@ -619,6 +700,7 @@
   color: var(--text-muted);
   max-width: 600px;
   margin: 0 auto 40px;
+  line-height: 1.8;
 }
 
 .cursos .cta-button {
@@ -640,59 +722,29 @@
   transform: translateY(-2px);
 }
 
-/* ── FOOTER ── */
-.cursos .curso-footer {
-  position: relative;
-  z-index: 1;
-  padding: 48px 60px;
-  border-top: 1px solid var(--border-soft);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-top: 100px;
-}
-
-.cursos .curso-footer-logo {
-  font-family: 'Teko', sans-serif;
-  font-weight: 600;
-  font-size: 18px;
-  letter-spacing: 3px;
-  background: var(--gradient-tech);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  line-height: 1;
-}
-
-.cursos .curso-footer-copy {
-  font-family: 'Space Mono', monospace;
-  font-size: 15px;
-  color: rgba(156, 163, 175, 0.4);
-  letter-spacing: 2px;
-}
-
 /* ── RESPONSIVE ── */
 @media (max-width: 1024px) {
-  .cursos .curso-hero { padding: 110px 30px 80px; }
-  .cursos .curso-section { padding: 72px 30px; }
-  .cursos .cursos-grid { grid-template-columns: 1fr; }
-  .cursos .beneficios-grid { grid-template-columns: repeat(2, 1fr); }
-  .cursos .testimonios-grid { grid-template-columns: repeat(2, 1fr); }
-  .cursos .curso-included-banner { margin: 0 30px; }
-  .cursos .curso-footer { padding: 32px 30px; }
-  .cursos .curso-divider { margin: 0 30px; }
-  .cursos .included-highlights { grid-template-columns: repeat(2, 1fr); }
-  .cursos .pasos-container { grid-template-columns: repeat(2, 1fr); }
-}
-
-@media (max-width: 768px) {
-  .cursos .beneficios-grid { grid-template-columns: 1fr; }
-  .cursos .testimonios-grid { grid-template-columns: 1fr; }
-  .cursos .pasos-container { grid-template-columns: 1fr; }
+  .cursos .curso-hero            { padding: 110px 30px 80px; }
+  .cursos .curso-section         { padding: 72px 30px; }
+  .cursos .curso-included-banner { margin: 0 30px; padding: 40px; }
+  .cursos .curso-divider         { margin: 0 30px; }
+  .cursos .included-highlights   { grid-template-columns: repeat(2, 1fr); }
+  .cursos .curso-carousel-wrapper { padding: 0 44px; }
+  .cursos .pasos-container       { flex-wrap: wrap; }
+  .cursos .paso-wrapper          { flex: 0 0 calc(50% - 12px); }
+  .cursos .paso-connector        { display: none; }
+  .cursos .testimonio-featured   { padding: 40px; }
+  .cursos .testimonios-thumbs    { flex-wrap: wrap; justify-content: center; }
 }
 
 @media (max-width: 640px) {
-  .cursos .curso-hero-title { font-size: 48px; }
+  .cursos .curso-hero-title      { font-size: 48px; }
   .cursos .curso-included-banner { padding: 32px 24px; }
-  .cursos .included-highlights { grid-template-columns: 1fr; }
+  .cursos .included-highlights   { grid-template-columns: 1fr; }
+  .cursos .curso-carousel-wrapper { padding: 0 36px; }
+  .cursos .pasos-container       { flex-direction: column; }
+  .cursos .paso-wrapper          { flex: 1 1 100%; }
+  .cursos .testimonio-featured   { padding: 28px 24px; }
+  .cursos .testimonio-featured-text { font-size: 14px; }
+  .cursos .testimonio-thumb      { max-width: 100%; }
 }
