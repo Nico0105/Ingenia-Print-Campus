@@ -7,11 +7,14 @@ import { API_URL } from "../config";
 
 // ✅ Normaliza imagenes para que siempre sea un array
 function parseImagenes(imagenes) {
-  if (Array.isArray(imagenes)) return imagenes;
-  if (typeof imagenes === 'string') {
-    try { return JSON.parse(imagenes); } catch { return []; }
-  }
-  return [];
+  let arr;
+  if (Array.isArray(imagenes)) arr = imagenes;
+  else if (typeof imagenes === 'string') {
+    try { arr = JSON.parse(imagenes); } catch { return []; }
+  } else return [];
+  
+  // Extraer URL si son objetos { url, public_id }
+  return arr.map(img => typeof img === 'string' ? img : img.url).filter(Boolean);
 }
 
 export default function Catalogo() {
@@ -101,9 +104,9 @@ export default function Catalogo() {
               <div className="product-card" key={product.id}>
                 <div className="product-image">
                   <img
-                    src={product.imagenes[0] || "/images/Logo.png"}
+                    src={product.imagenes[0] || "https://res.cloudinary.com/dvjmdhlac/image/upload/v1775435437/Logo_Principal_gq4gtt.png"}
                     alt={product.nombre}
-                    onError={(e) => { e.target.src = "/images/Logo.png"; }}
+                    onError={(e) => { e.target.src = "https://res.cloudinary.com/dvjmdhlac/image/upload/v1775435437/Logo_Principal_gq4gtt.png"; }}
                   />
                 </div>
 

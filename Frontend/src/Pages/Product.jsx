@@ -94,7 +94,7 @@ export default function Product() {
                 src={product.imagenes[mainImage]}
                 alt={product.nombre}
                 onError={(e) => {
-                  e.target.src = "/images/Logo.png";
+                  e.target.src = "https://res.cloudinary.com/dvjmdhlac/image/upload/v1775435437/Logo_Principal_gq4gtt.png";
                 }}
               />
             ) : (
@@ -112,7 +112,7 @@ export default function Product() {
                   src={img}
                   alt={`Thumbnail ${i + 1}`}
                   onError={(e) => {
-                    e.target.src = "/images/Logo.png";
+                    e.target.src = "https://res.cloudinary.com/dvjmdhlac/image/upload/v1775435437/Logo_Principal_gq4gtt.png";
                   }}
                 />
               </div>
