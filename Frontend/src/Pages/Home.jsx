@@ -29,6 +29,8 @@ export default function Home() {
           ? p.imagenes.map(img => typeof img === 'string' ? img : img.url).filter(Boolean)
           : []
       }));
+      console.log('productos parseados:', parsed);
+      console.log('primera imagen:', parsed[0]?.imagenes[0]);
       setProducts(parsed);
     })
     .catch(err => console.error('Error fetching products:', err));
