@@ -890,4 +890,10 @@
   .nosotros .nos-valor2-card--wide .nos-valor2-icon-wrap { margin-bottom: 20px; }
   .nosotros .nos-valor2-card--wide .nos-valor2-verb   { font-size: 26px; }
   .nosotros .nos-valor2-card--wide .nos-valor2-complement { font-size: 16px; }
+
+  .nosotros .testimonio-featured   { padding: 32px 20px; min-height: auto; }
+  .nosotros .testimonio-quote-mark { font-size: 100px; left: 10px; }
+  .nosotros .testimonio-featured-text { font-size: 14px; margin-bottom: 20px; }
+  .nosotros .testimonio-name      { font-size: 16px; }
+  .nosotros .testimonios-thumbs    { flex-wrap: wrap; }
 }
