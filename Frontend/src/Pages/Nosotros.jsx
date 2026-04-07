@@ -29,33 +29,6 @@ const timelineData = [
   },
 ];
 
-const statsData = [
-  {
-    number: 3000,
-    suffix: "+",
-    label: "Clientes activos",
-    desc: "Empresas, estudios y makers en toda la región que confían en nosotros",
-  },
-  {
-    number: 3,
-    suffix: "años",
-    label: "En el mercado",
-    desc: "Construyendo expertise en manufactura aditiva",
-  },
-  {
-    number: 98,
-    suffix: "%",
-    label: "Satisfacción",
-    desc: "Tasa de satisfacción post-venta 2024",
-  },
-  {
-    number: 23,
-    suffix: "",
-    label: "Provincias",
-    desc: "Cobertura y soporte técnico en todo el país",
-  },
-];
-
 const valoresData = [
   {
     icon: "⬡",
@@ -369,31 +342,6 @@ export default function Nosotros() {
               ))}
             </div>
           </div>
-        </div>
-      </section>
-
-      <div className="nos-divider" />
-
-      {/* MISIÓN */}
-      <div className="nos-mision-banner">
-        <div className="nos-mision-tag">// Nuestra misión</div>
-        <div className="nos-mision-text">
-          Democratizar la fabricación aditiva para que{" "}
-          <span>cualquier idea, sin importar su escala</span>, pueda volverse un
-          objeto real.
-        </div>
-      </div>
-
-      <div className="nos-divider" />
-
-      {/* STATS */}
-      <section className="nos-section" id="stats">
-        <div className="nos-section-label">En números</div>
-        <h2 className="nos-section-title">RESULTADOS QUE HABLAN</h2>
-        <div className="nos-stats-grid">
-          {statsData.map((s, i) => (
-            <StatCard key={i} stat={s} delay={i * 0.1} />
-          ))}
         </div>
       </section>
 

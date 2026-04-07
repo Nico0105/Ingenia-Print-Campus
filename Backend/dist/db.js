@@ -16,7 +16,7 @@ exports.verifyPassword = verifyPassword;
 const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config();
 const pg_1 = require("pg");
-const bcrypt_1 = __importDefault(require("bcrypt"));
+const bcryptjs_1 = __importDefault(require("bcryptjs"));
 const ADMIN_USERNAME = process.env.ADMIN_USERNAME;
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD;
 exports.db = new pg_1.Pool({
@@ -47,7 +47,7 @@ async function initDB() {
   `);
     const result = await exports.db.query('SELECT id FROM admins WHERE username = $1', [ADMIN_USERNAME]);
     if (result.rows.length === 0) {
-        const hashedPassword = await bcrypt_1.default.hash(ADMIN_PASSWORD, 10);
+        const hashedPassword = await bcryptjs_1.default.hash(ADMIN_PASSWORD, 10);
         await exports.db.query('INSERT INTO admins (username, password, email) VALUES ($1, $2, $3)', [ADMIN_USERNAME, hashedPassword, 'admin@ingenia.com']);
         console.log('✅ Admin creado:', ADMIN_USERNAME);
     }
@@ -104,7 +104,7 @@ async function getAdminByUsername(username) {
 }
 async function verifyPassword(plainPassword, hashedPassword) {
     try {
-        return await bcrypt_1.default.compare(plainPassword, hashedPassword);
+        return await bcryptjs_1.default.compare(plainPassword, hashedPassword);
     }
     catch (error) {
         console.error('Error comparing passwords:', error);

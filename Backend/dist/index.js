@@ -3,6 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+// redeploy v2
 const express_1 = __importDefault(require("express"));
 const cors_1 = __importDefault(require("cors"));
 const dotenv_1 = __importDefault(require("dotenv"));
@@ -25,6 +26,11 @@ app.use('/api/auth', auth_routes_1.default);
 app.use('/api/products', productos_routes_1.default);
 app.get('/', (req, res) => {
     res.json({ message: 'API de Ingenia Print Campus funcionando! 🚀' });
+});
+// Error handler global para multer y otros errores
+app.use((err, req, res, next) => {
+    console.error('Error global:', err.message, err.stack);
+    res.status(500).json({ error: err.message || 'Error interno del servidor' });
 });
 app.listen(PORT, () => {
     console.log(`🚀 Servidor corriendo en http://localhost:${PORT}`);

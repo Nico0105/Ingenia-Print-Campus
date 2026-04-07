@@ -315,9 +315,10 @@ router.get("/:id", async (req: Request, res: Response) => {
 });
 
 // POST /api/products - Crear producto
-router.post("/", upload.array('imagenes'), async (req: Request, res: Response) => {
+// ✅ CAMBIO: upload.any() en vez de upload.array('imagenes') para aceptar color_imagen_N
+router.post("/", upload.any(), async (req: Request, res: Response) => {
   try {
-    let { nombre, categoria, subcategoria, titulo, especificaciones, materiales_compatibles, ideal_para } = req.body;
+    let { nombre, categoria, subcategoria, titulo, especificaciones, materiales_compatibles, ideal_para, colores } = req.body;
     if (!nombre) {
       res.status(400).json({ error: "Nombre requerido" });
       return;
@@ -328,9 +329,23 @@ router.post("/", upload.array('imagenes'), async (req: Request, res: Response) =
       subcategoria = "Otros";
     }
 
-    // ✅ NUEVO: Cloudinary ya subió las imágenes, file.path = URL, file.filename = public_id
-    const files = req.files as (Express.Multer.File & { path: string; filename: string })[];
-    const imagenes = files ? files.map(f => ({ url: f.path, public_id: f.filename })) : [];
+    // ✅ Separar archivos por fieldname
+    const allFiles = req.files as (Express.Multer.File & { path: string; filename: string })[];
+    const imagenesFiles = allFiles.filter(f => f.fieldname === 'imagenes');
+    const imagenes = imagenesFiles.map(f => ({ url: f.path, public_id: f.filename }));
+
+    // ✅ Procesar colores con sus imágenes
+    let coloresMeta: any[] = [];
+    try { coloresMeta = JSON.parse(colores || '[]'); } catch { coloresMeta = []; }
+
+    const coloresFinales = coloresMeta.map((c: any, i: number) => {
+      const colorFile = allFiles.find(f => f.fieldname === `color_imagen_${i}`) as any;
+      return {
+        nombre: c.nombre,
+        imagenUrl: colorFile ? colorFile.path : (c.imagenUrl || null),
+        public_id: colorFile ? colorFile.filename : null,
+      };
+    });
 
     await insertProducto({
       nombre,
@@ -340,7 +355,8 @@ router.post("/", upload.array('imagenes'), async (req: Request, res: Response) =
         titulo,
         especificaciones: JSON.parse(especificaciones || "{}"),
         materiales_compatibles: JSON.parse(materiales_compatibles || "[]"),
-        ideal_para: JSON.parse(ideal_para || "[]")
+        ideal_para: JSON.parse(ideal_para || "[]"),
+        colores: coloresFinales,
       })
     });
 
@@ -352,7 +368,8 @@ router.post("/", upload.array('imagenes'), async (req: Request, res: Response) =
 });
 
 // PUT /api/products/:id - Editar producto
-router.put("/:id", upload.array('imagenes'), async (req: Request, res: Response) => {
+// ✅ CAMBIO: upload.any() en vez de upload.array('imagenes') para aceptar color_imagen_N
+router.put("/:id", upload.any(), async (req: Request, res: Response) => {
   try {
     const id = parseInt(req.params.id as string, 10);
     if (isNaN(id)) {
@@ -360,8 +377,11 @@ router.put("/:id", upload.array('imagenes'), async (req: Request, res: Response)
       return;
     }
 
-    const { nombre, categoria, subcategoria, titulo, especificaciones, materiales_compatibles, ideal_para } = req.body;
-    const files = req.files as Express.Multer.File[];
+    const { nombre, categoria, subcategoria, titulo, especificaciones, materiales_compatibles, ideal_para, colores } = req.body;
+
+    // ✅ Separar archivos por fieldname
+    const allFiles = req.files as (Express.Multer.File & { path: string; filename: string })[];
+    const imagenesFiles = allFiles.filter(f => f.fieldname === 'imagenes');
 
     let currentProducto = await getProductoById(id);
     let dbId = id;
@@ -414,7 +434,7 @@ router.put("/:id", upload.array('imagenes'), async (req: Request, res: Response)
       return;
     }
 
-   let imagenes: { url: string; public_id: string }[] = [];
+    let imagenes: { url: string; public_id: string }[] = [];
     try {
       const parsed = JSON.parse(currentProducto.imagenes || '[]');
       if (Array.isArray(parsed)) {
@@ -426,12 +446,25 @@ router.put("/:id", upload.array('imagenes'), async (req: Request, res: Response)
       }
     } catch { imagenes = []; }
 
-    if (files && files.length > 0) {
-      const cloudFiles = files as (Express.Multer.File & { path: string; filename: string })[];
-      for (const file of cloudFiles) {
+    // ✅ Solo agregar imágenes principales (fieldname === 'imagenes')
+    if (imagenesFiles.length > 0) {
+      for (const file of imagenesFiles) {
         imagenes.push({ url: file.path, public_id: file.filename });
       }
     }
+
+    // ✅ Procesar colores con sus imágenes
+    let coloresMeta: any[] = [];
+    try { coloresMeta = JSON.parse(colores || '[]'); } catch { coloresMeta = []; }
+
+    const coloresFinales = coloresMeta.map((c: any, i: number) => {
+      const colorFile = allFiles.find(f => f.fieldname === `color_imagen_${i}`) as any;
+      return {
+        nombre: c.nombre,
+        imagenUrl: colorFile ? colorFile.path : (c.imagenUrl || null),
+        public_id: colorFile ? colorFile.filename : null,
+      };
+    });
 
     const updatedProduct = {
       nombre: nombre || currentProducto.nombre,
@@ -451,7 +484,8 @@ router.put("/:id", upload.array('imagenes'), async (req: Request, res: Response)
         ideal_para: (() => {
           try { return ideal_para ? JSON.parse(ideal_para) : (JSON.parse(currentProducto.descripcion_general || '{}').ideal_para || []); }
           catch { return []; }
-        })()
+        })(),
+        colores: coloresFinales, // ✅ NUEVO: guardar colores con sus imágenes
       }
     };
     await updateProducto(dbId, updatedProduct);

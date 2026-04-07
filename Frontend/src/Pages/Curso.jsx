@@ -308,32 +308,6 @@ export default function Cursos() {
           Scroll para explorar
         </div>
       </section>
-
-      {/* INCLUDED BANNER */}
-      <section className="curso-included-banner">
-        <div className="included-content">
-          <h2>¿Qué incluye el Campus Ingenia?</h2>
-          <p>
-            Cada impresora 3D que adquieras en Ingenia Print incluye acceso completo a nuestro programa de formación,
-            diseñado por técnicos y makers con años de experiencia en el ecosistema de manufactura aditiva.
-          </p>
-          <div className="included-highlights">
-            <div className="highlight">
-              <strong>+15 horas</strong>
-              <span>De contenido en video</span>
-            </div>
-            <div className="highlight">
-              <strong>Soporte lifetime</strong>
-              <span>Para tus preguntas técnicas</span>
-            </div>
-            <div className="highlight">
-              <strong>Comunidad activa</strong>
-              <span>De makers y profesionales</span>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* BENEFICIOS */}
       <section className="curso-section">
         <div className="curso-section-label">Beneficios</div>

@@ -444,6 +444,99 @@
   padding: 12px 24px !important;
 }
 
+/* ================================
+   SECCIÓN COLORES (Filamentos)
+================================ */
+.colores-section {
+  margin-top: 24px;
+  padding: 20px;
+  background: rgba(217, 119, 6, 0.05);
+  border: 1px solid rgba(217, 119, 6, 0.3);
+  border-radius: 10px;
+}
+
+.colores-section h4 {
+  color: #f97316 !important;
+  margin-top: 0 !important;
+}
+
+.colores-hint {
+  font-size: 12px;
+  color: #64748b;
+  margin: -8px 0 16px 0;
+}
+
+.color-field {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+
+.color-field input[type="text"] {
+  flex: 1;
+  min-width: 150px;
+  padding: 10px 14px;
+  background: #0f172a;
+  border: 1px solid #334155;
+  border-radius: 8px;
+  color: #f1f5f9;
+  font-size: 14px;
+}
+
+.color-field input[type="text"]:focus {
+  border-color: #f97316;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.1);
+}
+
+.file-label {
+  display: inline-block;
+  padding: 9px 14px;
+  background: #1e40af;
+  color: white;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s ease;
+  white-space: nowrap;
+}
+
+.file-label:hover {
+  background: #1e3a8a;
+}
+
+.color-preview-img {
+  width: 42px;
+  height: 42px;
+  object-fit: cover;
+  border-radius: 6px;
+  border: 2px solid #334155;
+  flex-shrink: 0;
+}
+
+.btn-remove-color {
+  background: #dc2626 !important;
+  color: white !important;
+  border: none !important;
+  border-radius: 6px !important;
+  width: 34px !important;
+  height: 34px !important;
+  font-size: 18px !important;
+  cursor: pointer !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  flex-shrink: 0 !important;
+  padding: 0 !important;
+}
+
+.btn-remove-color:hover {
+  background: #b91c1c !important;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
   .admin-panel {

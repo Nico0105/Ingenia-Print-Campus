@@ -6,7 +6,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const fs_1 = __importDefault(require("fs"));
 const path_1 = __importDefault(require("path"));
-const multer_1 = __importDefault(require("multer"));
+const cloudinary_1 = require("../cloudinary");
+const cloudinary_2 = __importDefault(require("../cloudinary"));
 const mammoth_1 = __importDefault(require("mammoth"));
 const db_1 = require("../db");
 const router = (0, express_1.Router)();
@@ -20,7 +21,6 @@ const normalizeName = (name) => name
     .trim()
     .normalize('NFD')
     .replace(/[\u0300-\u036f]/g, '');
-const upload = (0, multer_1.default)({ dest: path_1.default.join(__dirname, "../uploads/temp") });
 async function getDescripcionFromDocx(productPath) {
     try {
         const descPath = path_1.default.join(productPath, 'Descripción.docx');
@@ -165,7 +165,16 @@ async function buildProducts() {
                     }
                 }
             }
-            const images = getProductImages(item.categoria, item.subcarpeta, item.fullPath);
+            let images = [];
+            if (dbProduct && dbProduct.imagenes) {
+                try {
+                    const raw = JSON.parse(dbProduct.imagenes);
+                    images = Array.isArray(raw) ? raw.map((img) => typeof img === 'string' ? img : img.url) : [];
+                }
+                catch {
+                    images = [];
+                }
+            }
             let contenido = {};
             if (dbProduct && dbProduct.descripcion_general) {
                 try {
@@ -260,6 +269,24 @@ async function buildProducts() {
         return [];
     }
 }
+// POST /api/products/upload-color - Subir imagen de color
+router.post("/upload-color", cloudinary_1.upload.single('imagen'), async (req, res) => {
+    try {
+        const file = req.file;
+        if (!file) {
+            res.status(400).json({ error: "No file provided" });
+            return;
+        }
+        res.json({
+            url: file.path,
+            public_id: file.filename,
+        });
+    }
+    catch (error) {
+        console.error("Error uploading color image:", error);
+        res.status(500).json({ error: "Error uploading color image" });
+    }
+});
 // GET /api/products
 router.get("/", async (req, res) => {
     try {
@@ -293,9 +320,9 @@ router.get("/:id", async (req, res) => {
     }
 });
 // POST /api/products - Crear producto
-router.post("/", upload.array('imagenes'), async (req, res) => {
+router.post("/", cloudinary_1.upload.array('imagenes'), async (req, res) => {
     try {
-        let { nombre, categoria, subcategoria, titulo, especificaciones, materiales_compatibles, ideal_para } = req.body;
+        let { nombre, categoria, subcategoria, titulo, especificaciones, materiales_compatibles, ideal_para, colores } = req.body;
         if (!nombre) {
             res.status(400).json({ error: "Nombre requerido" });
             return;
@@ -304,21 +331,15 @@ router.post("/", upload.array('imagenes'), async (req, res) => {
         if (categoria === "Impresoras FDM" && !subcategoria) {
             subcategoria = "Otros";
         }
+        // ✅ NUEVO: Cloudinary ya subió las imágenes, file.path = URL, file.filename = public_id
         const files = req.files;
-        const imagenes = [];
-        const productDir = subcategoria
-            ? path_1.default.join(PRODUCTOS_BASE, categoria, subcategoria, nombre)
-            : path_1.default.join(PRODUCTOS_BASE, categoria, nombre);
-        if (!fs_1.default.existsSync(productDir)) {
-            fs_1.default.mkdirSync(productDir, { recursive: true });
+        const imagenes = files ? files.map(f => ({ url: f.path, public_id: f.filename })) : [];
+        let coloresData = [];
+        try {
+            coloresData = colores ? JSON.parse(colores) : [];
         }
-        if (files) {
-            for (const file of files) {
-                const newName = `${Date.now()}_${file.originalname}`;
-                const newPath = path_1.default.join(productDir, newName);
-                fs_1.default.renameSync(file.path, newPath);
-                imagenes.push(newName);
-            }
+        catch {
+            coloresData = [];
         }
         await (0, db_1.insertProducto)({
             nombre,
@@ -328,7 +349,8 @@ router.post("/", upload.array('imagenes'), async (req, res) => {
                 titulo,
                 especificaciones: JSON.parse(especificaciones || "{}"),
                 materiales_compatibles: JSON.parse(materiales_compatibles || "[]"),
-                ideal_para: JSON.parse(ideal_para || "[]")
+                ideal_para: JSON.parse(ideal_para || "[]"),
+                colores: coloresData,
             })
         });
         res.status(201).json({ message: "Producto creado" });
@@ -339,14 +361,14 @@ router.post("/", upload.array('imagenes'), async (req, res) => {
     }
 });
 // PUT /api/products/:id - Editar producto
-router.put("/:id", upload.array('imagenes'), async (req, res) => {
+router.put("/:id", cloudinary_1.upload.array('imagenes'), async (req, res) => {
     try {
         const id = parseInt(req.params.id, 10);
         if (isNaN(id)) {
             res.status(400).json({ error: "ID inválido" });
             return;
         }
-        const { nombre, categoria, subcategoria, titulo, especificaciones, materiales_compatibles, ideal_para } = req.body;
+        const { nombre, categoria, subcategoria, titulo, especificaciones, materiales_compatibles, ideal_para, colores } = req.body;
         const files = req.files;
         let currentProducto = await (0, db_1.getProductoById)(id);
         let dbId = id;
@@ -394,27 +416,28 @@ router.put("/:id", upload.array('imagenes'), async (req, res) => {
         }
         let imagenes = [];
         try {
-            imagenes = JSON.parse(currentProducto.imagenes || '[]');
-            if (!Array.isArray(imagenes))
-                imagenes = [];
+            const parsed = JSON.parse(currentProducto.imagenes || '[]');
+            if (Array.isArray(parsed)) {
+                imagenes = parsed.map((img) => typeof img === 'string'
+                    ? { url: img, public_id: '' }
+                    : img);
+            }
         }
         catch {
             imagenes = [];
         }
         if (files && files.length > 0) {
-            const categoriaDir = categoria || currentProducto.categoria || "Impresoras FDM";
-            const productDir = subcategoria
-                ? path_1.default.join(PRODUCTOS_BASE, categoriaDir, subcategoria, nombre || currentProducto.nombre)
-                : path_1.default.join(PRODUCTOS_BASE, categoriaDir, nombre || currentProducto.nombre);
-            if (!fs_1.default.existsSync(productDir)) {
-                fs_1.default.mkdirSync(productDir, { recursive: true });
+            const cloudFiles = files;
+            for (const file of cloudFiles) {
+                imagenes.push({ url: file.path, public_id: file.filename });
             }
-            for (const file of files) {
-                const newName = `${Date.now()}_${file.originalname}`;
-                const targetPath = path_1.default.join(productDir, newName);
-                fs_1.default.renameSync(file.path, targetPath);
-                imagenes.push(newName);
-            }
+        }
+        let coloresData = [];
+        try {
+            coloresData = colores ? JSON.parse(colores) : [];
+        }
+        catch {
+            coloresData = [];
         }
         const updatedProduct = {
             nombre: nombre || currentProducto.nombre,
@@ -446,15 +469,17 @@ router.put("/:id", upload.array('imagenes'), async (req, res) => {
                     catch {
                         return [];
                     }
-                })()
+                })(),
+                colores: coloresData,
             }
         };
         await (0, db_1.updateProducto)(dbId, updatedProduct);
         res.json({ message: "Producto actualizado" });
     }
     catch (error) {
-        console.error("Error actualizando producto:", error);
-        res.status(500).json({ error: "Error actualizando producto: " + error.message });
+        console.error("Error actualizando producto RAW:", String(error));
+        console.error("Error actualizando producto STRINGIFY:", JSON.stringify(error));
+        res.status(500).json({ error: String(error) });
     }
 });
 // PUT /api/products/:id/stock - Toggle stock
@@ -506,36 +531,6 @@ router.put("/:id/stock", async (req, res) => {
         res.status(500).json({ error: "Error actualizando stock" });
     }
 });
-function deleteProductFolder(nombre, categoria) {
-    try {
-        const categorias = ['Impresoras FDM', 'Impresoras de resina', 'Grabadoras Láser', 'Filamentos', 'Accesorios'];
-        for (const cat of categorias) {
-            const productPath = path_1.default.join(PRODUCTOS_BASE, cat, nombre);
-            if (fs_1.default.existsSync(productPath)) {
-                fs_1.default.rmSync(productPath, { recursive: true, force: true });
-                console.log('Carpeta eliminada:', productPath);
-                return true;
-            }
-            const catPath = path_1.default.join(PRODUCTOS_BASE, cat);
-            if (fs_1.default.existsSync(catPath)) {
-                const subdirs = fs_1.default.readdirSync(catPath).filter(f => fs_1.default.statSync(path_1.default.join(catPath, f)).isDirectory());
-                for (const subdir of subdirs) {
-                    const subProductPath = path_1.default.join(catPath, subdir, nombre);
-                    if (fs_1.default.existsSync(subProductPath)) {
-                        fs_1.default.rmSync(subProductPath, { recursive: true, force: true });
-                        console.log('Carpeta eliminada (subcarpeta):', subProductPath);
-                        return true;
-                    }
-                }
-            }
-        }
-        return false;
-    }
-    catch (err) {
-        console.error('Error eliminando carpeta:', err);
-        return false;
-    }
-}
 // DELETE /api/products/:id
 router.delete("/:id", async (req, res) => {
     try {
@@ -554,16 +549,18 @@ router.delete("/:id", async (req, res) => {
         console.log('Delete - Producto encontrado:', productToDelete.nombre, 'categoría:', productToDelete.categoria);
         const dbProduct = await (0, db_1.getProductoByNombre)(productToDelete.nombre);
         if (!dbProduct) {
-            console.log('Delete - Producto solo en carpeta, eliminando:', productToDelete.nombre);
-            const folderDeleted = deleteProductFolder(productToDelete.nombre, productToDelete.categoria);
-            if (folderDeleted) {
-                res.json({ message: "Producto eliminado (carpeta)" });
-            }
-            else {
-                res.status(404).json({ error: "Producto no encontrado en carpeta" });
-            }
+            res.status(404).json({ error: "Producto no encontrado en base de datos" });
             return;
         }
+        // Borrar imágenes de Cloudinary
+        try {
+            const imgs = JSON.parse(dbProduct.imagenes || '[]');
+            for (const img of imgs) {
+                if (img.public_id)
+                    await cloudinary_2.default.uploader.destroy(img.public_id);
+            }
+        }
+        catch { /* si no tiene imágenes o falla, seguimos igual */ }
         await (0, db_1.deleteProducto)(dbProduct.nombre);
         res.json({ message: "Producto eliminado" });
     }

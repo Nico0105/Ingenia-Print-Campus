@@ -963,6 +963,90 @@
   background: #05060a;
 }
 
+/* ================================
+   SWATCHES DE COLORES (Filamentos)
+================================ */
+.color-swatches {
+  margin-top: 12px;
+}
+
+.swatches-label {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-bottom: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.swatches-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.swatch-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  background: rgba(15, 17, 23, 0.6);
+  border: 2px solid var(--border-soft);
+  border-radius: 10px;
+  padding: 8px 10px;
+  cursor: pointer;
+  transition: border-color 0.2s ease, transform 0.2s ease;
+  min-width: 56px;
+}
+
+.swatch-btn:hover {
+  border-color: var(--accent-blue);
+  transform: translateY(-2px);
+}
+
+.swatch-btn.active {
+  border-color: var(--accent-orange);
+  background: var(--accent-orange-glow);
+}
+
+.swatch-circle {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  display: block;
+  flex-shrink: 0;
+}
+
+.swatch-name {
+  font-size: 11px;
+  color: var(--text-muted);
+  text-align: center;
+  line-height: 1.2;
+  max-width: 56px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.swatch-btn.active .swatch-name {
+  color: var(--accent-orange);
+}
+
+.selected-color-label {
+  margin-top: 4px;
+  font-size: 14px;
+  color: var(--text-muted);
+}
+
+.selected-color-label strong {
+  color: var(--accent-orange);
+}
+
+/* Thumbnail activo */
+.thumbnail.active {
+  border-color: var(--accent-orange);
+}
+
 /* RESPONSIVE */
 @media (max-width: 1200px) {
   .product-main {
