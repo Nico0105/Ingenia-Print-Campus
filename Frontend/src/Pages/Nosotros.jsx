@@ -278,9 +278,8 @@ export default function Nosotros() {
         <div className="nos-hero-orb-orange" />
         <div className="nos-hero-label">Quiénes somos</div>
         <h1 className="nos-hero-title">
-          HACEMOS
-          <span>REALIDAD</span>
-          LO QUE DISEÑÁS
+          SOBRE
+          <span>INGENIA PRINT</span>
         </h1>
         <button className="nos-hero-cta" onClick={handleCatalogo}>
           Conocé nuestro catálogo →
