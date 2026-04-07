@@ -20,7 +20,7 @@
   min-height: 100vh;
   background: var(--bg-primary);
   color: var(--text-primary);
-  font-family: 'Barlow', sans-serif;
+  font-family: 'Poppins', sans-serif;
   position: relative;
   overflow-x: hidden;
   padding-top: 120px;
@@ -82,7 +82,7 @@
   border: 1px solid rgba(217, 119, 6, 0.3);
   border-radius: 100px;
   padding: 6px 18px;
-  font-family: 'Barlow Condensed', sans-serif;
+  font-family: 'Poppins', sans-serif;
   font-size: 0.72rem;
   letter-spacing: 0.15em;
   text-transform: uppercase;
@@ -131,14 +131,14 @@
 }
 
 .garantia-hero-title {
-  font-family: 'Teko', sans-serif;
-  font-size: clamp(3.5rem, 7vw, 6rem);
-  font-weight: 600;
-  line-height: 1;
-  letter-spacing: 0.02em;
-  text-transform: uppercase;
-  margin-bottom: 1.5rem;
-  animation: garantia-fadeSlideDown 0.8s ease both;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 500;
+  font-size: clamp(52px, 9vw, 99px);
+  line-height: 1.1;
+  letter-spacing: 1px;
+  margin-bottom: 24px;
+  opacity: 0;
+  animation: cursoFadeUp 0.9s ease forwards 0.4s;
 }
 
 .garantia-hero-title span {
@@ -250,9 +250,9 @@
 }
 
 .garantia-service-card h3 {
-  font-family: 'Teko', sans-serif;
+  font-family: 'Poppins', sans-serif;
   font-size: 1.6rem;
-  font-weight: 600;
+  font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.03em;
   margin-bottom: 0.5rem;
@@ -319,7 +319,7 @@
 }
 
 .garantia-coverage-months {
-  font-family: 'Teko', sans-serif;
+  font-family: 'Poppins', sans-serif;
   font-size: 5rem;
   font-weight: 700;
   line-height: 1;
@@ -331,7 +331,7 @@
 }
 
 .garantia-coverage-label {
-  font-family: 'Barlow Condensed', sans-serif;
+  font-family: 'Poppins', sans-serif;
   font-size: 0.72rem;
   letter-spacing: 0.15em;
   text-transform: uppercase;
@@ -396,7 +396,7 @@
 }
 
 .garantia-exclusion-title {
-  font-family: 'Teko', sans-serif;
+  font-family: 'Poppins', sans-serif;
   font-size: 1.6rem;
   font-weight: 600;
   text-transform: uppercase;
@@ -458,7 +458,7 @@
 }
 
 .garantia-cta-title {
-  font-family: 'Teko', sans-serif;
+  font-family: 'Poppins', sans-serif;
   font-size: clamp(2.5rem, 5vw, 4.5rem);
   font-weight: 600;
   text-transform: uppercase;
@@ -489,7 +489,7 @@
   border-radius: 8px;
   background: var(--gradient-tech);
   color: white;
-  font-family: 'Barlow Condensed', sans-serif;
+  font-family: 'Poppins', sans-serif;
   font-size: 1rem;
   font-weight: 600;
   letter-spacing: 0.1em;

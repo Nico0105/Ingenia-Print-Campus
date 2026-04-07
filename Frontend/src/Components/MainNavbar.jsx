@@ -48,7 +48,7 @@ export default function MainNavbar() {
         <img src="https://res.cloudinary.com/dvjmdhlac/image/upload/v1775435437/Logo_Principal_gq4gtt.png" alt="Logo Ingenia" />
       </div>
 
-      <div className="nos-nav-logo">INGENIA PRINT</div>
+      <div className="nos-nav-logo" onClick={() => go("/Home")}>INGENIA PRINT</div>
 
       <div className="nav">
         <button className={`nav-btn ${pathname === "/Catalogo" ? "active" : ""}`} onClick={() => go("/Catalogo")}>Catalogo</button>

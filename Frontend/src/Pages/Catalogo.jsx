@@ -101,7 +101,7 @@ export default function Catalogo() {
 
           <div className="products-grid">
             {filteredProducts.map((product) => (
-              <div className="product-card" key={product.id}>
+              <div className="product-card" key={product.id} onClick={() => navigate(`/product/${product.id}`)}>
                 <div className="product-image">
                   <img
                     src={product.imagenes[0] || "https://res.cloudinary.com/dvjmdhlac/image/upload/v1775435437/Logo_Principal_gq4gtt.png"}
@@ -121,7 +121,7 @@ export default function Catalogo() {
                       className="btn-add-cart"
                       onClick={() => navigate(`/product/${product.id}`)}
                     >
-                      Consultar
+                      Ver Producto
                     </button>
                   </div>
                 </div>

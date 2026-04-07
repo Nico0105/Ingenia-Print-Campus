@@ -39,24 +39,6 @@ const beneficiosData = [
   },
 ];
 
-const testimoniosData = [
-  {
-    name: "Juan Martinez",
-    role: "Emprendedor",
-    text: "Los cursos fueron absolutamente clave para empezar mi negocio de figuras personalizadas. Aprendí desde cómo calibrar la impresora hasta técnicas de acabado profesional. El soporte técnico es excepcional y siempre responden rápido cuando tengo dudas.",
-  },
-  {
-    name: "María González",
-    role: "Diseñadora Industrial",
-    text: "Aprendí desde cero, sin experiencia previa en impresión 3D. Los instructores explican paso a paso, con ejemplos prácticos y proyectos reales. La comunidad es muy amable y colaborativa, el nivel de detalle en los cursos es increíble.",
-  },
-  {
-    name: "Carlos López",
-    role: "Maker",
-    text: "Gracias a los cursos optimicé completamente mis impresiones en tiempo y calidad. Reduje el desperdicio de material en más del 40% aplicando lo que aprendí en slicing y parametrización. La inversión valió 100% la pena.",
-  },
-];
-
 const pasosData = [
   {
     number: "01",
@@ -103,14 +85,10 @@ function useInView(ref, options = {}) {
   return inView;
 }
 
-function useVisible(breakpoints = { sm: 640, md: 1024 }, values = { sm: 1, md: 2, lg: 3 }) {
-  const [visible, setVisible] = useState(values.lg);
+function useVisible() {
+  const [visible, setVisible] = useState(2);
   useEffect(() => {
-    const update = () => {
-      if (window.innerWidth < breakpoints.sm) setVisible(values.sm);
-      else if (window.innerWidth < breakpoints.md) setVisible(values.md);
-      else setVisible(values.lg);
-    };
+    const update = () => setVisible(window.innerWidth < 640 ? 1 : 2);
     update();
     window.addEventListener("resize", update);
     return () => window.removeEventListener("resize", update);
@@ -120,7 +98,7 @@ function useVisible(breakpoints = { sm: 640, md: 1024 }, values = { sm: 1, md: 2
 
 // ── SUB-COMPONENTS ────────────────────────────────────────────────────────────
 
-function BeneficioCard({ ben, idx, visible = 3 }) {
+function BeneficioCard({ ben, idx, visible = 2 }) {
   const ref = useRef(null);
   const inView = useInView(ref);
 
@@ -132,6 +110,7 @@ function BeneficioCard({ ben, idx, visible = 3 }) {
         transitionDelay: `${(idx % visible) * 0.1}s`,
         flex: `0 0 calc(100% / ${visible})`,
         boxSizing: "border-box",
+        padding: "0 10px",
       }}
     >
       <div className="beneficio-icon">{ben.icon}</div>
@@ -145,23 +124,18 @@ function BeneficiosCarousel({ items }) {
   const [current, setCurrent] = useState(0);
   const [animating, setAnimating] = useState(false);
   const visible = useVisible();
-  const maxIndex = items.length - visible;
+  const totalPages = Math.ceil(items.length / visible);
 
   const go = (dir) => {
     if (animating) return;
     setAnimating(true);
-    setCurrent((prev) => {
-      const next = prev + dir;
-      if (next < 0) return maxIndex;
-      if (next > maxIndex) return 0;
-      return next;
-    });
+    setCurrent((prev) => (prev + dir + totalPages) % totalPages);
     setTimeout(() => setAnimating(false), 400);
   };
 
   useEffect(() => {
-    setCurrent((prev) => Math.min(prev, maxIndex));
-  }, [visible, maxIndex]);
+    setCurrent(0);
+  }, [visible]);
 
   return (
     <div className="curso-carousel-wrapper">
@@ -169,83 +143,32 @@ function BeneficiosCarousel({ items }) {
       <div className="curso-carousel-track-outer">
         <div
           className="curso-carousel-track"
-          style={{ transform: `translateX(calc(-${current} * (100% / ${visible})))` }}
+          style={{ transform: `translateX(calc(-${current * 100}%))` }}
         >
-          {items.map((ben, i) => (
-            <BeneficioCard key={i} ben={ben} idx={i} visible={visible} />
+          {Array.from({ length: totalPages }).map((_, pageIdx) => (
+            <div
+              key={pageIdx}
+              style={{
+                display: "flex",
+                flex: "0 0 100%",
+                boxSizing: "border-box",
+              }}
+            >
+              {items.slice(pageIdx * visible, pageIdx * visible + visible).map((ben, i) => (
+                <BeneficioCard key={i} ben={ben} idx={pageIdx * visible + i} visible={visible} />
+              ))}
+            </div>
           ))}
         </div>
       </div>
       <button className="curso-carousel-btn curso-carousel-next" onClick={() => go(1)} aria-label="Siguiente">›</button>
       <div className="curso-carousel-dots">
-        {Array.from({ length: maxIndex + 1 }).map((_, i) => (
+        {Array.from({ length: totalPages }).map((_, i) => (
           <button
             key={i}
             className={`curso-carousel-dot${i === current ? " active" : ""}`}
             onClick={() => setCurrent(i)}
           />
-        ))}
-      </div>
-    </div>
-  );
-}
-
-function TestimoniosCarousel({ items }) {
-  const [current, setCurrent] = useState(0);
-  const [animating, setAnimating] = useState(false);
-  const total = items.length;
-
-  const go = (dir) => {
-    if (animating) return;
-    setAnimating(true);
-    setCurrent((prev) => (prev + dir + total) % total);
-    setTimeout(() => setAnimating(false), 400);
-  };
-
-  const t = items[current];
-
-  return (
-    <div className="testimonios-carousel">
-      <div className="testimonio-featured">
-        <div className="testimonio-quote-mark">"</div>
-        <p className="testimonio-featured-text">{t.text}</p>
-        <div className="testimonio-featured-author">
-          <div className="testimonio-avatar" />
-          <div>
-            <div className="testimonio-name">{t.name}</div>
-            <div className="testimonio-role">{t.role}</div>
-          </div>
-        </div>
-      </div>
-
-      <div className="testimonios-nav">
-        <button className="curso-carousel-btn" onClick={() => go(-1)} aria-label="Anterior">‹</button>
-        <div className="curso-carousel-dots">
-          {items.map((_, i) => (
-            <button
-              key={i}
-              className={`curso-carousel-dot${i === current ? " active" : ""}`}
-              onClick={() => setCurrent(i)}
-            />
-          ))}
-        </div>
-        <button className="curso-carousel-btn" onClick={() => go(1)} aria-label="Siguiente">›</button>
-      </div>
-
-      {/* Miniaturas de los otros testimonios */}
-      <div className="testimonios-thumbs">
-        {items.map((item, i) => (
-          <button
-            key={i}
-            className={`testimonio-thumb${i === current ? " active" : ""}`}
-            onClick={() => setCurrent(i)}
-          >
-            <div className="testimonio-thumb-avatar" />
-            <div>
-              <div className="testimonio-thumb-name">{item.name}</div>
-              <div className="testimonio-thumb-role">{item.role}</div>
-            </div>
-          </button>
         ))}
       </div>
     </div>
@@ -308,6 +231,7 @@ export default function Cursos() {
           Scroll para explorar
         </div>
       </section>
+
       {/* BENEFICIOS */}
       <section className="curso-section">
         <div className="curso-section-label">Beneficios</div>
@@ -326,15 +250,6 @@ export default function Cursos() {
             <PasoCard key={i} paso={p} delay={i * 0.1} isLast={i === pasosData.length - 1} />
           ))}
         </div>
-      </section>
-
-      <div className="curso-divider" />
-
-      {/* TESTIMONIOS */}
-      <section className="curso-section">
-        <div className="curso-section-label">Comunidad</div>
-        <h2 className="curso-section-title">QUÉ DICEN NUESTROS CLIENTES</h2>
-        <TestimoniosCarousel items={testimoniosData} />
       </section>
 
       <div className="curso-divider" />

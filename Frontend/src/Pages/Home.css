@@ -51,6 +51,7 @@
   display: inline-flex;
   align-items: center;
   padding: 10px 20px;
+  margin: 25px;
   background: rgba(217, 119, 6, 0.15);  /* Naranja oscuro con transparencia */
   border: 1px solid rgba(217, 119, 6, 0.4);
   border-radius: 24px;
@@ -833,4 +834,18 @@ main {
   font-size: 15px;     
   flex: 1;
   font-weight: 600;
+}
+
+@media (max-width: 1024px) {
+  .hero-animation {
+    display: none;
+  }
+  .hero-content {
+    text-align: center;
+    width: 100%;
+    padding-left: 0;
+  }
+  .hero {
+    justify-content: center;
+  }
 }

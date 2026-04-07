@@ -82,7 +82,7 @@ export default function Home() {
 
           <div className="product-grid">
             {products.map((product) => (
-              <div className="card" key={product.id}>
+              <div className="card" key={product.id} onClick={() => navigate(`/product/${product.id}`)}>
                 <div className="card-image">
                   <img 
                     src={product.imagenes && product.imagenes[0] ? product.imagenes[0] : 'https://res.cloudinary.com/dvjmdhlac/image/upload/v1775435437/Logo_Principal_gq4gtt.png'} 
@@ -95,9 +95,6 @@ export default function Home() {
 
                 <div className="card-body">
                   <h4>{product.nombre}</h4>
-
-                  <p className="description">{product.contenido?.titulo || 'Descripción no disponible'}</p>
-
                   <ul>
                     {Object.entries(product.contenido?.especificaciones || {}).slice(0, 3).map(([key, value], index) => (
                       <li key={index}>{key}: {value}</li>
@@ -106,7 +103,7 @@ export default function Home() {
 
                   <div className="card-actions">
                     <button className="btn-primary small" onClick={() => navigate(`/product/${product.id}`)}>
-                      Consulta Aquí
+                      Ver Producto
                     </button>
                   </div>
                 </div>

@@ -4,64 +4,6 @@ import MainNavbar from "../Components/MainNavbar";
 import Footer from "../Components/Footer";
 import { useNavigate } from "react-router-dom";
 
-// ── DATA ──────────────────────────────────────────────────────────────────────
-
-const timelineData = [
-  {
-    year: "2023",
-    title: "Los inicios",
-    desc: "Nace Ingenia Print con la primera impresora comprada para fabricar.",
-  },
-  {
-    year: "2024",
-    title: "Expansión de catálogo",
-    desc: "Incorporamos equipos industriales FDM y resina UV para profesionales y estudios.",
-  },
-  {
-    year: "2025",
-    title: "Distribución nacional",
-    desc: "Alcanzamos las 23 provincias con envíos y a todo el país.",
-  },
-  {
-    year: "2026",
-    title: "Liderazgo regional",
-    desc: "Referentes en impresión 3D para Argentina más de 3.000 clientes activos.",
-  },
-];
-
-const valoresData = [
-  {
-    icon: "⬡",
-    title: "Asesoramiento antes de la compra",
-    desc: "No vendemos máquinas, vendemos soluciones. Te ayudamos a elegir el equipo que realmente necesitas, no el más caro.",
-  },
-  {
-    icon: "◈",
-    title: "Acompañamiento durante la instalación",
-    desc: "Cada cliente recibe soporte personalizado durante la instalación y puesta en marcha, para asegurar que todo funcione desde el primer día.",
-  },
-  {
-    icon: "⬟",
-    title: "Respondemos dudas reales",
-    desc: "Soporte técnico en tiempo real, sin bots ni respuestas automáticas. Hablás con personas reales que entienden tu problema.",
-  },
-  {
-    icon: "◇",
-    title: "Ayudamos a entender",
-    desc: "Como usar cada equipo según el objetivo de cada cliente, no solo cómo funciona. Queremos que saques el máximo provecho a tu inversión.",
-  },
-  {
-    icon: "⬠",
-    title: "Accesibilidad",
-    desc: "Creemos que la fabricación digital debe estar al alcance de todos, sin importar el tamaño del proyecto.",
-  },
-  {
-    icon: "◉",
-    title: "Durabilidad y calidad",
-    desc: "Promovemos prácticas responsables y materiales de calidad para que tus creaciones duren y sean seguras",
-  },
-];
-
 // ── HOOKS ─────────────────────────────────────────────────────────────────────
 
 function useInView(ref, options = {}) {
@@ -83,20 +25,6 @@ function useInView(ref, options = {}) {
   }, [ref]);
 
   return inView;
-}
-
-function useVisible() {
-  const [visible, setVisible] = useState(3);
-  useEffect(() => {
-    const update = () =>
-      setVisible(
-        window.innerWidth < 640 ? 1 : window.innerWidth < 1024 ? 2 : 3
-      );
-    update();
-    window.addEventListener("resize", update);
-    return () => window.removeEventListener("resize", update);
-  }, []);
-  return visible;
 }
 
 // ── SUB-COMPONENTS ────────────────────────────────────────────────────────────
@@ -165,93 +93,196 @@ function StatCard({ stat, delay }) {
   );
 }
 
-function ValorCard({ v, idx, visible = 3 }) {
+// TESTIMONIOS
+function TestimoniosCarousel({ items }) {
+  const [current, setCurrent] = useState(0);
+  const [animating, setAnimating] = useState(false);
+  const total = items.length;
+
+  const go = (dir) => {
+    if (animating) return;
+    setAnimating(true);
+    setCurrent((prev) => (prev + dir + total) % total);
+    setTimeout(() => setAnimating(false), 400);
+  };
+
+  const t = items[current];
+
+  return (
+    <div className="testimonios-carousel">
+      <div className="testimonio-featured">
+        <div className="testimonio-quote-mark">"</div>
+        <p className="testimonio-featured-text">{t.text}</p>
+        <div className="testimonio-featured-author">
+          <div className="testimonio-avatar">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+              <circle cx="12" cy="7" r="4" />
+            </svg>
+          </div>
+          <div>
+            <div className="testimonio-name">{t.name}</div>
+            <div className="testimonio-role">{t.role}</div>
+          </div>
+        </div>
+      </div>
+
+      <div className="testimonios-nav">
+        <button className="curso-carousel-btn" onClick={() => go(-1)} aria-label="Anterior">‹</button>
+        <div className="curso-carousel-dots">
+          {items.map((_, i) => (
+            <button
+              key={i}
+              className={`curso-carousel-dot${i === current ? " active" : ""}`}
+              onClick={() => setCurrent(i)}
+            />
+          ))}
+        </div>
+        <button className="curso-carousel-btn" onClick={() => go(1)} aria-label="Siguiente">›</button>
+      </div>
+
+      <div className="testimonios-thumbs">
+        {items.map((item, i) => (
+          <button
+            key={i}
+            className={`testimonio-thumb${i === current ? " active" : ""}`}
+            onClick={() => setCurrent(i)}
+          >
+            <div className="testimonio-thumb-avatar">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                <circle cx="12" cy="7" r="4" />
+              </svg>
+            </div>
+            <div>
+              <div className="testimonio-thumb-name">{item.name}</div>
+              <div className="testimonio-thumb-role">{item.role}</div>
+            </div>
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+const testimoniosData = [
+  {
+    name: "Ivan Paez",
+    role: "Emprendedor",
+    text: "Muy recomendable Ingenia Print, mi experiencia para comprar una máquina desde Tucumán, la verdad muy confiables, Muchas Gracias.",
+  },
+  {
+    name: "Rodrigo Santoja",
+    role: "Emprendedor",
+    text: "Le compre mas de 7 maquinas y jamas tuve un problema, contesta al momento y cualquier detalle que necesites lo soluciona al instante, super recomendables. 10 puntos en todo el servicio gracias!.",
+  },
+  {
+    name: "Daniela  Di Lullo",
+    role: "Maker",
+    text: "Les compre mas de 10 impresoras y siempre todo perfecto. Son muy confiables y el envio super rapido. Cuando tuve problemas siempre me respondieron al instante. Los recomiendo.",
+  },
+  {
+    name: "Agostina Zunino",
+    role: "Maker",
+    text: "Es la segunda maquina que compramos, muy recomendable. Responden por la garantia y todo 10 puntos.",
+  },
+  {
+    name: "Tomas Esteverena",
+    role: "Emprendedor",
+    text: "10 puntos la atención, el asesoramiento y la buena onda de Fabri, ademas de muy buenos precios. Le compre mi primera maquina hace un par de años y hace un mes le compre 2 mas para el laburo. Se los recomiendo a todo el que quiera su primera impresora o comprar varias para equipar su granja o empresa.",
+  }
+];
+// ── VALORES GRID ──────────────────────────────────────────────────────────────
+
+function ValorCard({ num, verb, complement, icon, delay, wide }) {
   const ref = useRef(null);
   const inView = useInView(ref);
 
   return (
     <div
       ref={ref}
-      className={`nos-valor-card${inView ? " visible" : ""}`}
-      style={{
-        transitionDelay: `${(idx % visible) * 0.12}s`,
-        flex: `0 0 calc(100% / ${visible})`,
-        boxSizing: "border-box",
-      }}
+      className={`nos-valor2-card${wide ? " nos-valor2-card--wide" : ""}${inView ? " visible" : ""}`}
+      style={{ transitionDelay: `${delay}s` }}
     >
-      <span className="nos-valor-num">0{idx + 1}</span>
-      <span className="nos-valor-icon">{v.icon}</span>
-      <div className="nos-valor-title">{v.title}</div>
-      <div className="nos-valor-desc">{v.desc}</div>
-      <div className="nos-valor-accent" />
+      <div className="nos-valor2-bar" />
+      <div className="nos-valor2-num">{num}</div>
+      <div className="nos-valor2-icon-wrap">
+        <div className="nos-valor2-icon-ring" />
+        {icon}
+      </div>
+      <div className="nos-valor2-verb">{verb}</div>
+      <div className="nos-valor2-complement">{complement}</div>
     </div>
   );
 }
 
-function ValoresCarousel({ valores }) {
-  const [current, setCurrent] = useState(0);
-  const [animating, setAnimating] = useState(false);
-  const visible = useVisible();
-  const total = valores.length;
-  const maxIndex = total - visible;
-
-  const go = (dir) => {
-    if (animating) return;
-    setAnimating(true);
-    setCurrent((prev) => {
-      const next = prev + dir;
-      if (next < 0) return maxIndex;
-      if (next > maxIndex) return 0;
-      return next;
-    });
-    setTimeout(() => setAnimating(false), 400);
-  };
-
-  // Si al cambiar visible el current queda fuera de rango, lo corregimos
-  useEffect(() => {
-    setCurrent((prev) => Math.min(prev, maxIndex));
-  }, [visible, maxIndex]);
-
+function ValoresGrid() {
   return (
-    <div className="nos-carousel-wrapper">
-      <button
-        className="nos-carousel-btn nos-carousel-prev"
-        onClick={() => go(-1)}
-        aria-label="Anterior"
-      >
-        ‹
-      </button>
-
-      <div className="nos-carousel-track-outer">
-        <div
-          className="nos-carousel-track"
-          style={{
-            transform: `translateX(calc(-${current} * (100% / ${visible})))`,
-          }}
-        >
-          {valores.map((v, i) => (
-            <ValorCard key={i} v={v} idx={i} visible={visible} />
-          ))}
-        </div>
-      </div>
-
-      <button
-        className="nos-carousel-btn nos-carousel-next"
-        onClick={() => go(1)}
-        aria-label="Siguiente"
-      >
-        ›
-      </button>
-
-      <div className="nos-carousel-dots">
-        {Array.from({ length: maxIndex + 1 }).map((_, i) => (
-          <button
-            key={i}
-            className={`nos-carousel-dot${i === current ? " active" : ""}`}
-            onClick={() => setCurrent(i)}
-          />
-        ))}
-      </div>
+    <div className="nos-valor2-grid">
+      <ValorCard
+        num="01"
+        verb="Asesoramos"
+        complement="antes de la compra"
+        delay={0}
+        icon={
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M12 20h9" />
+            <path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z" />
+          </svg>
+        }
+      />
+      <ValorCard
+        num="02"
+        verb="Acompañamos"
+        complement="durante la instalación"
+        delay={0.08}
+        icon={
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" />
+            <circle cx="9" cy="7" r="4" />
+            <path d="M23 21v-2a4 4 0 00-3-3.87" />
+            <path d="M16 3.13a4 4 0 010 7.75" />
+          </svg>
+        }
+      />
+      <ValorCard
+        num="03"
+        verb="Respondemos"
+        complement="dudas reales"
+        delay={0.16}
+        icon={
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+            <circle cx="12" cy="12" r="10" />
+            <path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3" />
+            <line x1="12" y1="17" x2="12.01" y2="17" strokeWidth="2.5" />
+          </svg>
+        }
+      />
+      <ValorCard
+        num="04"
+        verb="Ayudamos"
+        complement="a entender cómo usar cada equipo según el objetivo de cada persona"
+        delay={0.24}
+        icon={
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+            <circle cx="12" cy="12" r="3" />
+          </svg>
+        }
+      />
+      <ValorCard
+        num="05"
+        verb="Y seguimos presentes"
+        complement="después"
+        delay={0.32}
+        wide
+        icon={
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M22 11.08V12a10 10 0 11-5.93-9.14" />
+            <polyline points="22 4 12 14.01 9 11.01" />
+          </svg>
+        }
+      />
     </div>
   );
 }
@@ -293,7 +324,6 @@ export default function Nosotros() {
       {/* HISTORIA */}
       <section className="nos-section nos-historia" id="historia">
         <div className="nos-section-label">Historia</div>
-        <h2 className="nos-section-title">DE TALLER A REFERENTE</h2>
         <div className="nos-historia-inner">
           <div className="nos-historia-text">
             <p>
@@ -333,14 +363,6 @@ export default function Nosotros() {
               descubrir todo lo que pueden hacer por vos.
             </p>
           </div>
-
-          <div>
-            <div className="nos-timeline">
-              {timelineData.map((item, i) => (
-                <TimelineItem key={i} item={item} delay={i * 0.15} />
-              ))}
-            </div>
-          </div>
         </div>
       </section>
 
@@ -350,8 +372,22 @@ export default function Nosotros() {
       <section className="nos-section nos-historia" id="valores">
         <div className="nos-section-label">Valores</div>
         <h2 className="nos-section-title">NUESTRA FORMA DE TRABAJAR</h2>
-        <ValoresCarousel valores={valoresData} />
+        <p className="nos-valores-sub">
+          En Ingenia Print creemos que la tecnología tiene que ser clara, accesible y acompañada. Por eso:
+        </p>
+        <ValoresGrid />
       </section>
+
+      <div className="nos-divider" />
+
+      {/* TESTIMONIOS */}
+      <section className="nos-section">
+        <div className="nos-section-label">Comunidad</div>
+        <h2 className="nos-section-title">QUÉ DICEN NUESTROS CLIENTES</h2>
+        <TestimoniosCarousel items={testimoniosData} />
+      </section>
+
+      <div className="nos-divider" />
 
       {/* FOOTER */}
       <Footer />
