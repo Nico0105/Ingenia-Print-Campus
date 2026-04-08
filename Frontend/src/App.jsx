@@ -1,6 +1,5 @@
 import React from 'react';
 import {Routes, Route} from 'react-router-dom';
-import logo from './logo.svg';
 import './App.css';
 import Home from './Pages/Home.jsx';
 import Curso from './Pages/Curso.jsx';
