@@ -219,8 +219,11 @@ export default function Cursos() {
           <span>ACOMPAÑADO</span>
           DESDE EL PRIMER DÍA
         </h1>
+
+        <div className="garantia-hero-line" />
+
         <p className="curso-hero-desc hero-content-down">
-          Cuando comprás tu impresora en Ingenia Print accedés sin costo al Campus Ingenia: un espacio pensado para acompañarte en cada etapa del proceso. Desde la primera impresión hasta el desarrollo de proyectos más avanzados.
+          Cuando comprás tu impresora en <strong>Ingenia Print</strong> accedés sin costo al Campus Ingenia: un espacio pensado para acompañarte en cada etapa del proceso. Desde la primera impresión hasta el desarrollo de proyectos más avanzados.
         </p>
       </section>
 
