@@ -101,14 +101,12 @@ export default function MainNavbar() {
 
   return (
     <nav className={`nos-nav ${hidden ? "hidden" : ""}`}>
-      <div className="nos-logo" onClick={() => go("/Home")}>
+    <div className="nos-nav-brand" onClick={() => go("/Home")}>
         <img
-          src="https://res.cloudinary.com/dvjmdhlac/image/upload/v1775435437/Logo_Principal_gq4gtt.png"
-          alt="Logo Ingenia"
+          src="https://res.cloudinary.com/dvjmdhlac/image/upload/v1775702212/Ingenia_Navbar_tuopnj.png"
+          alt="Ingenia Print"
         />
-      </div>
-
-      <div className="nos-nav-logo" onClick={() => go("/Home")}>INGENIA PRINT</div>
+    </div>
 
       <div className="nav">
           <button className={`nav-btn ${pathname === "/Catalogo" ? "active" : ""}`} onClick={() => go("/Catalogo")}>Catalogo</button>

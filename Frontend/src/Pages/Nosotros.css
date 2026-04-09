@@ -38,13 +38,12 @@
 .nosotros .nos-hero {
   position: relative;
   z-index: 1;
-  min-height: 100vh;
+  min-height: 85vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   text-align: center;
-  padding: 80px 32px 64px;
   overflow: hidden;
 }
 

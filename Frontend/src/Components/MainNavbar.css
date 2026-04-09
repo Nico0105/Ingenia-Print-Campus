@@ -18,10 +18,6 @@
   will-change: transform;
 }
 
-.nos-logo img {
-  height: 70px;
-  cursor: pointer;
-}
 
 .nav {
   display: flex;
@@ -62,14 +58,17 @@
 .nav-btn:hover { border-color: var(--accent-orange); color: var(--text-primary); box-shadow: 0 0 20px var(--accent-orange-glow); }
 .nav-btn.active { background: var(--gradient-tech-soft); border-color: var(--accent-blue); color: var(--text-primary); box-shadow: 0 0 20px var(--accent-blue-glow); }
 
-.nos-nav-logo {
-  font-family: 'Teko', sans-serif;
-  font-size: 24px;
-  letter-spacing: 2px;
-  background: var(--gradient-tech);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  line-height: 1;
+.nos-nav-brand {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.nos-nav-brand img {
+  height: 48px;
+  width: auto;
+  object-fit: contain;
 }
 
 .campus-btn {
@@ -301,12 +300,12 @@
   .hamburger { display: flex; }
   .mobile-menu { display: none; }
   .navbar-search { display: none !important; }  /* ← !important para pisar el 1024 */
+  .nos-nav-brand img { height: 36px; }
 }
 
 @media (max-width: 640px) {
   .nos-nav-tag { display: none; }
     .navbar-search { display: none; }
-  .nos-nav-logo { font-size: 20px; }
     .nos-nav-tag { display: none; }
 
 }
@@ -315,7 +314,7 @@
   .nos-nav { padding: 16px 30px; gap: 12px; }
   .nav { display: none; }
   .hamburger { display: flex; }
-  .nos-logo img { height: 54px; }
   .navbar-search { display: block; margin-left: auto; }
   .search-input { width: 140px; }
+  .nos-nav-brand img { height: 40px; }
 }
