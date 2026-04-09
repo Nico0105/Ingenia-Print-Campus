@@ -41,8 +41,10 @@
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  padding: 120px 60px 80px;
+  align-items: center;
+  justify-content: flex-end;
+  text-align: center;
+  padding: 80px 32px 100px;
   overflow: hidden;
 }
 
@@ -109,6 +111,7 @@
   line-height: 1.1;
   letter-spacing: 1px;
   margin-bottom: 24px;
+  margin-top: 0;
   opacity: 0;
   animation: cursoFadeUp 0.9s ease forwards 0.4s;
 }
@@ -128,7 +131,8 @@
   font-weight: 400;
   line-height: 1.8;
   color: var(--text-muted);
-  margin-bottom: 40px;
+  margin-top: 40px;
+  margin-bottom: 0;
   opacity: 0;
   animation: cursoFadeUp 1s ease forwards 0.6s;
   text-align: left;
@@ -271,7 +275,9 @@
 .cursos .curso-section {
   position: relative;
   z-index: 1;
-  padding: 100px 60px;
+  padding: 80px 32px;
+  max-width: 1100px;
+  margin: 0 auto;
 }
 
 .cursos .curso-section-label {
@@ -303,104 +309,29 @@
   margin-bottom: 0;
 }
 
-/* ── CAROUSEL COMPARTIDO ── */
-.cursos .curso-carousel-wrapper {
-  position: relative;
+/* ── BENEFICIOS GRID 3x2 ── */
+.cursos .beneficios-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 48px;
   margin-top: 48px;
-  padding: 0 56px;
 }
 
-.cursos .curso-carousel-track-outer {
-  overflow: hidden;
-}
-
-.cursos .curso-carousel-track {
-  display: flex;
-  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.cursos .curso-carousel-btn {
+.cursos .beneficio-card {
   background: var(--bg-soft);
   border: 1px solid var(--border-soft);
-  color: var(--text-primary);
-  width: 40px;
-  height: 40px;
-  font-size: 22px;
-  cursor: pointer;
+  padding: 40px 32px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  box-sizing: border-box;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.5s ease, transform 0.5s ease, border-color 0.3s;
+  min-height: 280px;
   display: flex;
-  align-items: center;
+  flex-direction: column;
   justify-content: center;
-  clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px));
-  transition: background 0.2s, border-color 0.2s;
-  flex-shrink: 0;
-}
-
-.cursos .curso-carousel-btn:hover {
-  background: rgba(217, 119, 6, 0.15);
-  border-color: rgba(217, 119, 6, 0.4);
-}
-
-.cursos .curso-carousel-wrapper .curso-carousel-prev {
-  position: absolute;
-  top: 50%;
-  left: 0;
-  transform: translateY(-60%);
-  z-index: 2;
-}
-
-.cursos .curso-carousel-wrapper .curso-carousel-next {
-  position: absolute;
-  top: 50%;
-  right: 0;
-  transform: translateY(-60%);
-  z-index: 2;
-}
-
-.cursos .curso-carousel-dots {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 8px;
-}
-
-.cursos .curso-carousel-wrapper .curso-carousel-dots {
-  margin-top: 32px;
-}
-
-.cursos .curso-carousel-dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: var(--border-soft);
-  border: none;
-  cursor: pointer;
-  transition: background 0.3s, transform 0.3s;
-  padding: 0;
-}
-
-.cursos .curso-carousel-dot.active {
-  background: var(--accent-orange);
-  transform: scale(1.4);
-}
-
-/* ── BENEFICIOS CAROUSEL ── */
-.cursos .beneficio-card {
-    background: var(--bg-soft);
-    border: 1px solid var(--border-soft);
-    padding: 48px 36px;
-    text-align: center;
-    position: relative;
-    overflow: hidden;
-    flex-shrink: 0;
-    box-sizing: border-box;
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.5s ease, transform 0.5s ease, border-color 0.3s;
-    margin: 0;
-    min-height: 320px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
 }
 
 .cursos .beneficio-card.visible {
@@ -446,7 +377,7 @@
   line-height: 1.7;
 }
 
-/* ── PASOS ── */
+/* ── PASOS — todas las cards iguales en alto ── */
 .cursos .pasos-container {
   display: flex;
   align-items: stretch;
@@ -456,7 +387,7 @@
 
 .cursos .paso-wrapper {
   display: flex;
-  align-items: center;
+  align-items: stretch;
   flex: 1;
 }
 
@@ -470,6 +401,10 @@
   opacity: 0;
   transform: translateY(20px);
   transition: opacity 0.5s ease, transform 0.5s ease, border-color 0.3s;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  /* altura uniforme: todas comparten el mismo alto por ser stretch */
 }
 
 .cursos .paso.visible {
@@ -497,6 +432,8 @@
   opacity: 0.5;
   padding: 0 8px;
   flex-shrink: 0;
+  display: flex;
+  align-items: center;
 }
 
 .cursos .paso-number {
@@ -583,27 +520,37 @@
 
 /* ── RESPONSIVE ── */
 @media (max-width: 1024px) {
-  .cursos .curso-hero            { padding: 110px 30px 80px; }
+  .cursos .curso-hero            { padding: 110px 30px 80px; justify-content: flex-end; }
   .cursos .curso-section         { padding: 72px 30px; }
   .cursos .curso-included-banner { margin: 0 30px; padding: 40px; }
   .cursos .curso-divider         { margin: 0 30px; }
   .cursos .included-highlights   { grid-template-columns: repeat(2, 1fr); }
-  .cursos .curso-carousel-wrapper { padding: 0 44px; }
   .cursos .pasos-container       { flex-wrap: wrap; }
   .cursos .paso-wrapper          { flex: 0 0 calc(50% - 12px); }
   .cursos .paso-connector        { display: none; }
-  .cursos .testimonio-featured   { padding: 40px; }
-  .cursos .testimonios-thumbs    { flex-wrap: wrap; justify-content: center; }
+  .cursos .beneficios-grid       { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 1440px) and (min-width: 1025px) {
+  .cursos .curso-hero-title {
+    font-size: clamp(42px, 6vw, 72px);
+  }
+  .cursos .curso-hero {
+    justify-content: center;        /* centra verticalmente en vez de pegarlo abajo */
+    padding-top: 120px;             /* respeta el navbar */
+    padding-bottom: 60px;
+  }
+  .cursos .curso-scroll-line {
+    bottom: 24px;                   /* mantiene el scroll indicator visible */
+  }
 }
 
 @media (max-width: 640px) {
+  .cursos .curso-hero            { padding: 80px 24px 64px; justify-content: flex-end; }
   .cursos .curso-hero-title      { font-size: 48px; }
   .cursos .curso-included-banner { padding: 32px 24px; }
   .cursos .included-highlights   { grid-template-columns: 1fr; }
-  .cursos .curso-carousel-wrapper { padding: 0 36px; }
   .cursos .pasos-container       { flex-direction: column; }
   .cursos .paso-wrapper          { flex: 1 1 100%; }
-  .cursos .testimonio-featured   { padding: 28px 24px; }
-  .cursos .testimonio-featured-text { font-size: 14px; }
-  .cursos .testimonio-thumb      { max-width: 100%; }
+  .cursos .beneficios-grid       { grid-template-columns: 1fr; }
 }

@@ -93,73 +93,103 @@ function StatCard({ stat, delay }) {
   );
 }
 
-// TESTIMONIOS
+// ── TESTIMONIOS CAROUSEL — card central + laterales ───────────────────────────
+
+const UserIcon = ({ size = 24 }) => (
+  <svg
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="1.5"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    width={size}
+    height={size}
+  >
+    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+    <circle cx="12" cy="7" r="4" />
+  </svg>
+);
+
 function TestimoniosCarousel({ items }) {
   const [current, setCurrent] = useState(0);
-  const [animating, setAnimating] = useState(false);
   const total = items.length;
 
-  const go = (dir) => {
-    if (animating) return;
-    setAnimating(true);
-    setCurrent((prev) => (prev + dir + total) % total);
-    setTimeout(() => setAnimating(false), 400);
-  };
+  const prev = () => setCurrent((c) => (c - 1 + total) % total);
+  const next = () => setCurrent((c) => (c + 1) % total);
+
+  const leftIdx  = (current - 1 + total) % total;
+  const rightIdx = (current + 1) % total;
 
   const t = items[current];
+  const l = items[leftIdx];
+  const r = items[rightIdx];
 
   return (
     <div className="testimonios-carousel">
-      <div className="testimonio-featured">
-        <div className="testimonio-quote-mark">"</div>
-        <p className="testimonio-featured-text">{t.text}</p>
-        <div className="testimonio-featured-author">
-          <div className="testimonio-avatar">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
-              <circle cx="12" cy="7" r="4" />
-            </svg>
-          </div>
-          <div>
-            <div className="testimonio-name">{t.name}</div>
-            <div className="testimonio-role">{t.role}</div>
+      <div className="testimonios-stage">
+
+        {/* CARD IZQUIERDA */}
+        <div className="testimonio-side" onClick={prev} aria-label="Testimonio anterior">
+          <p className="testimonio-side-text">{l.text}</p>
+          <div className="testimonio-side-author">
+            <div className="testimonio-side-avatar">
+              <UserIcon size={16} />
+            </div>
+            <div>
+              <div className="testimonio-side-name">{l.name}</div>
+              <div className="testimonio-side-role">{l.role}</div>
+            </div>
           </div>
         </div>
+
+        {/* CARD CENTRAL */}
+        <div className="testimonio-center-wrap">
+          <div className="testimonio-featured">
+            <div className="testimonio-quote-mark">"</div>
+            <p className="testimonio-featured-text">{t.text}</p>
+            <div className="testimonio-featured-author">
+              <div className="testimonio-avatar">
+                <UserIcon size={24} />
+              </div>
+              <div>
+                <div className="testimonio-name">{t.name}</div>
+                <div className="testimonio-role">{t.role}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* CARD DERECHA */}
+        <div className="testimonio-side" onClick={next} aria-label="Testimonio siguiente">
+          <p className="testimonio-side-text">{r.text}</p>
+          <div className="testimonio-side-author">
+            <div className="testimonio-side-avatar">
+              <UserIcon size={16} />
+            </div>
+            <div>
+              <div className="testimonio-side-name">{r.name}</div>
+              <div className="testimonio-side-role">{r.role}</div>
+            </div>
+          </div>
+        </div>
+
       </div>
 
+      {/* NAVEGACIÓN */}
       <div className="testimonios-nav">
-        <button className="curso-carousel-btn" onClick={() => go(-1)} aria-label="Anterior">‹</button>
+        <button className="curso-carousel-btn" onClick={prev} aria-label="Anterior">‹</button>
         <div className="curso-carousel-dots">
           {items.map((_, i) => (
             <button
               key={i}
               className={`curso-carousel-dot${i === current ? " active" : ""}`}
               onClick={() => setCurrent(i)}
+              aria-label={`Ir al testimonio ${i + 1}`}
             />
           ))}
         </div>
-        <button className="curso-carousel-btn" onClick={() => go(1)} aria-label="Siguiente">›</button>
-      </div>
-
-      <div className="testimonios-thumbs">
-        {items.map((item, i) => (
-          <button
-            key={i}
-            className={`testimonio-thumb${i === current ? " active" : ""}`}
-            onClick={() => setCurrent(i)}
-          >
-            <div className="testimonio-thumb-avatar">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
-                <circle cx="12" cy="7" r="4" />
-              </svg>
-            </div>
-            <div>
-              <div className="testimonio-thumb-name">{item.name}</div>
-              <div className="testimonio-thumb-role">{item.role}</div>
-            </div>
-          </button>
-        ))}
+        <button className="curso-carousel-btn" onClick={next} aria-label="Siguiente">›</button>
       </div>
     </div>
   );
@@ -177,7 +207,7 @@ const testimoniosData = [
     text: "Le compre mas de 7 maquinas y jamas tuve un problema, contesta al momento y cualquier detalle que necesites lo soluciona al instante, super recomendables. 10 puntos en todo el servicio gracias!.",
   },
   {
-    name: "Daniela  Di Lullo",
+    name: "Daniela Di Lullo",
     role: "Maker",
     text: "Les compre mas de 10 impresoras y siempre todo perfecto. Son muy confiables y el envio super rapido. Cuando tuve problemas siempre me respondieron al instante. Los recomiendo.",
   },
@@ -190,18 +220,19 @@ const testimoniosData = [
     name: "Tomas Esteverena",
     role: "Emprendedor",
     text: "10 puntos la atención, el asesoramiento y la buena onda de Fabri, ademas de muy buenos precios. Le compre mi primera maquina hace un par de años y hace un mes le compre 2 mas para el laburo. Se los recomiendo a todo el que quiera su primera impresora o comprar varias para equipar su granja o empresa.",
-  }
+  },
 ];
+
 // ── VALORES GRID ──────────────────────────────────────────────────────────────
 
-function ValorCard({ num, verb, complement, icon, delay, wide }) {
+function ValorCard({ num, verb, complement, icon, delay }) {
   const ref = useRef(null);
   const inView = useInView(ref);
 
   return (
     <div
       ref={ref}
-      className={`nos-valor2-card${wide ? " nos-valor2-card--wide" : ""}${inView ? " visible" : ""}`}
+      className={`nos-valor2-card${inView ? " visible" : ""}`}
       style={{ transitionDelay: `${delay}s` }}
     >
       <div className="nos-valor2-bar" />
@@ -273,9 +304,8 @@ function ValoresGrid() {
       <ValorCard
         num="05"
         verb="Y seguimos presentes"
-        complement="después"
+        complement="después de la compra"
         delay={0.32}
-        wide
         icon={
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
             <path d="M22 11.08V12a10 10 0 11-5.93-9.14" />
@@ -292,10 +322,6 @@ function ValoresGrid() {
 export default function Nosotros() {
   const navigate = useNavigate();
 
-  const handleCatalogo = () => {
-    navigate("/catalogo");
-  };
-
   return (
     <div className="nosotros">
       <div className="grid-bg" />
@@ -308,17 +334,11 @@ export default function Nosotros() {
         <div className="nos-hero-orb-blue" />
         <div className="nos-hero-orb-orange" />
         <div className="nos-hero-label">Quiénes somos</div>
+        <div className="nos-hero-spacer" />
         <h1 className="nos-hero-title">
           SOBRE
           <span>INGENIA PRINT</span>
         </h1>
-        <button className="nos-hero-cta" onClick={handleCatalogo}>
-          Conocé nuestro catálogo →
-        </button>
-        <div className="nos-scroll-line">
-          <div className="nos-scroll-bar" />
-          Scroll para explorar
-        </div>
       </section>
 
       {/* HISTORIA */}

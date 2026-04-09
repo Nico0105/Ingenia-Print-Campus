@@ -42,7 +42,9 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 120px 60px 40px;
+  align-items: center;
+  text-align: center;
+  padding: 80px 32px 64px;
   overflow: hidden;
 }
 
@@ -86,7 +88,7 @@
   letter-spacing: 4px;
   color: var(--accent-orange);
   text-transform: uppercase;
-  margin-bottom: 16px;
+  margin-bottom: 28px;
   display: flex;
   align-items: center;
   gap: 12px;
@@ -108,9 +110,10 @@
   font-size: clamp(52px, 9vw, 99px);
   line-height: 1.1;
   letter-spacing: 1px;
-  margin-bottom: 24px;
+  margin-top: 32px;
+  margin-bottom: 48px;
   opacity: 0;
-  animation: cursoFadeUp 0.9s ease forwards 0.4s;
+  animation: nosFadeUp 0.9s ease forwards 0.4s;
 }
 
 .nosotros .nos-hero-title span {
@@ -121,80 +124,8 @@
   background-clip: text;
 }
 
-.nosotros .nos-hero-desc {
-  max-width: 520px;
-  font-family: 'Poppins', monospace;
-  font-size: 15px;
-  font-weight: 400;
-  line-height: 1.8;
-  color: var(--text-muted);
-  margin-bottom: 40px;
-  opacity: 0;
-  animation: nosFadeUp 1s ease forwards 0.6s;
-}
-
-.nosotros .nos-hero-cta {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  font-family: 'Poppins', monospace;
-  font-size: 15px;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  color: var(--text-primary);
-  background: var(--gradient-tech);
-  padding: 12px 28px;
-  border: none;
-  cursor: pointer;
-  clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
-  transition: opacity 0.3s, transform 0.3s;
-  opacity: 0;
-  animation: nosFadeUp 1s ease forwards 0.8s;
-}
-
-.nosotros .nos-hero-cta:hover {
-  opacity: 0.85;
-  transform: translateY(-2px);
-}
-
-.nosotros .nos-scroll-line {
-  position: absolute;
-  bottom: 40px;
-  left: 60px;
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  font-family: 'Poppins', monospace;
-  font-size: 15px;
-  letter-spacing: 3px;
-  color: var(--text-muted);
-  text-transform: uppercase;
-  opacity: 0;
-  animation: nosFadeUp 1s ease forwards 1.2s;
-}
-
-.nosotros .nos-scroll-bar {
-  width: 60px;
-  height: 1px;
-  background: var(--gradient-tech);
-  position: relative;
-  overflow: hidden;
-}
-
-.nosotros .nos-scroll-bar::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: white;
-  animation: nosScanLine 2s linear infinite;
-}
-
-@keyframes nosScanLine {
-  0%   { left: -100%; }
-  100% { left: 100%; }
+.nosotros .nos-hero-spacer {
+  display: none;
 }
 
 @keyframes nosFadeUp {
@@ -206,7 +137,9 @@
 .nosotros .nos-section {
   position: relative;
   z-index: 1;
-  padding: 60px 60px;
+  padding: 80px 32px;
+  max-width: 100%;
+  margin: 0 auto;
 }
 
 .nosotros .nos-section-label {
@@ -242,6 +175,9 @@
   background: var(--bg-soft);
   border-top: 1px solid var(--border-soft);
   border-bottom: 1px solid var(--border-soft);
+  width: 100vw;
+  margin-left: calc(-50vw + 50%);
+  padding: 80px 32px;
 }
 
 .nosotros .nos-historia-inner {
@@ -424,10 +360,10 @@
   line-height: 1.7;
 }
 
-/* ── VALORES GRID ── */
+/* ── VALORES GRID — 5 cards en fila ── */
 .nosotros .nos-valor2-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(5, 1fr);
   gap: 2px;
 }
 
@@ -435,12 +371,13 @@
   position: relative;
   background: var(--bg-soft);
   border: 1px solid var(--border-soft);
-  padding: 40px 36px 44px;
+  padding: 32px 24px 36px;
   overflow: hidden;
   opacity: 0;
   transform: translateY(24px);
   transition: opacity 0.6s ease, transform 0.6s ease, border-color 0.3s;
   cursor: default;
+  display: block;
 }
 
 .nosotros .nos-valor2-card.visible {
@@ -457,30 +394,8 @@
   transform: scaleX(1);
 }
 
-/* wide card spans last 2 columns */
 .nosotros .nos-valor2-card--wide {
-  grid-column: span 2;
-  display: flex;
-  align-items: center;
-  gap: 36px;
-  padding: 40px 48px;
-  background: linear-gradient(135deg, rgba(30, 64, 175, 0.08) 0%, rgba(217, 119, 6, 0.05) 100%);
-  border-color: rgba(217, 119, 6, 0.15);
-}
-
-.nosotros .nos-valor2-card--wide .nos-valor2-num {
-  position: static;
-  font-size: 56px;
-  color: rgba(255, 255, 255, 0.04);
-  flex-shrink: 0;
-}
-
-.nosotros .nos-valor2-card--wide .nos-valor2-verb {
-  font-size: 32px;
-}
-
-.nosotros .nos-valor2-card--wide .nos-valor2-complement {
-  font-size: 18px;
+  grid-column: span 1;
 }
 
 .nosotros .nos-valor2-bar {
@@ -497,31 +412,32 @@
 
 .nosotros .nos-valor2-num {
   position: absolute;
-  top: 20px;
-  right: 24px;
+  top: 16px;
+  right: 16px;
   font-family: 'Poppins', sans-serif;
-  font-size: 72px;
+  font-size: 56px;
   font-weight: 800;
   color: rgba(255, 255, 255, 0.03);
   line-height: 1;
   letter-spacing: -2px;
   pointer-events: none;
+  display: block;
 }
 
 .nosotros .nos-valor2-icon-wrap {
-  width: 52px;
-  height: 52px;
+  width: 44px;
+  height: 44px;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 24px;
+  margin-bottom: 20px;
   position: relative;
   flex-shrink: 0;
 }
 
 .nosotros .nos-valor2-icon-wrap svg {
-  width: 30px;
-  height: 30px;
+  width: 24px;
+  height: 24px;
   color: var(--accent-orange);
 }
 
@@ -534,75 +450,23 @@
 
 .nosotros .nos-valor2-verb {
   font-family: 'Poppins', sans-serif;
-  font-size: 28px;
+  font-size: 20px;
   font-weight: 700;
   background: var(--gradient-tech);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
   letter-spacing: 0.5px;
-  line-height: 1;
+  line-height: 1.1;
   margin-bottom: 10px;
 }
 
 .nosotros .nos-valor2-complement {
   font-family: 'Poppins', sans-serif;
-  font-size: 17px;
+  font-size: 14px;
   font-weight: 400;
   color: var(--text-muted);
   line-height: 1.6;
-}
-
-/* ── MISIÓN BANNER ── */
-.nosotros .nos-mision-banner {
-  position: relative;
-  z-index: 1;
-  margin: 80px 60px;
-  padding: 64px 80px;
-  background: var(--gradient-tech-soft);
-  border: 1px solid rgba(217, 119, 6, 0.2);
-  overflow: hidden;
-  clip-path: polygon(0 0, calc(100% - 24px) 0, 100% 24px, 100% 100%, 24px 100%, 0 calc(100% - 24px));
-}
-
-.nosotros .nos-mision-banner::before {
-  content: '"';
-  position: absolute;
-  top: -20px;
-  left: 40px;
-  font-family: 'Poppins', sans-serif;
-  font-weight: 700;
-  font-size: 200px;
-  color: rgba(217, 119, 6, 0.06);
-  line-height: 1;
-  pointer-events: none;
-}
-
-.nosotros .nos-mision-tag {
-  font-family: 'Poppins', monospace;
-  font-size: 15px;
-  letter-spacing: 4px;
-  color: var(--accent-orange);
-  text-transform: uppercase;
-  margin-bottom: 16px;
-}
-
-.nosotros .nos-mision-text {
-  font-family: 'Poppins', sans-serif;
-  font-weight: 500;
-  font-size: clamp(22px, 3.2vw, 40px);
-  letter-spacing: 0.5px;
-  line-height: 1.2;
-  max-width: 800px;
-  position: relative;
-  z-index: 1;
-}
-
-.nosotros .nos-mision-text span {
-  background: var(--gradient-tech);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
 }
 
 /* ── DIVIDER ── */
@@ -615,41 +479,98 @@
   opacity: 0.3;
 }
 
-/* ── FOOTER ── */
-.nosotros .nos-footer {
-  position: relative;
-  z-index: 1;
-  padding: 48px 60px;
-  border-top: 1px solid var(--border-soft);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-top: 100px;
-}
-
-.nosotros .nos-footer-logo {
-  font-family: 'Poppins', sans-serif;
-  font-weight: 600;
-  font-size: 18px;
-  letter-spacing: 3px;
-  background: var(--gradient-tech);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  line-height: 1;
-}
-
-.nosotros .nos-footer-copy {
-  font-family: 'Poppins', monospace;
-  font-size: 15px;
-  color: rgba(156, 163, 175, 0.4);
-  letter-spacing: 2px;
-}
-
-
-/* ── TESTIMONIOS CAROUSEL ── */
+/* ── TESTIMONIOS CAROUSEL — 3 cards ── */
 .nosotros .testimonios-carousel {
   margin-top: 48px;
+}
+
+.nosotros .testimonios-stage {
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  gap: 16px;
+  position: relative;
+}
+
+/* cards laterales */
+.nosotros .testimonio-side {
+  flex: 0 0 240px;
+  background: var(--bg-soft);
+  border: 1px solid var(--border-soft);
+  padding: 28px 24px;
+  opacity: 0.45;
+  transform: scale(0.9);
+  transition: opacity 0.4s, transform 0.4s, border-color 0.3s;
+  cursor: pointer;
+  clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-self: center;
+  min-height: 200px;
+}
+
+.nosotros .testimonio-side:hover {
+  opacity: 0.65;
+  border-color: rgba(217, 119, 6, 0.3);
+}
+
+.nosotros .testimonio-side-text {
+  font-size: 13px;
+  color: var(--text-muted);
+  line-height: 1.7;
+  font-style: italic;
+  margin-bottom: 16px;
+  display: -webkit-box;
+  -webkit-line-clamp: 5;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.nosotros .testimonio-side-author {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.nosotros .testimonio-side-avatar {
+  width: 30px;
+  height: 30px;
+  background: var(--gradient-tech);
+  border-radius: 50%;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+}
+
+.nosotros .testimonio-side-avatar svg {
+  width: 16px;
+  height: 16px;
+}
+
+.nosotros .testimonio-side-name {
+  font-family: 'Poppins', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-primary);
+  opacity: 0.7;
+}
+
+.nosotros .testimonio-side-role {
+  font-family: 'Poppins', monospace;
+  font-size: 11px;
+  color: var(--accent-orange);
+  opacity: 0.6;
+  letter-spacing: 0.5px;
+}
+
+/* card central */
+.nosotros .testimonio-center-wrap {
+  flex: 1;
+  min-width: 0;
+  max-width: 560px;
 }
 
 .nosotros .curso-carousel-btn {
@@ -699,7 +620,7 @@
 .nosotros .testimonio-featured {
   background: var(--bg-soft);
   border: 1px solid var(--border-soft);
-  padding: 56px 64px;
+  padding: 56px 48px;
   position: relative;
   overflow: hidden;
   clip-path: polygon(0 0, calc(100% - 20px) 0, 100% 20px, 100% 100%, 20px 100%, 0 calc(100% - 20px));
@@ -729,14 +650,13 @@
 
 .nosotros .testimonio-featured-text {
   font-family: 'Poppins', monospace;
-  font-size: 16px;
+  font-size: 15px;
   color: var(--text-muted);
   line-height: 1.9;
   font-style: italic;
   margin-bottom: 32px;
   position: relative;
   z-index: 1;
-  max-width: 800px;
 }
 
 .nosotros .testimonio-featured-author {
@@ -787,113 +707,34 @@
   margin-top: 28px;
 }
 
-.nosotros .testimonios-thumbs {
-  display: flex;
-  gap: 12px;
-  margin-top: 24px;
-  justify-content: center;
-}
-
-.nosotros .testimonio-thumb {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  background: var(--bg-soft);
-  border: 1px solid var(--border-soft);
-  padding: 12px 16px;
-  cursor: pointer;
-  transition: border-color 0.3s, background 0.3s;
-  flex: 1;
-  max-width: 220px;
-}
-
-.nosotros .testimonio-thumb:hover,
-.nosotros .testimonio-thumb.active {
-  border-color: rgba(217, 119, 6, 0.5);
-  background: rgba(217, 119, 6, 0.05);
-}
-
-.nosotros .testimonio-thumb-avatar {
-  width: 32px;
-  height: 32px;
-  background: var(--gradient-tech);
-  border-radius: 50%;
-  flex-shrink: 0;
-  opacity: 0.6;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-}
-
-.nosotros .testimonio-thumb-avatar svg {
-  width: 18px;
-  height: 18px;
-}
-
-.nosotros .testimonio-thumb.active .testimonio-thumb-avatar {
-  opacity: 1;
-}
-
-.nosotros .testimonio-thumb-name {
-  font-family: 'Poppins', sans-serif;
-  font-size: 15px;
-  color: var(--text-muted);
-  font-weight: 600;
-  letter-spacing: 0.5px;
-  text-align: left;
-}
-
-.nosotros .testimonio-thumb.active .testimonio-thumb-name {
-  color: var(--text-primary);
-}
-
-.nosotros .testimonio-thumb-role {
-  font-family: 'Poppins', monospace;
-  font-size: 11px;
-  color: var(--accent-orange);
-  opacity: 0.6;
-  text-align: left;
-}
-
-.nosotros .testimonio-thumb.active .testimonio-thumb-role {
-  opacity: 1;
-}
-
 /* ── RESPONSIVE ── */
 @media (max-width: 1024px) {
   .nosotros .nos-hero              { padding: 110px 30px 80px; }
   .nosotros .nos-section           { padding: 72px 30px; }
   .nosotros .nos-historia-inner    { grid-template-columns: 1fr; gap: 48px; }
   .nosotros .nos-stats-grid        { grid-template-columns: repeat(2, 1fr); }
-  .nosotros .nos-mision-banner     { margin: 0 30px; padding: 40px; }
-  .nosotros .nos-footer            { padding: 32px 30px; }
   .nosotros .nos-divider           { margin: 0 30px; }
-  .nosotros .nos-valor2-grid       { grid-template-columns: repeat(2, 1fr); }
-  .nosotros .nos-valor2-card--wide { grid-column: span 2; }
-  .nosotros .nos-valor2-verb       { font-size: 24px; }
-  .nosotros .nos-valor2-complement { font-size: 16px; }
+  .nosotros .nos-valor2-grid       { grid-template-columns: repeat(3, 1fr); }
+  .nosotros .nos-valor2-card--wide { grid-column: span 1; }
+  .nosotros .nos-valor2-verb       { font-size: 18px; }
+  .nosotros .nos-valor2-complement { font-size: 13px; }
+  .nosotros .testimonio-side       { flex: 0 0 160px; }
 }
 
 @media (max-width: 640px) {
   .nosotros .nos-stats-grid        { grid-template-columns: 1fr; }
   .nosotros .nos-hero-title        { font-size: 48px; }
-  .nosotros .nos-mision-banner     { padding: 32px 24px; }
-  .nosotros .nos-valor2-grid       { grid-template-columns: 1fr; }
-  .nosotros .nos-valor2-card--wide {
-    grid-column: span 1;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0;
-  }
-  .nosotros .nos-valor2-card--wide .nos-valor2-num    { display: none; }
-  .nosotros .nos-valor2-card--wide .nos-valor2-icon-wrap { margin-bottom: 20px; }
-  .nosotros .nos-valor2-card--wide .nos-valor2-verb   { font-size: 26px; }
-  .nosotros .nos-valor2-card--wide .nos-valor2-complement { font-size: 16px; }
+  .nosotros .nos-valor2-grid       { grid-template-columns: repeat(2, 1fr); }
+  .nosotros .nos-valor2-card--wide { grid-column: span 1; }
+  .nosotros .nos-valor2-verb       { font-size: 16px; }
+  .nosotros .nos-valor2-complement { font-size: 13px; }
 
-  .nosotros .testimonio-featured   { padding: 32px 20px; min-height: auto; }
-  .nosotros .testimonio-quote-mark { font-size: 100px; left: 10px; }
+  /* carousel mobile: solo card central */
+  .nosotros .testimonio-side        { display: none; }
+  .nosotros .testimonio-center-wrap { max-width: 100%; }
+  .nosotros .testimonio-featured    { padding: 32px 20px; min-height: auto; }
+  .nosotros .testimonio-quote-mark  { font-size: 100px; left: 10px; }
   .nosotros .testimonio-featured-text { font-size: 14px; margin-bottom: 20px; }
-  .nosotros .testimonio-name      { font-size: 16px; }
-  .nosotros .testimonios-thumbs    { flex-wrap: wrap; }
+  .nosotros .testimonio-name        { font-size: 16px; }
+  .nosotros .nos-historia-text      { max-width: 90%; }
 }

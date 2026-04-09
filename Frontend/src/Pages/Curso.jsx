@@ -214,29 +214,25 @@ export default function Cursos() {
         <div className="curso-hero-orb-blue" />
         <div className="curso-hero-orb-orange" />
         <div className="curso-hero-label">Formación Incluida</div>
-        <h1 className="curso-hero-title">
+        <h1 className="curso-hero-title hero-content-down">
           APRENDE
           <span>ACOMPAÑADO</span>
           DESDE EL PRIMER DÍA
         </h1>
-        <p className="curso-hero-desc">
-          Cuando comprás tu impresora en Ingenia Print accedés sin costo al Campus Ingenia: un espacio pensado
-          para acompañarte en cada etapa del proceso. Desde la primera impresión hasta el desarrollo de proyectos más avanzados.
+        <p className="curso-hero-desc hero-content-down">
+          Cuando comprás tu impresora en Ingenia Print accedés sin costo al Campus Ingenia: un espacio pensado para acompañarte en cada etapa del proceso. Desde la primera impresión hasta el desarrollo de proyectos más avanzados.
         </p>
-        <button className="curso-hero-cta" onClick={handleCatalogo}>
-          Ver impresoras disponibles →
-        </button>
-        <div className="curso-scroll-line">
-          <div className="curso-scroll-bar" />
-          Scroll para explorar
-        </div>
       </section>
 
       {/* BENEFICIOS */}
       <section className="curso-section">
         <div className="curso-section-label">Beneficios</div>
         <h2 className="curso-section-title">QUÉ INCLUYE EL CAMPUS INGENIA</h2>
-        <BeneficiosCarousel items={beneficiosData} />
+        <div className="beneficios-grid">
+          {beneficiosData.map((ben, idx) => (
+            <BeneficioCard key={idx} ben={ben} idx={idx} visible={3} />
+          ))}
+        </div>
       </section>
 
       <div className="curso-divider" />

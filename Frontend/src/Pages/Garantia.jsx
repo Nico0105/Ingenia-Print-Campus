@@ -125,8 +125,8 @@ export default function Garantia() {
         </div>
 
         <h1 className="garantia-hero-title">
-          Garantía de<br />
-          <span>Nuestros Productos</span>
+          GARANTIA DE<br />
+          <span>NUESTROS PRODUCTOS</span>
         </h1>
 
         <div className="garantia-hero-line" />

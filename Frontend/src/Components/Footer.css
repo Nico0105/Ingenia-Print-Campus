@@ -83,6 +83,24 @@
   color: var(--accent-orange-dark);
 }
 
+.whatsapp-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #25d366;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 600;
+  transition: opacity 0.2s ease;
+}
+
+.whatsapp-btn:hover { opacity: 0.8; }
+
+@media (max-width: 768px) {
+  .footer-bottom { order: unset; }
+  .whatsapp-btn { order: -1; }
+}
+
 @media (max-width: 768px) {
   .footer-top {
     grid-template-columns: 1fr;
