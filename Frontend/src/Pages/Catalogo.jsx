@@ -3,6 +3,7 @@ import "./Catalogo.css";
 import MainNavbar from "../Components/MainNavbar";
 import Footer from "../Components/Footer";
 import { useNavigate } from "react-router-dom";
+import { WhatsAppFloat } from "../Components/WhatsAppFloat";
 import { API_URL } from "../config";
 
 // ✅ Normaliza imagenes para que siempre sea un array
@@ -130,6 +131,7 @@ export default function Catalogo() {
           </div>
         </section>
       </main>
+        <WhatsAppFloat />
 
       <Footer />
     </div>

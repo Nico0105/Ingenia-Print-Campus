@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import "./Curso.css";
 import MainNavbar from "../Components/MainNavbar";
 import Footer from "../Components/Footer";
+import WhatsAppFloat from "../Components/WhatsAppFloat";
 import { useNavigate } from "react-router-dom";
 
 // ── DATA ──────────────────────────────────────────────────────────────────────
@@ -261,6 +262,8 @@ export default function Cursos() {
           Ver catálogo completo
         </button>
       </section>
+      <WhatsAppFloat />
+
 
       {/* FOOTER */}
       <Footer />

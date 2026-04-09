@@ -18,7 +18,6 @@
   will-change: transform;
 }
 
-
 .nav {
   display: flex;
   gap: 16px;
@@ -66,7 +65,7 @@
 }
 
 .nos-nav-brand img {
-  height: 48px;
+  height: 64px;
   width: auto;
   object-fit: contain;
 }
@@ -300,7 +299,7 @@
   .hamburger { display: flex; }
   .mobile-menu { display: none; }
   .navbar-search { display: none !important; }  /* ← !important para pisar el 1024 */
-  .nos-nav-brand img { height: 36px; }
+  .nos-nav-brand img { height: 44px; }
 }
 
 @media (max-width: 640px) {
@@ -316,5 +315,5 @@
   .hamburger { display: flex; }
   .navbar-search { display: block; margin-left: auto; }
   .search-input { width: 140px; }
-  .nos-nav-brand img { height: 40px; }
+  .nos-nav-brand img { height: 54px; }
 }

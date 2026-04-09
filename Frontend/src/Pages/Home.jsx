@@ -5,6 +5,7 @@ import MainNavbar from "../Components/MainNavbar";
 import Footer from "../Components/Footer";
 import { animate } from "animejs";
 import { useNavigate, Link } from "react-router-dom";
+import { WhatsAppFloat } from "../Components/WhatsAppFloat";
 import { API_URL } from "../config";
 
 
@@ -111,6 +112,7 @@ export default function Home() {
             ))}
           </div>
         </section>
+         <WhatsAppFloat />
 
         {/* FOOTER */}
         <Footer />

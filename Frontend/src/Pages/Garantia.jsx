@@ -2,6 +2,7 @@ import React from 'react';
 import './Garantia.css';
 import MainNavbar from '../Components/MainNavbar';
 import Footer from '../Components/Footer';
+import { WhatsAppFloat } from '../Components/WhatsAppFloat';
 import { useNavigate } from "react-router-dom";
 
 const ShieldIcon = () => (
@@ -234,6 +235,7 @@ export default function Garantia() {
           <p className="garantia-cta-note">Te acompañamos en lo que necesites · Soporte en tiempo real</p>
         </div>
       </section>
+      <WhatsAppFloat />
 
       <Footer />
     </div>

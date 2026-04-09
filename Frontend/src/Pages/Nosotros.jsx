@@ -3,6 +3,7 @@ import "./Nosotros.css";
 import MainNavbar from "../Components/MainNavbar";
 import Footer from "../Components/Footer";
 import { useNavigate } from "react-router-dom";
+import { WhatsAppFloat } from "../Components/WhatsAppFloat";
 
 // ── HOOKS ─────────────────────────────────────────────────────────────────────
 
@@ -449,8 +450,9 @@ export default function Nosotros() {
         <h2 className="nos-section-title">QUÉ DICEN NUESTROS CLIENTES</h2>
         <TestimoniosCarousel items={testimoniosData} />
       </section>
+       <WhatsAppFloat />
+       
       <div className="nos-divider" />
-
       {/* FOOTER */}
       <Footer />
     </div>
