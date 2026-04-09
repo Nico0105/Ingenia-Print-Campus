@@ -707,6 +707,89 @@
   margin-top: 28px;
 }
 
+/* ── PROPÓSITO ── */
+.nosotros .nos-proposito-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  max-width: 480px;
+  margin: 0 auto 0;
+}
+
+.nosotros .nos-proposito-icon-wrap {
+  width: 250px;
+  height: 250px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(217, 119, 6, 0.25);
+  border-radius: 50%;
+  margin-bottom: 28px;
+  color: #ffffff;
+  background: rgba(217, 119, 6, 0.04);
+}
+
+.nosotros .nos-proposito-text {
+  font-family: 'Poppins', sans-serif;
+  font-size: 18px;
+  color: var(--text-muted);
+  line-height: 1.6;
+  margin: 0 0 6px;
+}
+
+.nosotros .nos-proposito-highlight {
+  font-family: 'Poppins', sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0 0 32px;
+}
+
+.nosotros .nos-proposito-stat {
+  border: 1px solid var(--border-soft);
+  padding: 24px 48px;
+  background: var(--bg-soft);
+  clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
+  transition: border-color 0.3s;
+  min-width: 200px;
+}
+
+.nosotros .nos-proposito-stat:hover { border-color: rgba(217, 119, 6, 0.3); }
+
+.nosotros .nos-proposito-stat-number {
+  font-family: 'Poppins', sans-serif;
+  font-size: 48px;
+  font-weight: 700;
+  background: var(--gradient-tech);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1;
+}
+
+.nosotros .nos-proposito-stat-label {
+  font-family: 'Poppins', sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-top: 4px;
+}
+
+.nosotros .nos-proposito-stat-desc {
+  font-family: 'Poppins', sans-serif;
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+
+/* separador interno entre propósito y testimonios */
+.nosotros .nos-proposito-divider {
+  height: 1px;
+  margin: 64px 0 56px;
+  background: linear-gradient(90deg, transparent, var(--border-soft), transparent);
+}
+
 /* ── RESPONSIVE ── */
 @media (max-width: 1024px) {
   .nosotros .nos-hero              { padding: 110px 30px 80px; }

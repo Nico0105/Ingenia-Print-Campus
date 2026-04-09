@@ -400,13 +400,55 @@ export default function Nosotros() {
 
       <div className="nos-divider" />
 
-      {/* TESTIMONIOS */}
-      <section className="nos-section">
-        <div className="nos-section-label">Comunidad</div>
+    {/* COMUNIDAD: PROPÓSITO + TESTIMONIOS */}
+    <section className="nos-section">
+      <div className="nos-section-label">Comunidad</div>
+
+      {/* Propósito */}
+      <div className="nos-proposito-inner">
+        <div className="nos-proposito-icon-wrap">
+        <svg viewBox="0 0 64 64" width="200" height="200" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="medallon-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="#1e40af" />
+              <stop offset="100%" stopColor="#d97706" />
+            </linearGradient>
+            <radialGradient id="medallon-glow" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stopColor="#1e40af" stopOpacity="0.12"/>
+              <stop offset="100%" stopColor="#d97706" stopOpacity="0"/>
+            </radialGradient>
+          </defs>
+
+          {/* Glow de fondo */}
+          <circle cx="32" cy="32" r="32" fill="url(#medallon-glow)"/>
+
+          {/* Círculo de fondo oscuro */}
+          <circle cx="32" cy="32" r="28" fill="#0f1117"/>
+          {/* Borde degradado */}
+          <circle cx="32" cy="32" r="28" fill="none"
+            stroke="url(#medallon-grad)" strokeWidth="2"/>
+          {/* Checkmark */}
+          <polyline points="22,32 28,39 42,24" fill="none"
+            stroke="url(#medallon-grad)" strokeWidth="3.5"
+            strokeLinecap="round" strokeLinejoin="round"/>
+        </svg>
+        </div>
+        <p className="nos-proposito-text">Nuestro objetivo no es solo vender una máquina.</p>
+        <p className="nos-proposito-highlight">Es que puedas usarla bien.</p>
+        <div className="nos-proposito-stat">
+          <div className="nos-proposito-stat-number">+500</div>
+          <div className="nos-proposito-stat-label">personas</div>
+          <div className="nos-proposito-stat-desc">que confiaron en nosotros</div>
+        </div>
+      </div>
+
+      {/* Divider interno */}
+      <div className="nos-proposito-divider" />
+
+        {/* Testimonios */}
         <h2 className="nos-section-title">QUÉ DICEN NUESTROS CLIENTES</h2>
         <TestimoniosCarousel items={testimoniosData} />
       </section>
-
       <div className="nos-divider" />
 
       {/* FOOTER */}
