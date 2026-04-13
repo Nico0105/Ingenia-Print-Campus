@@ -302,25 +302,29 @@
 .cursos .beneficios-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 48px;
+  gap: 1.5px;
+  background: var(--border-soft);
+  border: 1px solid var(--border-soft);
+  border-radius: 16px;
+  overflow: hidden;
   margin-top: 48px;
 }
 
 .cursos .beneficio-card {
   background: var(--bg-soft);
-  border: 1px solid var(--border-soft);
-  padding: 40px 32px;
-  text-align: center;
+  padding: 2.5rem 2rem;
   position: relative;
   overflow: hidden;
-  box-sizing: border-box;
   opacity: 0;
   transform: translateY(20px);
-  transition: opacity 0.5s ease, transform 0.5s ease, border-color 0.3s;
-  min-height: 280px;
+  transition: opacity 0.5s ease, transform 0.5s ease, background 0.3s;
+  cursor: default;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
+  text-align: left;
+  box-sizing: border-box;
+  min-height: 280px;
 }
 
 .cursos .beneficio-card.visible {
@@ -328,42 +332,72 @@
   transform: translateY(0);
 }
 
-.cursos .beneficio-card:hover { border-color: rgba(217, 119, 6, 0.3); }
+.cursos .beneficio-card:hover { 
+  background: #13151f;
+}
+
+.cursos .beneficio-card:hover .beneficio-icon-wrap {
+  border-color: rgba(217, 119, 6, 0.5);
+  box-shadow: 0 0 20px var(--accent-orange-glow);
+}
 
 .cursos .beneficio-card::before {
-  content: '';
+  display: none;
+}
+
+.cursos .beneficio-number {
+  font-family: 'Teko', sans-serif;
+  font-size: 5rem;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.04);
   position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 2px;
-  background: var(--gradient-tech);
-  transform: scaleX(0);
-  transition: transform 0.4s ease;
-  transform-origin: left;
+  top: 1rem;
+  right: 1.5rem;
+  line-height: 1;
+  user-select: none;
+}
+
+.cursos .beneficio-icon-wrap {
+  width: 52px;
+  height: 52px;
+  border-radius: 12px;
+  border: 1px solid var(--border-soft);
+  background: var(--gradient-tech-soft);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+  transition: all 0.3s;
+  flex-shrink: 0;
 }
 
 .cursos .beneficio-card:hover::before { transform: scaleX(1); }
 
 .cursos .beneficio-icon {
-  font-size: 28px;
-  margin-bottom: 16px;
+  font-size: 20px;
   color: var(--accent-orange);
   font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
 }
 
 .cursos .beneficio-title {
   font-family: 'Poppins', sans-serif;
+  font-size: 1.1rem;
   font-weight: 600;
-  font-size: 27px;
-  margin-bottom: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  margin-bottom: 0.5rem;
   color: var(--text-primary);
-  letter-spacing: 0.5px;
 }
 
 .cursos .beneficio-desc {
-  font-family: 'Poppins', monospace;
-  font-size: 17px;
+  font-size: 0.88rem;
   color: var(--text-muted);
-  line-height: 1.7;
+  line-height: 1.6;
 }
 
 /* ── PASOS — todas las cards iguales en alto ── */

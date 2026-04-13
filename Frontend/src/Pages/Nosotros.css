@@ -361,22 +361,27 @@
 
 /* ── VALORES GRID — 5 cards en fila ── */
 .nosotros .nos-valor2-grid {
-  display: grid;
+   display: grid;
   grid-template-columns: repeat(5, 1fr);
-  gap: 2px;
+  gap: 1.5px;
+  background: var(--border-soft);
+  border: 1px solid var(--border-soft);
+  border-radius: 16px;
+  overflow: hidden;
 }
 
 .nosotros .nos-valor2-card {
   position: relative;
   background: var(--bg-soft);
-  border: 1px solid var(--border-soft);
-  padding: 32px 24px 36px;
+  padding: 2.5rem 2rem;
   overflow: hidden;
   opacity: 0;
   transform: translateY(24px);
-  transition: opacity 0.6s ease, transform 0.6s ease, border-color 0.3s;
+  transition: opacity 0.6s ease, transform 0.6s ease, background 0.3s;
   cursor: default;
-  display: block;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
 }
 
 .nosotros .nos-valor2-card.visible {
@@ -385,8 +390,7 @@
 }
 
 .nosotros .nos-valor2-card:hover {
-  border-color: rgba(217, 119, 6, 0.3);
-  transform: translateY(-2px);
+  background: #13151f;
 }
 
 .nosotros .nos-valor2-card:hover .nos-valor2-bar {
@@ -398,39 +402,33 @@
 }
 
 .nosotros .nos-valor2-bar {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 2px;
-  background: var(--gradient-tech);
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 0.4s ease;
+  display: none;
 }
 
 .nosotros .nos-valor2-num {
   position: absolute;
-  top: 16px;
-  right: 16px;
-  font-family: 'Poppins', sans-serif;
-  font-size: 56px;
-  font-weight: 800;
-  color: rgba(255, 255, 255, 0.03);
+  top: 1rem;
+  right: 1.5rem;
+  font-family: 'Teko', sans-serif;
+  font-size: 5rem;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.04);
   line-height: 1;
-  letter-spacing: -2px;
   pointer-events: none;
-  display: block;
+  user-select: none;
 }
 
 .nosotros .nos-valor2-icon-wrap {
-  width: 44px;
-  height: 44px;
+  width: 52px;
+  height: 52px;
+  border-radius: 12px;
+  border: 1px solid var(--border-soft);
+  background: var(--gradient-tech-soft);
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 20px;
-  position: relative;
+  margin-bottom: 1.5rem;
+  transition: all 0.3s;
   flex-shrink: 0;
 }
 
@@ -441,29 +439,23 @@
 }
 
 .nosotros .nos-valor2-icon-ring {
-  position: absolute;
-  inset: 0;
-  border: 1px solid rgba(217, 119, 6, 0.25);
-  clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px));
+  display: none;
 }
 
 .nosotros .nos-valor2-verb {
   font-family: 'Poppins', sans-serif;
-  font-size: 20px;
-  font-weight: 700;
-  background: var(--gradient-tech);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  letter-spacing: 0.5px;
-  line-height: 1.1;
-  margin-bottom: 10px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  margin-bottom: 0.5rem;
+  color: var(--text-primary);
+  background: none;
+  -webkit-text-fill-color: unset;
 }
 
 .nosotros .nos-valor2-complement {
-  font-family: 'Poppins', sans-serif;
-  font-size: 14px;
-  font-weight: 400;
+  font-size: 0.88rem;
   color: var(--text-muted);
   line-height: 1.6;
 }

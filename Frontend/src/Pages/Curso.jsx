@@ -86,20 +86,9 @@ function useInView(ref, options = {}) {
   return inView;
 }
 
-function useVisible() {
-  const [visible, setVisible] = useState(2);
-  useEffect(() => {
-    const update = () => setVisible(window.innerWidth < 640 ? 1 : 2);
-    update();
-    window.addEventListener("resize", update);
-    return () => window.removeEventListener("resize", update);
-  }, []);
-  return visible;
-}
-
 // ── SUB-COMPONENTS ────────────────────────────────────────────────────────────
 
-function BeneficioCard({ ben, idx, visible = 2 }) {
+function BeneficioCard({ ben, idx }) {
   const ref = useRef(null);
   const inView = useInView(ref);
 
@@ -107,71 +96,14 @@ function BeneficioCard({ ben, idx, visible = 2 }) {
     <div
       ref={ref}
       className={`beneficio-card${inView ? " visible" : ""}`}
-      style={{
-        transitionDelay: `${(idx % visible) * 0.1}s`,
-        flex: `0 0 calc(100% / ${visible})`,
-        boxSizing: "border-box",
-        padding: "0 10px",
-      }}
+      style={{ transitionDelay: `${(idx % 3) * 0.1}s` }}
     >
-      <div className="beneficio-icon">{ben.icon}</div>
+      <div className="beneficio-number">0{idx + 1}</div>
+      <div className="beneficio-icon-wrap">
+        <div className="beneficio-icon">{ben.icon}</div>
+      </div>
       <h4 className="beneficio-title">{ben.title}</h4>
       <p className="beneficio-desc">{ben.desc}</p>
-    </div>
-  );
-}
-
-function BeneficiosCarousel({ items }) {
-  const [current, setCurrent] = useState(0);
-  const [animating, setAnimating] = useState(false);
-  const visible = useVisible();
-  const totalPages = Math.ceil(items.length / visible);
-
-  const go = (dir) => {
-    if (animating) return;
-    setAnimating(true);
-    setCurrent((prev) => (prev + dir + totalPages) % totalPages);
-    setTimeout(() => setAnimating(false), 400);
-  };
-
-  useEffect(() => {
-    setCurrent(0);
-  }, [visible]);
-
-  return (
-    <div className="curso-carousel-wrapper">
-      <button className="curso-carousel-btn curso-carousel-prev" onClick={() => go(-1)} aria-label="Anterior">‹</button>
-      <div className="curso-carousel-track-outer">
-        <div
-          className="curso-carousel-track"
-          style={{ transform: `translateX(calc(-${current * 100}%))` }}
-        >
-          {Array.from({ length: totalPages }).map((_, pageIdx) => (
-            <div
-              key={pageIdx}
-              style={{
-                display: "flex",
-                flex: "0 0 100%",
-                boxSizing: "border-box",
-              }}
-            >
-              {items.slice(pageIdx * visible, pageIdx * visible + visible).map((ben, i) => (
-                <BeneficioCard key={i} ben={ben} idx={pageIdx * visible + i} visible={visible} />
-              ))}
-            </div>
-          ))}
-        </div>
-      </div>
-      <button className="curso-carousel-btn curso-carousel-next" onClick={() => go(1)} aria-label="Siguiente">›</button>
-      <div className="curso-carousel-dots">
-        {Array.from({ length: totalPages }).map((_, i) => (
-          <button
-            key={i}
-            className={`curso-carousel-dot${i === current ? " active" : ""}`}
-            onClick={() => setCurrent(i)}
-          />
-        ))}
-      </div>
     </div>
   );
 }
@@ -234,7 +166,7 @@ export default function Cursos() {
         <h2 className="curso-section-title">QUÉ INCLUYE EL CAMPUS INGENIA</h2>
         <div className="beneficios-grid">
           {beneficiosData.map((ben, idx) => (
-            <BeneficioCard key={idx} ben={ben} idx={idx} visible={3} />
+            <BeneficioCard key={idx} ben={ben} idx={idx} />
           ))}
         </div>
       </section>

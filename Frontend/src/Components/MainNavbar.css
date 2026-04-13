@@ -21,7 +21,8 @@
 .nav {
   display: flex;
   gap: 16px;
-  margin-left: 24px;
+  flex: 1;
+  justify-content: center;
 }
 
 .nav-btn {
@@ -139,7 +140,7 @@
 /* ── Search Bar ─────────────────────────────────────── */
 .navbar-search {
   position: relative;
-  margin-left: 8px;
+  margin-left: auto;
 }
 
 .search-box {
@@ -171,7 +172,7 @@
   font-family: 'Teko', sans-serif;
   font-size: 15px;
   letter-spacing: 0.5px;
-  width: 180px;
+  width: 260px;
 }
 
 .search-input::placeholder { color: var(--text-muted); }

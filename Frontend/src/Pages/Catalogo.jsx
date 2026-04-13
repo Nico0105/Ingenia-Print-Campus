@@ -6,22 +6,26 @@ import { useNavigate } from "react-router-dom";
 import { WhatsAppFloat } from "../Components/WhatsAppFloat";
 import { API_URL } from "../config";
 
-// ✅ Normaliza imagenes para que siempre sea un array
 function parseImagenes(imagenes) {
   let arr;
   if (Array.isArray(imagenes)) arr = imagenes;
   else if (typeof imagenes === 'string') {
     try { arr = JSON.parse(imagenes); } catch { return []; }
   } else return [];
-  
-  // Extraer URL si son objetos { url, public_id }
   return arr.map(img => typeof img === 'string' ? img : img.url).filter(Boolean);
 }
+
+const SUBCATEGORIES = {
+  "Impresoras FDM": ["Bambu Lab", "Creality"],
+  "Accesorios": ["Bambu Lab", "Creality"],
+};
 
 export default function Catalogo() {
   const navigate = useNavigate();
   const [allProducts, setAllProducts] = useState([]);
   const [activeCategory, setActiveCategory] = useState("all");
+  const [activeSub, setActiveSub] = useState(null);
+  const [openDropdown, setOpenDropdown] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -43,16 +47,14 @@ export default function Catalogo() {
   }, []);
 
   const validProducts = (allProducts || []).filter(p => p && p.categoria);
-  const categorias = [
-    { id: "all", name: "Todos los Productos" },
-    ...Array.from(new Set(validProducts.map((p) => p.categoria))).map((cat) => ({
-      id: cat,
-      name: cat,
-    })),
-  ];
+
+  const categorias = Array.from(new Set(validProducts.map((p) => p.categoria)));
 
   const filteredProducts = validProducts.filter((product) => {
-    return activeCategory === "all" || product.categoria === activeCategory;
+    if (activeCategory === "all") return true;
+    if (product.categoria !== activeCategory) return false;
+    if (activeSub && !product.nombre?.toLowerCase().includes(activeSub.toLowerCase())) return false;
+    return true;
   });
 
   if (loading) {
@@ -76,19 +78,79 @@ export default function Catalogo() {
           <div className="filters-section">
             <h3 className="filters-title">Categorías</h3>
             <div className="filter-list">
-              {categorias.map((cat) => (
-                <button
-                  key={cat.id}
-                  className={`filter-btn ${activeCategory === cat.id ? "active" : ""}`}
-                  onClick={() => setActiveCategory(cat.id)}
-                >
-                  {cat.name}
-                </button>
-              ))}
+
+              <button
+                className={`filter-btn ${activeCategory === "all" && !activeSub ? "active" : ""}`}
+                onClick={() => {
+                  setActiveCategory("all");
+                  setActiveSub(null);
+                  setOpenDropdown(null);
+                }}
+              >
+                Todos los Productos
+              </button>
+
+              {categorias.map((cat) => {
+                const hasSubs = !!SUBCATEGORIES[cat];
+                const isOpen = openDropdown === cat;
+                const isActive = activeCategory === cat && !activeSub;
+
+                return (
+                  <div key={cat} className="filter-group">
+                    <button
+                      className={`filter-btn ${isActive ? "active" : ""}`}
+                      onClick={() => {
+                        if (hasSubs) {
+                          setOpenDropdown(isOpen ? null : cat);
+                          if (!isOpen) {
+                            setActiveCategory(cat);
+                            setActiveSub(null);
+                          }
+                        } else {
+                          setActiveCategory(cat);
+                          setActiveSub(null);
+                          setOpenDropdown(null);
+                        }
+                      }}
+                    >
+                      <span>{cat}</span>
+                      {hasSubs && (
+                        <span className={`filter-chevron ${isOpen ? "open" : ""}`}>&#9658;</span>
+                      )}
+                    </button>
+
+                    {hasSubs && (
+                      <div className={`subcategory-group ${isOpen ? "open" : ""}`}>
+                        {SUBCATEGORIES[cat].map((sub) => (
+                          <button
+                            key={sub}
+                            className={`sub-filter-btn ${activeSub === sub && activeCategory === cat ? "active" : ""}`}
+                            onClick={() => {
+                              setActiveCategory(cat);
+                              setActiveSub(sub);
+                            }}
+                          >
+                            <span className="sub-dot" />
+                            {sub}
+                          </button>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
+
             </div>
           </div>
 
-          <button className="reset-filters" onClick={() => setActiveCategory("all")}>
+          <button
+            className="reset-filters"
+            onClick={() => {
+              setActiveCategory("all");
+              setActiveSub(null);
+              setOpenDropdown(null);
+            }}
+          >
             Limpiar Filtros
           </button>
         </aside>
@@ -102,12 +164,18 @@ export default function Catalogo() {
 
           <div className="products-grid">
             {filteredProducts.map((product) => (
-              <div className="product-card" key={product.id} onClick={() => navigate(`/product/${product.id}`)}>
+              <div
+                className="product-card"
+                key={product.id}
+                onClick={() => navigate(`/product/${product.id}`)}
+              >
                 <div className="product-image">
                   <img
                     src={product.imagenes[0] || "https://res.cloudinary.com/dvjmdhlac/image/upload/v1775435437/Logo_Principal_gq4gtt.png"}
                     alt={product.nombre}
-                    onError={(e) => { e.target.src = "https://res.cloudinary.com/dvjmdhlac/image/upload/v1775435437/Logo_Principal_gq4gtt.png"; }}
+                    onError={(e) => {
+                      e.target.src = "https://res.cloudinary.com/dvjmdhlac/image/upload/v1775435437/Logo_Principal_gq4gtt.png";
+                    }}
                   />
                 </div>
 
@@ -131,8 +199,8 @@ export default function Catalogo() {
           </div>
         </section>
       </main>
-        <WhatsAppFloat />
 
+      <WhatsAppFloat />
       <Footer />
     </div>
   );
