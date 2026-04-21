@@ -399,30 +399,33 @@ export default function AdminPanel() {
       </button>
 
       <h4>Ideal Para:</h4>
-      {form.ideal_para.map((ideal, index) => (
-        <div key={index} className="dynamic-field">
-          <input
-            type="text"
-            value={ideal}
-            placeholder="Uso..."
-            onChange={(e) => {
-              const newIdeal = [...form.ideal_para];
-              newIdeal[index] = e.target.value;
-              setForm({ ...form, ideal_para: newIdeal });
-            }}
-          />
-          {form.ideal_para.length > 1 && (
-            <button
-              type="button"
-              onClick={() => {
-                const newIdeal = form.ideal_para.filter((_, i) => i !== index);
+        {form.ideal_para.map((ideal, index) => (
+          <div key={index} className="dynamic-field">
+            <textarea
+              value={ideal}
+              placeholder="Uso... (podés usar Enter para saltar líneas)"
+              rows={3}
+              onChange={(e) => {
+                const newIdeal = [...form.ideal_para];
+                newIdeal[index] = e.target.value;
                 setForm({ ...form, ideal_para: newIdeal });
               }}
-            >
-              ×
-            </button>
-          )}
-        </div>
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') e.stopPropagation(); // evita que Enter guarde el form
+              }}
+            />
+            {form.ideal_para.length > 1 && (
+              <button
+                type="button"
+                onClick={() => {
+                  const newIdeal = form.ideal_para.filter((_, i) => i !== index);
+                  setForm({ ...form, ideal_para: newIdeal });
+                }}
+              >
+                ×
+              </button>
+            )}
+          </div>
       ))}
       <button
         type="button"
