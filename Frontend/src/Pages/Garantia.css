@@ -22,7 +22,7 @@
   color: var(--text-primary);
   font-family: 'Poppins', sans-serif;
   position: relative;
-  overflow-x: hidden;
+  overflow-x: clip;
   padding-top: 120px;
 }
 
@@ -384,6 +384,7 @@
   border: 1px solid var(--border-soft);
   border-radius: 16px;
   padding: 2rem;
+  text-align: left;
 }
 
 .garantia-exclusion-card.garantia-no-warranty {
@@ -420,6 +421,7 @@
   line-height: 1.5;
   padding-left: 1rem;
   position: relative;
+  text-align: left;
 }
 
 .garantia-exclusion-list li::before {
@@ -440,7 +442,7 @@
   z-index: 1;
   padding: 6rem 2rem;
   text-align: center;
-  overflow: hidden;
+  overflow: visible;
 }
 
 .garantia-cta-section::before {
@@ -452,9 +454,10 @@
 }
 
 .garantia-cta-inner {
-  max-width: 680px;
+  max-width: 1060px;
   margin: 0 auto;
   position: relative;
+  overflow: visible;
 }
 
 .garantia-cta-title {

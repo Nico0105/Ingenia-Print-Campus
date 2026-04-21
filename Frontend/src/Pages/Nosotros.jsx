@@ -199,27 +199,22 @@ function TestimoniosCarousel({ items }) {
 const testimoniosData = [
   {
     name: "Ivan Paez",
-    role: "Emprendedor",
     text: "Muy recomendable Ingenia Print, mi experiencia para comprar una máquina desde Tucumán, la verdad muy confiables, Muchas Gracias.",
   },
   {
     name: "Rodrigo Santoja",
-    role: "Emprendedor",
     text: "Le compre mas de 7 maquinas y jamas tuve un problema, contesta al momento y cualquier detalle que necesites lo soluciona al instante, super recomendables. 10 puntos en todo el servicio gracias!.",
   },
   {
     name: "Daniela Di Lullo",
-    role: "Maker",
     text: "Les compre mas de 10 impresoras y siempre todo perfecto. Son muy confiables y el envio super rapido. Cuando tuve problemas siempre me respondieron al instante. Los recomiendo.",
   },
   {
     name: "Agostina Zunino",
-    role: "Maker",
     text: "Es la segunda maquina que compramos, muy recomendable. Responden por la garantia y todo 10 puntos.",
   },
   {
     name: "Tomas Esteverena",
-    role: "Emprendedor",
     text: "10 puntos la atención, el asesoramiento y la buena onda de Fabri, ademas de muy buenos precios. Le compre mi primera maquina hace un par de años y hace un mes le compre 2 mas para el laburo. Se los recomiendo a todo el que quiera su primera impresora o comprar varias para equipar su granja o empresa.",
   },
 ];

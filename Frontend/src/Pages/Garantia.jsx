@@ -215,10 +215,10 @@ export default function Garantia() {
       {/* ── CTA ── */}
       <section className="garantia-cta-section">
         <div className="garantia-cta-inner">
-          <h2 className="garantia-cta-title">
-            Tu impresora debe<br />
-            <span className="garantia-cta-gradient-text">funcionar siempre.</span>
-          </h2>
+         <h2 className="garantia-cta-title">
+          <span style={{display: 'block', whiteSpace: 'nowrap'}}>Tu impresora</span>
+          <span className="garantia-cta-gradient-text" style={{display: 'block', whiteSpace: 'nowrap'}}>debe funcionar siempre</span>
+        </h2>
           <p className="garantia-cta-desc">
             Nuestro objetivo es simple: que tu impresora funcione como debe y que siempre tengas a
             alguien que te acompañe. No hay bots — hablás con personas reales.

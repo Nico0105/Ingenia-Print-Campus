@@ -103,7 +103,7 @@ export default function MainNavbar() {
     <nav className={`nos-nav ${hidden ? "hidden" : ""}`}>
     <div className="nos-nav-brand" onClick={() => go("/Home")}>
         <img
-          src="https://res.cloudinary.com/dvjmdhlac/image/upload/v1775702212/Ingenia_Navbar_tuopnj.png"
+          src="https://res.cloudinary.com/dvjmdhlac/image/upload/v1776731433/logo_Ingenia_gaq0nh.png"
           alt="Ingenia Print"
         />
     </div>

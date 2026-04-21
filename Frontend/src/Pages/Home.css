@@ -23,12 +23,14 @@
 }
 
 .hero {
-  position: relative;
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  background: #000;
+  width: 100%;
   overflow: hidden;
+}
+
+.hero-banner {
+  width: 100%;
+  height: auto;
+  display: block;
 }
 
 .head {

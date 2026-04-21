@@ -148,9 +148,8 @@ export default function Cursos() {
         <div className="curso-hero-orb-orange" />
         <div className="curso-hero-label">Formación Incluida</div>
         <h1 className="curso-hero-title hero-content-down">
-          APRENDE
-          <span>ACOMPAÑADO</span>
-          DESDE EL PRIMER DÍA
+          <span>APRENDE ACOMPAÑADO</span>
+                DESDE EL PRIMER DÍA
         </h1>
 
         <div className="garantia-hero-line" />

@@ -57,20 +57,14 @@ export default function Home() {
 
       {/* HERO */}
       <main>
-       <section className="hero">
-
-        <div className="hero-content">
-          <span className="badge">IMPRESORAS 3D</span>
-          <h2 className="hero-title">
-            INGENIA PRINT <br />
-            <span>Ideas que toman forma</span>
-          </h2>
-        </div>
-        {/* Animacion */}
-        <div className="hero-animation">
-          <HeroPrinter />
-        </div>
-      </section>
+       {/* HERO */}
+        <section className="hero">
+          <img 
+            src="https://res.cloudinary.com/dvjmdhlac/image/upload/v1776731540/BANNER_MAIN_lfdxd3.jpg"
+            alt="Ingenia Print"
+            className="hero-banner"
+          />
+        </section>
 
         {/* PRODUCTS */}
        <section className="products">
