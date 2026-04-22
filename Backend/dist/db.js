@@ -70,6 +70,8 @@ async function getAllProductos() {
 }
 async function insertProducto(producto) {
     const { nombre, imagenes, descripcion_general, en_stock = true, origen_carpeta, categoria } = producto;
+    const imagenesStr = typeof imagenes === 'string' ? imagenes : JSON.stringify(imagenes);
+    const descripcionStr = typeof descripcion_general === 'string' ? descripcion_general : JSON.stringify(descripcion_general);
     const result = await exports.db.query(`INSERT INTO productos (nombre, imagenes, descripcion_general, en_stock, origen_carpeta, categoria)
      VALUES ($1, $2, $3, $4, $5, $6)
      ON CONFLICT (nombre) DO UPDATE SET
@@ -78,14 +80,7 @@ async function insertProducto(producto) {
        en_stock = EXCLUDED.en_stock,
        origen_carpeta = EXCLUDED.origen_carpeta,
        categoria = EXCLUDED.categoria
-     RETURNING id`, [
-        nombre,
-        JSON.stringify(imagenes),
-        JSON.stringify(descripcion_general),
-        en_stock ? 1 : 0,
-        origen_carpeta || null,
-        categoria || 'Sin categoría'
-    ]);
+     RETURNING id`, [nombre, imagenesStr, descripcionStr, en_stock ? 1 : 0, origen_carpeta || null, categoria || 'Sin categoría']);
     return result.rows[0].id;
 }
 async function updateProducto(id, producto) {
