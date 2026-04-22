@@ -288,7 +288,7 @@ function ValoresGrid() {
       <ValorCard
         num="04"
         verb="Ayudamos"
-        complement="a entender cómo usar cada equipo según el objetivo de cada persona"
+        complement={<>a entender cómo usar cada equipo<br/>según el objetivo de cada persona</>}
         delay={0.24}
         icon={
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
