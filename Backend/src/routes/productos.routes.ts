@@ -189,7 +189,8 @@ async function buildProducts(): Promise<any[]> {
       let contenido: any = {};
       if (dbProduct && dbProduct.descripcion_general) {
         try {
-          const parsed = JSON.parse(dbProduct.descripcion_general);
+          let parsed = JSON.parse(dbProduct.descripcion_general);
+          if (typeof parsed === 'string') parsed = JSON.parse(parsed); // fix double-stringify
           if (parsed && (parsed.titulo || parsed.especificaciones)) {
             contenido = parsed;
           }
@@ -318,6 +319,8 @@ router.get("/:id", async (req: Request, res: Response) => {
 // ✅ CAMBIO: upload.any() en vez de upload.array('imagenes') para aceptar color_imagen_N
 router.post("/", upload.any(), async (req: Request, res: Response) => {
   try {
+    console.log("=== BODY ===", JSON.stringify(req.body, null, 2));
+    console.log("=== FILES ===", req.files);
     let { nombre, categoria, subcategoria, titulo, especificaciones, materiales_compatibles, ideal_para, colores } = req.body;
     if (!nombre) {
       res.status(400).json({ error: "Nombre requerido" });

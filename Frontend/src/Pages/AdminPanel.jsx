@@ -7,7 +7,7 @@ const EMPTY_FORM = {
   nombre: "",
   categoria: "Impresoras FDM",
   subcategoria: "",
-  imagenes: [],
+  imagenes: [], // ahora es array de { id, file, preview }
   titulo: "",
   especificaciones: [
     { key: "Tecnología", value: "" },
@@ -36,9 +36,9 @@ function buildFormData(form) {
   formData.append("materiales_compatibles", JSON.stringify(form.materiales_compatibles.filter((m) => m)));
   formData.append("ideal_para", JSON.stringify(form.ideal_para.filter((i) => i)));
 
-  // Imágenes principales
-  for (const file of form.imagenes) {
-    formData.append("imagenes", file);
+  // Imágenes en el orden definido por el usuario
+  for (const img of form.imagenes) {
+    formData.append("imagenes", img.file);
   }
 
   // Colores: enviamos metadata + archivos separados
@@ -55,7 +55,108 @@ function buildFormData(form) {
   return formData;
 }
 
-// Sección de colores reutilizable
+// ── Reordenador de imágenes con drag & drop ─────────────────────────────────
+function ImageSorter({ images, onChange }) {
+  const dragIndex = useRef(null);
+  const [dragOver, setDragOver] = useState(null);
+
+  const handleDragStart = (e, index) => {
+    dragIndex.current = index;
+    e.dataTransfer.effectAllowed = "move";
+  };
+
+  const handleDragOver = (e, index) => {
+    e.preventDefault();
+    e.dataTransfer.dropEffect = "move";
+    setDragOver(index);
+  };
+
+  const handleDrop = (e, index) => {
+    e.preventDefault();
+    if (dragIndex.current === null || dragIndex.current === index) {
+      setDragOver(null);
+      return;
+    }
+    const reordered = [...images];
+    const [moved] = reordered.splice(dragIndex.current, 1);
+    reordered.splice(index, 0, moved);
+    dragIndex.current = null;
+    setDragOver(null);
+    onChange(reordered);
+  };
+
+  const handleDragEnd = () => {
+    dragIndex.current = null;
+    setDragOver(null);
+  };
+
+  const handleRemove = (index) => {
+    onChange(images.filter((_, i) => i !== index));
+  };
+
+  const moveLeft = (index) => {
+    if (index === 0) return;
+    const reordered = [...images];
+    [reordered[index - 1], reordered[index]] = [reordered[index], reordered[index - 1]];
+    onChange(reordered);
+  };
+
+  const moveRight = (index) => {
+    if (index === images.length - 1) return;
+    const reordered = [...images];
+    [reordered[index + 1], reordered[index]] = [reordered[index], reordered[index + 1]];
+    onChange(reordered);
+  };
+
+  if (!images || images.length === 0) return null;
+
+  return (
+    <div className="image-sorter">
+      <p className="image-sorter-hint">
+        🖱️ Arrastrá para reordenar · La primera imagen es la principal
+      </p>
+      <div className="image-sorter-grid">
+        {images.map((img, index) => (
+          <div
+            key={img.id}
+            className={`image-sorter-item${dragOver === index ? " drag-over" : ""}${index === 0 ? " is-main" : ""}`}
+            draggable
+            onDragStart={(e) => handleDragStart(e, index)}
+            onDragOver={(e) => handleDragOver(e, index)}
+            onDrop={(e) => handleDrop(e, index)}
+            onDragEnd={handleDragEnd}
+          >
+            {index === 0 && <span className="image-main-badge">Principal</span>}
+            <img src={img.preview} alt={`imagen ${index + 1}`} className="image-sorter-thumb" />
+            <div className="image-sorter-name" title={img.file.name}>{img.file.name}</div>
+            <div className="image-sorter-controls">
+              <button
+                type="button"
+                title="Mover izquierda"
+                onClick={() => moveLeft(index)}
+                disabled={index === 0}
+              >←</button>
+              <button
+                type="button"
+                title="Eliminar"
+                className="btn-remove-img"
+                onClick={() => handleRemove(index)}
+              >×</button>
+              <button
+                type="button"
+                title="Mover derecha"
+                onClick={() => moveRight(index)}
+                disabled={index === images.length - 1}
+              >→</button>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+// ── Sección de colores reutilizable ─────────────────────────────────────────
 function ColoresSection({ form, setForm }) {
   const isFilamento = form.categoria?.toLowerCase().includes("filament");
   if (!isFilamento) return null;
@@ -135,6 +236,7 @@ function ColoresSection({ form, setForm }) {
   );
 }
 
+// ── Componente principal ─────────────────────────────────────────────────────
 export default function AdminPanel() {
   const [products, setProducts] = useState([]);
   const [editingId, setEditingId] = useState(null);
@@ -192,7 +294,6 @@ export default function AdminPanel() {
   const handleEdit = (product) => {
     setEditingId(product.id);
 
-    // Parsear colores existentes
     let coloresExistentes = product.contenido?.colores || [];
     if (typeof coloresExistentes === "string") {
       try { coloresExistentes = JSON.parse(coloresExistentes); }
@@ -203,7 +304,7 @@ export default function AdminPanel() {
       nombre: product.nombre,
       categoria: product.categoria || "Impresoras FDM",
       subcategoria: product.subcategoria || "",
-      imagenes: [],
+      imagenes: [], // al editar, las imágenes nuevas se agregan desde cero
       titulo: product.contenido?.titulo || "",
       especificaciones: product.contenido?.especificaciones
         ? Object.entries(product.contenido.especificaciones).map(([key, value]) => ({ key, value }))
@@ -268,6 +369,19 @@ export default function AdminPanel() {
     navigate("/");
   };
 
+  // Convierte FileList a array de objetos { id, file, preview }
+  const handleImagenesChange = (e) => {
+    const files = Array.from(e.target.files || []);
+    const nuevas = files.map((file) => ({
+      id: `${file.name}-${file.lastModified}-${Math.random()}`,
+      file,
+      preview: URL.createObjectURL(file),
+    }));
+    setForm((prev) => ({ ...prev, imagenes: [...prev.imagenes, ...nuevas] }));
+    // Resetear el input para permitir volver a seleccionar los mismos archivos
+    e.target.value = "";
+  };
+
   // Formulario reutilizable (nuevo o edición)
   const renderForm = (onSubmit, submitLabel) => (
     <form onSubmit={onSubmit}>
@@ -300,13 +414,18 @@ export default function AdminPanel() {
         </div>
       </div>
 
+      {/* ── Selector + reordenador de imágenes ── */}
       <div className="form-group">
         <label>Imágenes:</label>
         <input
           type="file"
           multiple
           accept="image/*"
-          onChange={(e) => setForm({ ...form, imagenes: Array.from(e.target.files || []) })}
+          onChange={handleImagenesChange}
+        />
+        <ImageSorter
+          images={form.imagenes}
+          onChange={(reordered) => setForm({ ...form, imagenes: reordered })}
         />
       </div>
 
@@ -399,33 +518,33 @@ export default function AdminPanel() {
       </button>
 
       <h4>Ideal Para:</h4>
-        {form.ideal_para.map((ideal, index) => (
-          <div key={index} className="dynamic-field">
-            <textarea
-              value={ideal}
-              placeholder="Uso... (podés usar Enter para saltar líneas)"
-              rows={3}
-              onChange={(e) => {
-                const newIdeal = [...form.ideal_para];
-                newIdeal[index] = e.target.value;
+      {form.ideal_para.map((ideal, index) => (
+        <div key={index} className="dynamic-field">
+          <textarea
+            value={ideal}
+            placeholder="Uso... (podés usar Enter para saltar líneas)"
+            rows={3}
+            onChange={(e) => {
+              const newIdeal = [...form.ideal_para];
+              newIdeal[index] = e.target.value;
+              setForm({ ...form, ideal_para: newIdeal });
+            }}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") e.stopPropagation();
+            }}
+          />
+          {form.ideal_para.length > 1 && (
+            <button
+              type="button"
+              onClick={() => {
+                const newIdeal = form.ideal_para.filter((_, i) => i !== index);
                 setForm({ ...form, ideal_para: newIdeal });
               }}
-              onKeyDown={(e) => {
-                if (e.key === 'Enter') e.stopPropagation(); // evita que Enter guarde el form
-              }}
-            />
-            {form.ideal_para.length > 1 && (
-              <button
-                type="button"
-                onClick={() => {
-                  const newIdeal = form.ideal_para.filter((_, i) => i !== index);
-                  setForm({ ...form, ideal_para: newIdeal });
-                }}
-              >
-                ×
-              </button>
-            )}
-          </div>
+            >
+              ×
+            </button>
+          )}
+        </div>
       ))}
       <button
         type="button"
@@ -435,7 +554,6 @@ export default function AdminPanel() {
         + Agregar
       </button>
 
-      {/* SECCIÓN COLORES — solo aparece si categoría contiene "filament" */}
       <ColoresSection form={form} setForm={setForm} />
 
       <div className="form-buttons">

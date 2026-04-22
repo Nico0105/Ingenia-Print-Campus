@@ -269,24 +269,6 @@ async function buildProducts() {
         return [];
     }
 }
-// POST /api/products/upload-color - Subir imagen de color
-router.post("/upload-color", cloudinary_1.upload.single('imagen'), async (req, res) => {
-    try {
-        const file = req.file;
-        if (!file) {
-            res.status(400).json({ error: "No file provided" });
-            return;
-        }
-        res.json({
-            url: file.path,
-            public_id: file.filename,
-        });
-    }
-    catch (error) {
-        console.error("Error uploading color image:", error);
-        res.status(500).json({ error: "Error uploading color image" });
-    }
-});
 // GET /api/products
 router.get("/", async (req, res) => {
     try {
@@ -320,7 +302,8 @@ router.get("/:id", async (req, res) => {
     }
 });
 // POST /api/products - Crear producto
-router.post("/", cloudinary_1.upload.array('imagenes'), async (req, res) => {
+// ✅ CAMBIO: upload.any() en vez de upload.array('imagenes') para aceptar color_imagen_N
+router.post("/", cloudinary_1.upload.any(), async (req, res) => {
     try {
         let { nombre, categoria, subcategoria, titulo, especificaciones, materiales_compatibles, ideal_para, colores } = req.body;
         if (!nombre) {
@@ -331,16 +314,26 @@ router.post("/", cloudinary_1.upload.array('imagenes'), async (req, res) => {
         if (categoria === "Impresoras FDM" && !subcategoria) {
             subcategoria = "Otros";
         }
-        // ✅ NUEVO: Cloudinary ya subió las imágenes, file.path = URL, file.filename = public_id
-        const files = req.files;
-        const imagenes = files ? files.map(f => ({ url: f.path, public_id: f.filename })) : [];
-        let coloresData = [];
+        // ✅ Separar archivos por fieldname
+        const allFiles = req.files;
+        const imagenesFiles = allFiles.filter(f => f.fieldname === 'imagenes');
+        const imagenes = imagenesFiles.map(f => ({ url: f.path, public_id: f.filename }));
+        // ✅ Procesar colores con sus imágenes
+        let coloresMeta = [];
         try {
-            coloresData = colores ? JSON.parse(colores) : [];
+            coloresMeta = JSON.parse(colores || '[]');
         }
         catch {
-            coloresData = [];
+            coloresMeta = [];
         }
+        const coloresFinales = coloresMeta.map((c, i) => {
+            const colorFile = allFiles.find(f => f.fieldname === `color_imagen_${i}`);
+            return {
+                nombre: c.nombre,
+                imagenUrl: colorFile ? colorFile.path : (c.imagenUrl || null),
+                public_id: colorFile ? colorFile.filename : null,
+            };
+        });
         await (0, db_1.insertProducto)({
             nombre,
             categoria,
@@ -350,7 +343,7 @@ router.post("/", cloudinary_1.upload.array('imagenes'), async (req, res) => {
                 especificaciones: JSON.parse(especificaciones || "{}"),
                 materiales_compatibles: JSON.parse(materiales_compatibles || "[]"),
                 ideal_para: JSON.parse(ideal_para || "[]"),
-                colores: coloresData,
+                colores: coloresFinales,
             })
         });
         res.status(201).json({ message: "Producto creado" });
@@ -361,7 +354,8 @@ router.post("/", cloudinary_1.upload.array('imagenes'), async (req, res) => {
     }
 });
 // PUT /api/products/:id - Editar producto
-router.put("/:id", cloudinary_1.upload.array('imagenes'), async (req, res) => {
+// ✅ CAMBIO: upload.any() en vez de upload.array('imagenes') para aceptar color_imagen_N
+router.put("/:id", cloudinary_1.upload.any(), async (req, res) => {
     try {
         const id = parseInt(req.params.id, 10);
         if (isNaN(id)) {
@@ -369,7 +363,9 @@ router.put("/:id", cloudinary_1.upload.array('imagenes'), async (req, res) => {
             return;
         }
         const { nombre, categoria, subcategoria, titulo, especificaciones, materiales_compatibles, ideal_para, colores } = req.body;
-        const files = req.files;
+        // ✅ Separar archivos por fieldname
+        const allFiles = req.files;
+        const imagenesFiles = allFiles.filter(f => f.fieldname === 'imagenes');
         let currentProducto = await (0, db_1.getProductoById)(id);
         let dbId = id;
         if (!currentProducto && id >= 1000) {
@@ -426,19 +422,28 @@ router.put("/:id", cloudinary_1.upload.array('imagenes'), async (req, res) => {
         catch {
             imagenes = [];
         }
-        if (files && files.length > 0) {
-            const cloudFiles = files;
-            for (const file of cloudFiles) {
+        // ✅ Solo agregar imágenes principales (fieldname === 'imagenes')
+        if (imagenesFiles.length > 0) {
+            for (const file of imagenesFiles) {
                 imagenes.push({ url: file.path, public_id: file.filename });
             }
         }
-        let coloresData = [];
+        // ✅ Procesar colores con sus imágenes
+        let coloresMeta = [];
         try {
-            coloresData = colores ? JSON.parse(colores) : [];
+            coloresMeta = JSON.parse(colores || '[]');
         }
         catch {
-            coloresData = [];
+            coloresMeta = [];
         }
+        const coloresFinales = coloresMeta.map((c, i) => {
+            const colorFile = allFiles.find(f => f.fieldname === `color_imagen_${i}`);
+            return {
+                nombre: c.nombre,
+                imagenUrl: colorFile ? colorFile.path : (c.imagenUrl || null),
+                public_id: colorFile ? colorFile.filename : null,
+            };
+        });
         const updatedProduct = {
             nombre: nombre || currentProducto.nombre,
             categoria: categoria || currentProducto.categoria,
@@ -470,7 +475,7 @@ router.put("/:id", cloudinary_1.upload.array('imagenes'), async (req, res) => {
                         return [];
                     }
                 })(),
-                colores: coloresData,
+                colores: coloresFinales, // ✅ NUEVO: guardar colores con sus imágenes
             }
         };
         await (0, db_1.updateProducto)(dbId, updatedProduct);
