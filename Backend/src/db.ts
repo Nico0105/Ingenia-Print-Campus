@@ -72,31 +72,32 @@ export async function getAllProductos(): Promise<any[]> {
 }
 
 export async function insertProducto(producto: any): Promise<number> {
-  const { nombre, imagenes, descripcion_general, en_stock = true, origen_carpeta, categoria } = producto;
+  const { nombre, imagenes, descripcion_general, en_stock = true, origen_carpeta, categoria, subcategoria } = producto;
   
   const imagenesStr = typeof imagenes === 'string' ? imagenes : JSON.stringify(imagenes);
   const descripcionStr = typeof descripcion_general === 'string' ? descripcion_general : JSON.stringify(descripcion_general);
 
   const result = await db.query(
-    `INSERT INTO productos (nombre, imagenes, descripcion_general, en_stock, origen_carpeta, categoria)
-     VALUES ($1, $2, $3, $4, $5, $6)
+    `INSERT INTO productos (nombre, imagenes, descripcion_general, en_stock, origen_carpeta, categoria, subcategoria)
+     VALUES ($1, $2, $3, $4, $5, $6, $7)
      ON CONFLICT (nombre) DO UPDATE SET
        imagenes = EXCLUDED.imagenes,
        descripcion_general = EXCLUDED.descripcion_general,
        en_stock = EXCLUDED.en_stock,
        origen_carpeta = EXCLUDED.origen_carpeta,
-       categoria = EXCLUDED.categoria
+       categoria = EXCLUDED.categoria,
+       subcategoria = EXCLUDED.subcategoria
      RETURNING id`,
-    [nombre, imagenesStr, descripcionStr, en_stock ? 1 : 0, origen_carpeta || null, categoria || 'Sin categoría']
+    [nombre, imagenesStr, descripcionStr, en_stock ? 1 : 0, origen_carpeta || null, categoria || 'Sin categoría', subcategoria || null]
   );
   return result.rows[0].id;
 }
 
 export async function updateProducto(id: number, producto: any): Promise<void> {
-  const { nombre, categoria, imagenes, descripcion_general, en_stock } = producto;
+  const { nombre, categoria, subcategoria, imagenes, descripcion_general, en_stock } = producto;
   await db.query(
-    'UPDATE productos SET nombre = $1, categoria = $2, imagenes = $3, descripcion_general = $4, en_stock = $5 WHERE id = $6',
-    [nombre, categoria || 'Sin categoría', JSON.stringify(imagenes), JSON.stringify(descripcion_general), en_stock ? 1 : 0, id]
+    'UPDATE productos SET nombre = $1, categoria = $2, subcategoria = $3, imagenes = $4, descripcion_general = $5, en_stock = $6 WHERE id = $7',
+    [nombre, categoria || 'Sin categoría', subcategoria || null, JSON.stringify(imagenes), JSON.stringify(descripcion_general), en_stock ? 1 : 0, id]
   );
 }
 

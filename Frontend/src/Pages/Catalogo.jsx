@@ -15,11 +15,6 @@ function parseImagenes(imagenes) {
   return arr.map(img => typeof img === 'string' ? img : img.url).filter(Boolean);
 }
 
-const SUBCATEGORIES = {
-  "Impresoras FDM": ["Bambu Lab", "Creality"],
-  "Accesorios": ["Bambu Lab", "Creality"],
-};
-
 export default function Catalogo() {
   const navigate = useNavigate();
   const [allProducts, setAllProducts] = useState([]);
@@ -48,12 +43,21 @@ export default function Catalogo() {
 
   const validProducts = (allProducts || []).filter(p => p && p.categoria);
 
+  // Subcategorías dinámicas agrupadas por categoría
+  const subcategoriasPorCategoria = validProducts.reduce((acc, p) => {
+    if (p.subcategoria) {
+      if (!acc[p.categoria]) acc[p.categoria] = new Set();
+      acc[p.categoria].add(p.subcategoria);
+    }
+    return acc;
+  }, {});
+
   const categorias = Array.from(new Set(validProducts.map((p) => p.categoria)));
 
   const filteredProducts = validProducts.filter((product) => {
     if (activeCategory === "all") return true;
     if (product.categoria !== activeCategory) return false;
-    if (activeSub && !product.nombre?.toLowerCase().includes(activeSub.toLowerCase())) return false;
+    if (activeSub && product.subcategoria !== activeSub) return false;
     return true;
   });
 
@@ -91,7 +95,8 @@ export default function Catalogo() {
               </button>
 
               {categorias.map((cat) => {
-                const hasSubs = !!SUBCATEGORIES[cat];
+                const subs = [...(subcategoriasPorCategoria[cat] || [])];
+                const hasSubs = subs.length > 0;
                 const isOpen = openDropdown === cat;
                 const isActive = activeCategory === cat && !activeSub;
 
@@ -121,7 +126,7 @@ export default function Catalogo() {
 
                     {hasSubs && (
                       <div className={`subcategory-group ${isOpen ? "open" : ""}`}>
-                        {SUBCATEGORIES[cat].map((sub) => (
+                        {subs.map((sub) => (
                           <button
                             key={sub}
                             className={`sub-filter-btn ${activeSub === sub && activeCategory === cat ? "active" : ""}`}

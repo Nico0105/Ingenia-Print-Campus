@@ -219,7 +219,7 @@ async function buildProducts(): Promise<any[]> {
         id: productId,
         nombre: productName,
         categoria: categoryDisplayNames[item.categoria] || item.categoria,
-        subcategoria: null,
+        subcategoria: dbProduct?.subcategoria || null,
         imagenes: images.length > 0 ? images : [`${BASE_URL}/images/Logo.png`],
         contenido,
         en_stock: dbProduct ? dbProduct.en_stock === 1 : true,
@@ -253,7 +253,7 @@ async function buildProducts(): Promise<any[]> {
           id: dbProduct.id,
           nombre: dbProduct.nombre,
           categoria: folderCategory || dbProduct.categoria || 'Sin categoría',
-          subcategoria: null,
+          subcategoria: dbProduct?.subcategoria || null,
           imagenes: imagenes.length > 0 ? imagenes : [`${BASE_URL}/images/Logo.png`],
           contenido,
           en_stock: dbProduct.en_stock === 1,
@@ -263,7 +263,7 @@ async function buildProducts(): Promise<any[]> {
           id: dbProduct.id,
           nombre: dbProduct.nombre,
           categoria: dbProduct.categoria || 'Sin categoría',
-          subcategoria: null,
+          subcategoria: dbProduct?.subcategoria || null,
           imagenes: imagenes.length > 0 ? imagenes : [`${BASE_URL}/images/Logo.png`],
           contenido,
           en_stock: dbProduct.en_stock === 1,
@@ -316,7 +316,6 @@ router.get("/:id", async (req: Request, res: Response) => {
 });
 
 // POST /api/products - Crear producto
-// ✅ CAMBIO: upload.any() en vez de upload.array('imagenes') para aceptar color_imagen_N
 router.post("/", upload.any(), async (req: Request, res: Response) => {
   try {
     console.log("=== BODY ===", JSON.stringify(req.body, null, 2));
@@ -353,6 +352,7 @@ router.post("/", upload.any(), async (req: Request, res: Response) => {
     await insertProducto({
       nombre,
       categoria,
+      subcategoria: subcategoria || null,
       imagenes: JSON.stringify(imagenes),
       descripcion_general: JSON.stringify({
         titulo,
@@ -371,7 +371,6 @@ router.post("/", upload.any(), async (req: Request, res: Response) => {
 });
 
 // PUT /api/products/:id - Editar producto
-// ✅ CAMBIO: upload.any() en vez de upload.array('imagenes') para aceptar color_imagen_N
 router.put("/:id", upload.any(), async (req: Request, res: Response) => {
   try {
     const id = parseInt(req.params.id as string, 10);
@@ -472,6 +471,7 @@ router.put("/:id", upload.any(), async (req: Request, res: Response) => {
     const updatedProduct = {
       nombre: nombre || currentProducto.nombre,
       categoria: categoria || currentProducto.categoria,
+      subcategoria: subcategoria ?? currentProducto.subcategoria ?? null,
       imagenes,
       en_stock: currentProducto.en_stock,
       descripcion_general: {

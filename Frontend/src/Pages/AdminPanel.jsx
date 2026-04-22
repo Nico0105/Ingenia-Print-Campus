@@ -7,7 +7,7 @@ const EMPTY_FORM = {
   nombre: "",
   categoria: "Impresoras FDM",
   subcategoria: "",
-  imagenes: [], // ahora es array de { id, file, preview }
+  imagenes: [],
   titulo: "",
   especificaciones: [
     { key: "Tecnología", value: "" },
@@ -36,12 +36,10 @@ function buildFormData(form) {
   formData.append("materiales_compatibles", JSON.stringify(form.materiales_compatibles.filter((m) => m)));
   formData.append("ideal_para", JSON.stringify(form.ideal_para.filter((i) => i)));
 
-  // Imágenes en el orden definido por el usuario
   for (const img of form.imagenes) {
     formData.append("imagenes", img.file);
   }
 
-  // Colores: enviamos metadata + archivos separados
   const coloresMeta = form.colores.map((c, i) => ({
     nombre: c.nombre,
     imagenUrl: c.imagenUrl || null,
@@ -130,24 +128,9 @@ function ImageSorter({ images, onChange }) {
             <img src={img.preview} alt={`imagen ${index + 1}`} className="image-sorter-thumb" />
             <div className="image-sorter-name" title={img.file.name}>{img.file.name}</div>
             <div className="image-sorter-controls">
-              <button
-                type="button"
-                title="Mover izquierda"
-                onClick={() => moveLeft(index)}
-                disabled={index === 0}
-              >←</button>
-              <button
-                type="button"
-                title="Eliminar"
-                className="btn-remove-img"
-                onClick={() => handleRemove(index)}
-              >×</button>
-              <button
-                type="button"
-                title="Mover derecha"
-                onClick={() => moveRight(index)}
-                disabled={index === images.length - 1}
-              >→</button>
+              <button type="button" title="Mover izquierda" onClick={() => moveLeft(index)} disabled={index === 0}>←</button>
+              <button type="button" title="Eliminar" className="btn-remove-img" onClick={() => handleRemove(index)}>×</button>
+              <button type="button" title="Mover derecha" onClick={() => moveRight(index)} disabled={index === images.length - 1}>→</button>
             </div>
           </div>
         ))}
@@ -304,7 +287,7 @@ export default function AdminPanel() {
       nombre: product.nombre,
       categoria: product.categoria || "Impresoras FDM",
       subcategoria: product.subcategoria || "",
-      imagenes: [], // al editar, las imágenes nuevas se agregan desde cero
+      imagenes: [],
       titulo: product.contenido?.titulo || "",
       especificaciones: product.contenido?.especificaciones
         ? Object.entries(product.contenido.especificaciones).map(([key, value]) => ({ key, value }))
@@ -369,7 +352,6 @@ export default function AdminPanel() {
     navigate("/");
   };
 
-  // Convierte FileList a array de objetos { id, file, preview }
   const handleImagenesChange = (e) => {
     const files = Array.from(e.target.files || []);
     const nuevas = files.map((file) => ({
@@ -378,13 +360,13 @@ export default function AdminPanel() {
       preview: URL.createObjectURL(file),
     }));
     setForm((prev) => ({ ...prev, imagenes: [...prev.imagenes, ...nuevas] }));
-    // Resetear el input para permitir volver a seleccionar los mismos archivos
     e.target.value = "";
   };
 
-  // Formulario reutilizable (nuevo o edición)
   const renderForm = (onSubmit, submitLabel) => (
     <form onSubmit={onSubmit}>
+
+      {/* ── Fila superior: nombre, categoría, subcategoría ── */}
       <div className="form-row">
         <div className="form-group">
           <label>Nombre:</label>
@@ -408,13 +390,24 @@ export default function AdminPanel() {
           <label>Subcategoría:</label>
           <input
             type="text"
+            list="subcategorias-list"
             value={form.subcategoria}
             onChange={(e) => setForm({ ...form, subcategoria: e.target.value })}
+            placeholder="Escribí o elegí una subcategoría..."
           />
+          <datalist id="subcategorias-list">
+            {[...new Set(
+              products
+                .filter(p => p.categoria === form.categoria && p.subcategoria)
+                .map(p => p.subcategoria)
+            )].map((sub) => (
+              <option key={sub} value={sub} />
+            ))}
+          </datalist>
         </div>
       </div>
 
-      {/* ── Selector + reordenador de imágenes ── */}
+      {/* ── Imágenes ── */}
       <div className="form-group">
         <label>Imágenes:</label>
         <input
@@ -429,6 +422,7 @@ export default function AdminPanel() {
         />
       </div>
 
+      {/* ── Título ── */}
       <div className="form-group">
         <label>Título / Descripción:</label>
         <textarea
