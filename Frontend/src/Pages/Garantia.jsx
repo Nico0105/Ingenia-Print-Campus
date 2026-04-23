@@ -65,19 +65,19 @@ const SERVICES = [
     number: '01',
     icon: <HeadsetIcon />,
     title: 'Asesoramiento técnico especializado',
-    desc: 'Para detectar y resolver cualquier problema, nuestro equipo de soporte te guía paso a paso con soluciones claras y efectivas.',
+    desc: 'Para detectar el problema.',
   },
   {
     number: '02',
     icon: <BoxIcon />,
     title: 'Reposición sin costo',
-    desc: 'De la pieza defectuosa, la reponemos sin cargo si corresponde',
+    desc: 'De la pieza defectuosa, si corresponde',
   },
   {
     number: '03',
     icon: <WrenchIcon />,
-    title: 'Servicio técnico de reparación',
-    desc: 'Reparamos la impresora para dejarla funcionando perfectamente cuando sea necesario.',
+    title: 'Servicio técnico',
+    desc: 'para reparar y dejar la impresora funcionando correctamente cuando sea necesario.',
   },
 ];
 
@@ -88,7 +88,7 @@ const COVERAGE = [
   },
   {
     months: '6',
-    items: ['Drivers extraíbles'],
+    items: ['Drivers extraíbles', 'Display Impresion Resina'],
   },
   {
     months: '3',
@@ -133,7 +133,7 @@ export default function Garantia() {
         <div className="garantia-hero-line" />
 
         <p className="garantia-hero-subtitle">
-          En Ingenia Print <strong>respaldamos cada impresora 3D que vendemos.</strong> Si tu equipo
+          En Ingenia Print <strong>respaldamos cada impresora 3D que vendemos.</strong> <br />Si tu equipo
           presenta una falla de fábrica o un problema técnico, te damos una solución completa y sin
           complicaciones.
         </p>
@@ -221,7 +221,7 @@ export default function Garantia() {
         </h2>
           <p className="garantia-cta-desc">
             Nuestro objetivo es simple: que tu impresora funcione como debe y que siempre tengas a
-            alguien que te acompañe. No hay bots — hablás con personas reales.
+            alguien que te acompañe.
           </p>
           <a
             href="https://wa.me/541149455926?text=Hola%20Ingenia%20Print!%20Tengo%20una%20consulta%20sobre%20la%20garantía."
@@ -232,7 +232,7 @@ export default function Garantia() {
             <WhatsAppIcon />
             Hablar por WhatsApp
           </a>
-          <p className="garantia-cta-note">Te acompañamos en lo que necesites · Soporte en tiempo real</p>
+          <p className="garantia-cta-note">Te acompañamos en lo que necesites · No hay bots. Hablas con personas reales.</p>
         </div>
       </section>
       <WhatsAppFloat />
