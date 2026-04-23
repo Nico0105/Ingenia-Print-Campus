@@ -36,14 +36,12 @@ function buildFormData(form) {
   formData.append("materiales_compatibles", JSON.stringify(form.materiales_compatibles.filter((m) => m)));
   formData.append("ideal_para", JSON.stringify(form.ideal_para.filter((i) => i)));
 
-  // Enviar el orden completo como metadata
   const imagenesOrden = form.imagenes.map(img => ({
     tipo: img.file ? "nueva" : "existente",
     url: img.file ? null : img.url,
   }));
   formData.append("imagenes_orden", JSON.stringify(imagenesOrden));
 
-  // Enviar solo los archivos nuevos en orden
   form.imagenes
     .filter(img => img.file)
     .forEach(img => formData.append("imagenes_nuevas", img.file));
@@ -61,7 +59,6 @@ function buildFormData(form) {
   return formData;
 }
 
-// ── Reordenador de imágenes con drag & drop ─────────────────────────────────
 function ImageSorter({ images, onChange }) {
   const dragIndex = useRef(null);
   const [dragOver, setDragOver] = useState(null);
@@ -133,7 +130,12 @@ function ImageSorter({ images, onChange }) {
             onDragEnd={handleDragEnd}
           >
             {index === 0 && <span className="image-main-badge">Principal</span>}
-            <img src={img.preview} alt={`imagen ${index + 1}`} className="image-sorter-thumb" />
+            <img
+              src={img.preview}
+              alt={`imagen ${index + 1}`}
+              className="image-sorter-thumb"
+              onError={(e) => { e.target.style.opacity = "0.3"; }}
+            />
             <div className="image-sorter-name" title={img.file?.name || img.url}>
               {img.file?.name || "📷 existente"}
             </div>
@@ -149,7 +151,6 @@ function ImageSorter({ images, onChange }) {
   );
 }
 
-// ── Sección de colores reutilizable ─────────────────────────────────────────
 function ColoresSection({ form, setForm }) {
   const isFilamento = form.categoria?.toLowerCase().includes("filament");
   if (!isFilamento) return null;
@@ -229,7 +230,6 @@ function ColoresSection({ form, setForm }) {
   );
 }
 
-// ── Componente principal ─────────────────────────────────────────────────────
 export default function AdminPanel() {
   const [products, setProducts] = useState([]);
   const [editingId, setEditingId] = useState(null);
@@ -293,13 +293,11 @@ export default function AdminPanel() {
       catch { coloresExistentes = []; }
     }
 
-    // Cargar imágenes existentes en el sorter
-    const imagenesExistentes = (product.imagenes || []).map((url) => ({
-      id: `existing-${url}`,
-      url,
-      preview: url,
-      file: null,
-    }));
+    // Cargar imágenes existentes — cubre tanto strings como objetos {url}
+    const imagenesExistentes = (product.imagenes || []).map((img) => {
+      const url = typeof img === "string" ? img : img?.url;
+      return { id: `existing-${url}`, url, preview: url, file: null };
+    }).filter(img => img.url);
 
     setForm({
       nombre: product.nombre,
@@ -376,6 +374,7 @@ export default function AdminPanel() {
       id: `${file.name}-${file.lastModified}-${Math.random()}`,
       file,
       preview: URL.createObjectURL(file),
+      url: null,
     }));
     setForm((prev) => ({ ...prev, imagenes: [...prev.imagenes, ...nuevas] }));
     e.target.value = "";

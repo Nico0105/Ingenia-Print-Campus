@@ -12,7 +12,6 @@ const PRODUCTOS_BASE = path.join(__dirname, "../uploads/Productos");
 const BASE_URL = process.env.BASE_URL || "http://localhost:5000";
 const IMAGE_EXTENSIONS = /\.(jpg|jpeg|png|webp|gif)$/i;
 
-// ✅ Normaliza quitando espacios, mayúsculas Y acentos para comparaciones robustas
 const normalizeName = (name: string) =>
   name
     .toLowerCase()
@@ -20,7 +19,6 @@ const normalizeName = (name: string) =>
     .trim()
     .normalize('NFD')
     .replace(/[\u0300-\u036f]/g, '');
-
 
 async function getDescripcionFromDocx(productPath: string): Promise<any | null> {
   try {
@@ -133,6 +131,15 @@ const categoryDisplayNames: Record<string, string> = {
   'Accesorios': 'Accesorios'
 };
 
+// Helper para normalizar imagenes siempre a string[]
+function parseImagenesAsUrls(raw: any): string[] {
+  try {
+    const arr = typeof raw === 'string' ? JSON.parse(raw) : raw;
+    if (!Array.isArray(arr)) return [];
+    return arr.map((img: any) => typeof img === 'string' ? img : img?.url).filter(Boolean);
+  } catch { return []; }
+}
+
 async function buildProducts(): Promise<any[]> {
   try {
     const folderProducts = getCategoriesFromFolders();
@@ -141,20 +148,17 @@ async function buildProducts(): Promise<any[]> {
     const dbProducts = await getAllProductos();
     const dbProductsMap = new Map(dbProducts.map(p => [p.nombre, p]));
 
-    // ✅ Normalizar origen_carpeta con normalizeName (quita acentos + mayúsculas)
     const adoptedFoldersMap = new Map<string, any>();
     for (const p of dbProducts) {
       if (p.origen_carpeta) {
         adoptedFoldersMap.set(normalizeName(p.origen_carpeta), p);
       }
     }
-    console.log('Adopted folders:', adoptedFoldersMap.size);
 
     const usedIds = new Set<number>();
 
     const folderProductsResolved = await Promise.all(folderProducts.map(async (item, index) => {
       const folderPath = `${item.categoria}/${item.subcarpeta}`;
-      // ✅ Usar normalizeName en vez de .toLowerCase() para que matchee correctamente
       const normalizedFolderPath = normalizeName(folderPath);
       const folderName = item.subcarpeta.split(/[\\/]/).pop() || item.subcarpeta;
       const normalizedFolder = normalizeName(folderName);
@@ -162,38 +166,27 @@ async function buildProducts(): Promise<any[]> {
       if (adoptedFoldersMap.has(normalizedFolderPath)) {
         const adoptedDbProduct = adoptedFoldersMap.get(normalizedFolderPath);
         usedIds.add(adoptedDbProduct.id);
-        console.log('Skipping adopted folder:', folderPath, '- using DB product ID:', adoptedDbProduct.id);
         return null;
       }
 
       let dbProduct = dbProductsMap.get(folderName);
-
       if (!dbProduct) {
         for (const [name, product] of dbProductsMap) {
           if (normalizeName(name) === normalizedFolder) {
             dbProduct = product;
-            console.log('Found match (normalized):', folderName, '=', name);
             break;
           }
         }
       }
 
-      let images: string[] = [];
-      if (dbProduct && dbProduct.imagenes) {
-        try {
-          const raw = JSON.parse(dbProduct.imagenes);
-          images = Array.isArray(raw) ? raw.map((img: any) => typeof img === 'string' ? img : img.url) : [];
-        } catch { images = []; }
-      }
+      const images = dbProduct ? parseImagenesAsUrls(dbProduct.imagenes) : [];
 
       let contenido: any = {};
       if (dbProduct && dbProduct.descripcion_general) {
         try {
           let parsed = JSON.parse(dbProduct.descripcion_general);
-          if (typeof parsed === 'string') parsed = JSON.parse(parsed); // fix double-stringify
-          if (parsed && (parsed.titulo || parsed.especificaciones)) {
-            contenido = parsed;
-          }
+          if (typeof parsed === 'string') parsed = JSON.parse(parsed);
+          if (parsed && (parsed.titulo || parsed.especificaciones)) contenido = parsed;
         } catch {}
       }
 
@@ -226,13 +219,9 @@ async function buildProducts(): Promise<any[]> {
       };
     }));
 
-    // Filtrar nulls (carpetas adoptadas)
     const filteredProducts: any[] = folderProductsResolved.filter(p => p !== null);
-
-    // ✅ Trackear IDs ya agregados para evitar duplicados
     const alreadyAddedIds = new Set<number>(filteredProducts.map(p => p.id));
 
-    // Agregar productos de DB que no están en filteredProducts todavía
     for (const dbProduct of dbProducts) {
       if (alreadyAddedIds.has(dbProduct.id)) continue;
 
@@ -241,11 +230,7 @@ async function buildProducts(): Promise<any[]> {
         try { contenido = JSON.parse(dbProduct.descripcion_general); } catch {}
       }
 
-      let imagenes: string[] = [];
-      try {
-        imagenes = dbProduct.imagenes ? JSON.parse(dbProduct.imagenes) : [];
-        if (!Array.isArray(imagenes)) imagenes = [];
-      } catch { imagenes = []; }
+      const imagenes = parseImagenesAsUrls(dbProduct.imagenes);
 
       if (dbProduct.origen_carpeta) {
         const folderCategory = dbProduct.origen_carpeta.split('/')[0];
@@ -253,7 +238,7 @@ async function buildProducts(): Promise<any[]> {
           id: dbProduct.id,
           nombre: dbProduct.nombre,
           categoria: folderCategory || dbProduct.categoria || 'Sin categoría',
-          subcategoria: dbProduct?.subcategoria || null,
+          subcategoria: dbProduct.subcategoria || null,
           imagenes: imagenes.length > 0 ? imagenes : [`${BASE_URL}/images/Logo.png`],
           contenido,
           en_stock: dbProduct.en_stock === 1,
@@ -263,7 +248,7 @@ async function buildProducts(): Promise<any[]> {
           id: dbProduct.id,
           nombre: dbProduct.nombre,
           categoria: dbProduct.categoria || 'Sin categoría',
-          subcategoria: dbProduct?.subcategoria || null,
+          subcategoria: dbProduct.subcategoria || null,
           imagenes: imagenes.length > 0 ? imagenes : [`${BASE_URL}/images/Logo.png`],
           contenido,
           en_stock: dbProduct.en_stock === 1,
@@ -273,7 +258,7 @@ async function buildProducts(): Promise<any[]> {
       alreadyAddedIds.add(dbProduct.id);
     }
 
-    return filteredProducts; // ✅ siempre retornar filteredProducts
+    return filteredProducts;
   } catch (err) {
     console.error('Error en buildProducts:', err);
     return [];
@@ -295,19 +280,11 @@ router.get("/", async (req: Request, res: Response) => {
 router.get("/:id", async (req: Request, res: Response) => {
   try {
     const id = parseInt(req.params.id as string, 10);
-    if (isNaN(id)) {
-      res.status(400).json({ error: "ID inválido" });
-      return;
-    }
+    if (isNaN(id)) { res.status(400).json({ error: "ID inválido" }); return; }
 
     const products = await buildProducts();
-    const validProducts = products.filter(p => p && p.id);
-    const product = validProducts.find((p) => p.id === id);
-
-    if (!product) {
-      res.status(404).json({ error: "Producto no encontrado" });
-      return;
-    }
+    const product = products.filter(p => p && p.id).find((p) => p.id === id);
+    if (!product) { res.status(404).json({ error: "Producto no encontrado" }); return; }
 
     res.json(product);
   } catch (error) {
@@ -315,28 +292,19 @@ router.get("/:id", async (req: Request, res: Response) => {
   }
 });
 
-// POST /api/products - Crear producto
+// POST /api/products
 router.post("/", upload.any(), async (req: Request, res: Response) => {
   try {
-    console.log("=== BODY ===", JSON.stringify(req.body, null, 2));
-    console.log("=== FILES ===", req.files);
     let { nombre, categoria, subcategoria, titulo, especificaciones, materiales_compatibles, ideal_para, colores } = req.body;
-    if (!nombre) {
-      res.status(400).json({ error: "Nombre requerido" });
-      return;
-    }
+    if (!nombre) { res.status(400).json({ error: "Nombre requerido" }); return; }
 
     categoria = categoria || "Impresoras FDM";
-    if (categoria === "Impresoras FDM" && !subcategoria) {
-      subcategoria = "Otros";
-    }
+    if (categoria === "Impresoras FDM" && !subcategoria) subcategoria = "Otros";
 
-    // ✅ Separar archivos por fieldname
     const allFiles = req.files as (Express.Multer.File & { path: string; filename: string })[];
     const imagenesFiles = allFiles.filter(f => f.fieldname === 'imagenes');
     const imagenes = imagenesFiles.map(f => ({ url: f.path, public_id: f.filename }));
 
-    // ✅ Procesar colores con sus imágenes
     let coloresMeta: any[] = [];
     try { coloresMeta = JSON.parse(colores || '[]'); } catch { coloresMeta = []; }
 
@@ -370,14 +338,11 @@ router.post("/", upload.any(), async (req: Request, res: Response) => {
   }
 });
 
-// PUT /api/products/:id - Editar producto
+// PUT /api/products/:id
 router.put("/:id", upload.any(), async (req: Request, res: Response) => {
   try {
     const id = parseInt(req.params.id as string, 10);
-    if (isNaN(id)) {
-      res.status(400).json({ error: "ID inválido" });
-      return;
-    }
+    if (isNaN(id)) { res.status(400).json({ error: "ID inválido" }); return; }
 
     const { nombre, categoria, subcategoria, titulo, especificaciones,
             materiales_compatibles, ideal_para, colores, imagenes_orden } = req.body;
@@ -390,11 +355,9 @@ router.put("/:id", upload.any(), async (req: Request, res: Response) => {
 
     if (!currentProducto && id >= 1000) {
       const products = await buildProducts();
-      if (!products || products.length === 0) {
-        return res.status(404).json({ error: 'Producto no encontrado' });
-      }
-      const folderProduct = products.find((p) => p && p.id === id);
+      if (!products || products.length === 0) return res.status(404).json({ error: 'Producto no encontrado' });
 
+      const folderProduct = products.find((p) => p && p.id === id);
       if (folderProduct) {
         const dbProducts = await getAllProductos();
         const existingDbProduct = dbProducts.find((p: any) =>
@@ -417,7 +380,7 @@ router.put("/:id", upload.any(), async (req: Request, res: Response) => {
           const newDbId = await insertProducto({
             nombre: folderProduct.nombre,
             categoria: folderProduct.categoria,
-            imagenes: folderProduct.imagenes,
+            imagenes: JSON.stringify(folderProduct.imagenes.map((url: string) => ({ url, public_id: '' }))),
             descripcion_general: JSON.stringify(folderProduct.contenido || {}),
             en_stock: folderProduct.en_stock,
             origen_carpeta: origenCarpeta
@@ -428,12 +391,9 @@ router.put("/:id", upload.any(), async (req: Request, res: Response) => {
       }
     }
 
-    if (!currentProducto) {
-      res.status(404).json({ error: "Producto no encontrado" });
-      return;
-    }
+    if (!currentProducto) { res.status(404).json({ error: "Producto no encontrado" }); return; }
 
-    // ── Reconstruir imágenes en el orden exacto del frontend ──
+    // Reconstruir imágenes en el orden exacto del frontend
     let imagenesFinal: { url: string; public_id: string }[] = [];
     try {
       const orden: { tipo: string; url: string | null }[] = JSON.parse(imagenes_orden || '[]');
@@ -447,7 +407,6 @@ router.put("/:id", upload.any(), async (req: Request, res: Response) => {
         }
       }
     } catch {
-      // fallback: mantener existentes
       try {
         const parsed = JSON.parse(currentProducto.imagenes || '[]');
         imagenesFinal = Array.isArray(parsed)
@@ -456,11 +415,9 @@ router.put("/:id", upload.any(), async (req: Request, res: Response) => {
       } catch { imagenesFinal = []; }
     }
 
-    // ── Procesar colores ──
     let coloresMeta: any[] = [];
     try { coloresMeta = JSON.parse(colores || '[]'); } catch { coloresMeta = []; }
 
-    const coloresFiles = allFiles.filter(f => f.fieldname.startsWith('color_imagen_'));
     const coloresFinales = coloresMeta.map((c: any, i: number) => {
       const colorFile = allFiles.find(f => f.fieldname === `color_imagen_${i}`) as any;
       return {
@@ -498,32 +455,24 @@ router.put("/:id", upload.any(), async (req: Request, res: Response) => {
     res.json({ message: "Producto actualizado" });
 
   } catch (error) {
-    console.error("Error actualizando producto RAW:", String(error));
+    console.error("Error actualizando producto:", String(error));
     res.status(500).json({ error: String(error) });
   }
 });
 
-// PUT /api/products/:id/stock - Toggle stock
+// PUT /api/products/:id/stock
 router.put("/:id/stock", async (req: Request, res: Response) => {
   try {
     const id = parseInt(req.params.id as string, 10);
-    if (isNaN(id)) {
-      res.status(400).json({ error: "ID inválido" });
-      return;
-    }
+    if (isNaN(id)) { res.status(400).json({ error: "ID inválido" }); return; }
 
     const products = await buildProducts();
-    const validProducts = products.filter(p => p && p.id);
-    const product = validProducts.find((p) => p.id === id);
-    if (!product) {
-      res.status(404).json({ error: "Producto no encontrado" });
-      return;
-    }
+    const product = products.filter(p => p && p.id).find((p) => p.id === id);
+    if (!product) { res.status(404).json({ error: "Producto no encontrado" }); return; }
 
     let dbProduct = await getProductoById(id);
 
     if (!dbProduct) {
-      // ✅ origen_carpeta con categoria real de la carpeta
       const folderProductsList = getCategoriesFromFolders();
       const folderItem = folderProductsList.find(item => {
         const fn = item.subcarpeta.split(/[\\/]/).pop() || item.subcarpeta;
@@ -536,7 +485,7 @@ router.put("/:id/stock", async (req: Request, res: Response) => {
       const newDbId = await insertProducto({
         nombre: product.nombre,
         categoria: product.categoria,
-        imagenes: JSON.stringify(product.imagenes),
+        imagenes: JSON.stringify(product.imagenes.map((url: string) => ({ url, public_id: '' }))),
         descripcion_general: JSON.stringify(product.contenido || {}),
         en_stock: product.en_stock ? 1 : 0,
         origen_carpeta: origenCarpeta
@@ -544,12 +493,8 @@ router.put("/:id/stock", async (req: Request, res: Response) => {
       dbProduct = await getProductoById(newDbId);
     }
 
-    if (!dbProduct) {
-      res.status(500).json({ error: "Error creando producto en base de datos" });
-      return;
-    }
+    if (!dbProduct) { res.status(500).json({ error: "Error creando producto en base de datos" }); return; }
 
-    // ✅ toggleStock por ID
     await toggleStock(dbProduct.id);
     res.json({ message: "Stock actualizado" });
   } catch (error) {
@@ -562,36 +507,21 @@ router.put("/:id/stock", async (req: Request, res: Response) => {
 router.delete("/:id", async (req: Request, res: Response) => {
   try {
     const id = parseInt(req.params.id as string, 10);
-    if (isNaN(id)) {
-      res.status(400).json({ error: "ID inválido" });
-      return;
-    }
+    if (isNaN(id)) { res.status(400).json({ error: "ID inválido" }); return; }
 
     const products = await buildProducts();
-    const validProducts = products.filter(p => p && p.id);
-    const productToDelete = validProducts.find((p) => p.id === id);
-
-    if (!productToDelete) {
-      res.status(404).json({ error: "Producto no encontrado" });
-      return;
-    }
-
-    console.log('Delete - Producto encontrado:', productToDelete.nombre, 'categoría:', productToDelete.categoria);
+    const productToDelete = products.filter(p => p && p.id).find((p) => p.id === id);
+    if (!productToDelete) { res.status(404).json({ error: "Producto no encontrado" }); return; }
 
     const dbProduct = await getProductoByNombre(productToDelete.nombre);
+    if (!dbProduct) { res.status(404).json({ error: "Producto no encontrado en base de datos" }); return; }
 
-    if (!dbProduct) {
-      res.status(404).json({ error: "Producto no encontrado en base de datos" });
-      return;
-    }
-
-    // Borrar imágenes de Cloudinary
     try {
       const imgs = JSON.parse(dbProduct.imagenes || '[]');
       for (const img of imgs) {
         if (img.public_id) await cloudinary.uploader.destroy(img.public_id);
       }
-    } catch { /* si no tiene imágenes o falla, seguimos igual */ }
+    } catch {}
 
     await deleteProducto(dbProduct.nombre);
     res.json({ message: "Producto eliminado" });
