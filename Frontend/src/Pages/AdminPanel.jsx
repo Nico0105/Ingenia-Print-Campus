@@ -36,9 +36,17 @@ function buildFormData(form) {
   formData.append("materiales_compatibles", JSON.stringify(form.materiales_compatibles.filter((m) => m)));
   formData.append("ideal_para", JSON.stringify(form.ideal_para.filter((i) => i)));
 
-  for (const img of form.imagenes) {
-    formData.append("imagenes", img.file);
-  }
+  // Enviar el orden completo como metadata
+  const imagenesOrden = form.imagenes.map(img => ({
+    tipo: img.file ? "nueva" : "existente",
+    url: img.file ? null : img.url,
+  }));
+  formData.append("imagenes_orden", JSON.stringify(imagenesOrden));
+
+  // Enviar solo los archivos nuevos en orden
+  form.imagenes
+    .filter(img => img.file)
+    .forEach(img => formData.append("imagenes_nuevas", img.file));
 
   const coloresMeta = form.colores.map((c, i) => ({
     nombre: c.nombre,
@@ -126,7 +134,9 @@ function ImageSorter({ images, onChange }) {
           >
             {index === 0 && <span className="image-main-badge">Principal</span>}
             <img src={img.preview} alt={`imagen ${index + 1}`} className="image-sorter-thumb" />
-            <div className="image-sorter-name" title={img.file.name}>{img.file.name}</div>
+            <div className="image-sorter-name" title={img.file?.name || img.url}>
+              {img.file?.name || "📷 existente"}
+            </div>
             <div className="image-sorter-controls">
               <button type="button" title="Mover izquierda" onClick={() => moveLeft(index)} disabled={index === 0}>←</button>
               <button type="button" title="Eliminar" className="btn-remove-img" onClick={() => handleRemove(index)}>×</button>
@@ -283,11 +293,19 @@ export default function AdminPanel() {
       catch { coloresExistentes = []; }
     }
 
+    // Cargar imágenes existentes en el sorter
+    const imagenesExistentes = (product.imagenes || []).map((url) => ({
+      id: `existing-${url}`,
+      url,
+      preview: url,
+      file: null,
+    }));
+
     setForm({
       nombre: product.nombre,
       categoria: product.categoria || "Impresoras FDM",
       subcategoria: product.subcategoria || "",
-      imagenes: [],
+      imagenes: imagenesExistentes,
       titulo: product.contenido?.titulo || "",
       especificaciones: product.contenido?.especificaciones
         ? Object.entries(product.contenido.especificaciones).map(([key, value]) => ({ key, value }))
@@ -365,8 +383,6 @@ export default function AdminPanel() {
 
   const renderForm = (onSubmit, submitLabel) => (
     <form onSubmit={onSubmit}>
-
-      {/* ── Fila superior: nombre, categoría, subcategoría ── */}
       <div className="form-row">
         <div className="form-group">
           <label>Nombre:</label>
@@ -407,7 +423,6 @@ export default function AdminPanel() {
         </div>
       </div>
 
-      {/* ── Imágenes ── */}
       <div className="form-group">
         <label>Imágenes:</label>
         <input
@@ -422,7 +437,6 @@ export default function AdminPanel() {
         />
       </div>
 
-      {/* ── Título ── */}
       <div className="form-group">
         <label>Título / Descripción:</label>
         <textarea

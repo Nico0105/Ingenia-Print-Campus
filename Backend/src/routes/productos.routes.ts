@@ -379,11 +379,11 @@ router.put("/:id", upload.any(), async (req: Request, res: Response) => {
       return;
     }
 
-    const { nombre, categoria, subcategoria, titulo, especificaciones, materiales_compatibles, ideal_para, colores } = req.body;
+    const { nombre, categoria, subcategoria, titulo, especificaciones,
+            materiales_compatibles, ideal_para, colores, imagenes_orden } = req.body;
 
-    // ✅ Separar archivos por fieldname
     const allFiles = req.files as (Express.Multer.File & { path: string; filename: string })[];
-    const imagenesFiles = allFiles.filter(f => f.fieldname === 'imagenes');
+    const imagenesNuevasFiles = allFiles.filter(f => f.fieldname === 'imagenes_nuevas');
 
     let currentProducto = await getProductoById(id);
     let dbId = id;
@@ -404,9 +404,7 @@ router.put("/:id", upload.any(), async (req: Request, res: Response) => {
         if (existingDbProduct) {
           dbId = existingDbProduct.id;
           currentProducto = existingDbProduct;
-          console.log('Producto ya existe en DB con ID:', dbId);
         } else {
-          // ✅ origen_carpeta usando la categoria REAL de la carpeta (no el display name)
           const folderProductsList = getCategoriesFromFolders();
           const folderItem = folderProductsList.find(item => {
             const fn = item.subcarpeta.split(/[\\/]/).pop() || item.subcarpeta;
@@ -426,7 +424,6 @@ router.put("/:id", upload.any(), async (req: Request, res: Response) => {
           });
           dbId = newDbId;
           currentProducto = await getProductoById(newDbId);
-          console.log('Creado producto en DB con ID:', newDbId, 'origen:', origenCarpeta);
         }
       }
     }
@@ -436,29 +433,34 @@ router.put("/:id", upload.any(), async (req: Request, res: Response) => {
       return;
     }
 
-    let imagenes: { url: string; public_id: string }[] = [];
+    // ── Reconstruir imágenes en el orden exacto del frontend ──
+    let imagenesFinal: { url: string; public_id: string }[] = [];
     try {
-      const parsed = JSON.parse(currentProducto.imagenes || '[]');
-      if (Array.isArray(parsed)) {
-        imagenes = parsed.map((img: any) =>
-          typeof img === 'string'
-            ? { url: img, public_id: '' }
-            : img
-        );
+      const orden: { tipo: string; url: string | null }[] = JSON.parse(imagenes_orden || '[]');
+      let nuevasCursor = 0;
+      for (const item of orden) {
+        if (item.tipo === "existente" && item.url) {
+          imagenesFinal.push({ url: item.url, public_id: '' });
+        } else if (item.tipo === "nueva") {
+          const file = imagenesNuevasFiles[nuevasCursor++] as any;
+          if (file) imagenesFinal.push({ url: file.path, public_id: file.filename });
+        }
       }
-    } catch { imagenes = []; }
-
-    // ✅ Solo agregar imágenes principales (fieldname === 'imagenes')
-    if (imagenesFiles.length > 0) {
-      for (const file of imagenesFiles) {
-        imagenes.push({ url: file.path, public_id: file.filename });
-      }
+    } catch {
+      // fallback: mantener existentes
+      try {
+        const parsed = JSON.parse(currentProducto.imagenes || '[]');
+        imagenesFinal = Array.isArray(parsed)
+          ? parsed.map((img: any) => typeof img === 'string' ? { url: img, public_id: '' } : img)
+          : [];
+      } catch { imagenesFinal = []; }
     }
 
-    // ✅ Procesar colores con sus imágenes
+    // ── Procesar colores ──
     let coloresMeta: any[] = [];
     try { coloresMeta = JSON.parse(colores || '[]'); } catch { coloresMeta = []; }
 
+    const coloresFiles = allFiles.filter(f => f.fieldname.startsWith('color_imagen_'));
     const coloresFinales = coloresMeta.map((c: any, i: number) => {
       const colorFile = allFiles.find(f => f.fieldname === `color_imagen_${i}`) as any;
       return {
@@ -472,7 +474,7 @@ router.put("/:id", upload.any(), async (req: Request, res: Response) => {
       nombre: nombre || currentProducto.nombre,
       categoria: categoria || currentProducto.categoria,
       subcategoria: subcategoria ?? currentProducto.subcategoria ?? null,
-      imagenes,
+      imagenes: imagenesFinal,
       en_stock: currentProducto.en_stock,
       descripcion_general: {
         titulo: titulo || (JSON.parse(currentProducto.descripcion_general || '{}').titulo) || '',
@@ -488,15 +490,15 @@ router.put("/:id", upload.any(), async (req: Request, res: Response) => {
           try { return ideal_para ? JSON.parse(ideal_para) : (JSON.parse(currentProducto.descripcion_general || '{}').ideal_para || []); }
           catch { return []; }
         })(),
-        colores: coloresFinales, // ✅ NUEVO: guardar colores con sus imágenes
+        colores: coloresFinales,
       }
     };
-    await updateProducto(dbId, updatedProduct);
 
+    await updateProducto(dbId, updatedProduct);
     res.json({ message: "Producto actualizado" });
+
   } catch (error) {
     console.error("Error actualizando producto RAW:", String(error));
-    console.error("Error actualizando producto STRINGIFY:", JSON.stringify(error));
     res.status(500).json({ error: String(error) });
   }
 });
