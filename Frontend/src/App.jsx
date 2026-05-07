@@ -10,6 +10,7 @@ import Product from './Pages/Product.jsx';
 import Garantia from './Pages/Garantia.jsx';
 import LoginAdmin from './Pages/LoginAdmin.jsx';
 import AdminPanel from './Pages/AdminPanel.jsx';
+import IngeniaHub from './Pages/IngeniaHub.jsx';
 
 const App = () => {
   return (
@@ -18,7 +19,7 @@ const App = () => {
         <Route path="/" element={<Navigate to="/Home" replace />} />
         <Route path="/Home" element={<Home />} />
         <Route path="/Nosotros" element={<Nosotros />} />
-        <Route path="/Curso" element={<Curso />} />
+        <Route path="/IngeniaHub" element={<IngeniaHub />} />
         <Route path="/Catalogo" element={<Catalogo />} />
         <Route path="/Garantia" element={<Garantia />} />
         <Route path="/product/:productId" element={<Product />} />
