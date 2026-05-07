@@ -110,7 +110,7 @@ export default function MainNavbar() {
 
       <div className="nav">
           <button className={`nav-btn ${pathname === "/Catalogo" ? "active" : ""}`} onClick={() => go("/Catalogo")}>Catalogo</button>
-          <button className={`nav-btn ${pathname === "/Curso" ? "active" : ""}`} onClick={() => go("/Curso")}>Campus</button>
+          <button className={`nav-btn ${pathname === "/IngeniaHub" ? "active" : ""}`} onClick={() => go("/IngeniaHub")}>INGENIA HUB</button>
           <button className={`nav-btn ${pathname === "/Garantia" ? "active" : ""}`} onClick={() => go("/Garantia")}>Garantía</button>
           <button className={`nav-btn ${pathname === "/Nosotros" ? "active" : ""}`} onClick={() => go("/Nosotros")}>Nosotros</button>
       </div>
@@ -187,7 +187,7 @@ export default function MainNavbar() {
       <div className={`mobile-menu ${menuOpen ? "open" : ""}`}>
         <div className="mobile-nav">
           <button className={`nav-btn ${pathname === "/Catalogo" ? "active" : ""}`} onClick={() => go("/Catalogo")}>Catalogo</button>
-          <button className={`nav-btn ${pathname === "/Curso" ? "active" : ""}`} onClick={() => go("/Curso")}>Campus</button>
+          <button className={`nav-btn ${pathname === "/IngeniaHub" ? "active" : ""}`} onClick={() => go("/IngeniaHub")}>INGENIA HUB</button>
           <button className={`nav-btn ${pathname === "/Garantia" ? "active" : ""}`} onClick={() => go("/Garantia")}>Garantía</button>
           <button className={`nav-btn ${pathname === "/Nosotros" ? "active" : ""}`} onClick={() => go("/Nosotros")}>Nosotros</button>
 

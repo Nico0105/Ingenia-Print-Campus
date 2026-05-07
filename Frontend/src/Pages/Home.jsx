@@ -63,8 +63,6 @@ export default function Home() {
   const [products, setProducts] = useState([]);
   const navigate = useNavigate();
 
-  const handleLogin = () => navigate('/login');
-
   useEffect(() => {
     fetch(`${API_URL}/api/products`)
       .then(res => res.json())
@@ -90,9 +88,6 @@ export default function Home() {
           <div className="search-box">
             <input type="text" placeholder="Buscar modelos o partes..." />
           </div>
-          <button className="btn-primary" onClick={handleLogin}>
-            <span className="material-symbols-outlined">CAMPUS</span>
-          </button>
         </div>
       </header>
 

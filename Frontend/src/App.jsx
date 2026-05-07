@@ -2,7 +2,6 @@ import React from 'react';
 import {Routes, Route} from 'react-router-dom';
 import './App.css';
 import Home from './Pages/Home.jsx';
-import Curso from './Pages/Curso.jsx';
 import { Navigate } from 'react-router-dom';
 import Nosotros from './Pages/Nosotros.jsx';
 import Catalogo from './Pages/Catalogo.jsx';
@@ -11,10 +10,12 @@ import Garantia from './Pages/Garantia.jsx';
 import LoginAdmin from './Pages/LoginAdmin.jsx';
 import AdminPanel from './Pages/AdminPanel.jsx';
 import IngeniaHub from './Pages/IngeniaHub.jsx';
+import ScrollToTop from './Components/ScrollToTop.jsx';
 
 const App = () => {
   return (
     <div className="App">
+      <ScrollToTop />
       <Routes>
         <Route path="/" element={<Navigate to="/Home" replace />} />
         <Route path="/Home" element={<Home />} />

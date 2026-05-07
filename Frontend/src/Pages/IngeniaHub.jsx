@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import "./Curso.css";
+import "./IngeniaHub.css";
 import MainNavbar from "../Components/MainNavbar";
 import Footer from "../Components/Footer";
 import WhatsAppFloat from "../Components/WhatsAppFloat";
@@ -49,7 +49,7 @@ const pasosData = [
   {
     number: "02",
     title: "Recibí tus credenciales",
-    desc: "Con tu compra activamos tu acceso al Campus Ingenia automáticamente.",
+    desc: "Con tu compra activamos tu acceso a Ingenia Hub automáticamente.",
   },
   {
     number: "03",
@@ -155,14 +155,14 @@ export default function Cursos() {
         <div className="garantia-hero-line" />
 
         <p className="curso-hero-desc hero-content-down">
-          Cuando comprás tu impresora en <strong>Ingenia Print</strong> accedés sin costo al Campus Ingenia: un espacio pensado para acompañarte en cada etapa del proceso. Desde la primera impresión hasta el desarrollo de proyectos más avanzados.
+          Cuando comprás tu impresora en <strong>Ingenia Print</strong> accedés sin costo a Ingenia Hub: un espacio pensado para acompañarte en cada etapa del proceso. Desde la primera impresión hasta el desarrollo de proyectos más avanzados.
         </p>
       </section>
 
       {/* BENEFICIOS */}
       <section className="curso-section">
         <div className="curso-section-label">Beneficios</div>
-        <h2 className="curso-section-title">QUÉ INCLUYE EL CAMPUS INGENIA</h2>
+        <h2 className="curso-section-title">QUÉ INCLUYE INGENIA HUB</h2>
         <div className="beneficios-grid">
           {beneficiosData.map((ben, idx) => (
             <BeneficioCard key={idx} ben={ben} idx={idx} />
@@ -188,7 +188,7 @@ export default function Cursos() {
       {/* CTA FINAL */}
       <section className="curso-cta-final">
         <h2>¿Listo para empezar?</h2>
-        <p>Explorá nuestro catálogo de impresoras y accedé al Campus Ingenia desde el primer día.</p>
+        <p>Explorá nuestro catálogo de impresoras y accedé a Ingenia Hub desde el primer día.</p>
         <button className="cta-button" onClick={handleCatalogo}>
           Ver catálogo completo
         </button>

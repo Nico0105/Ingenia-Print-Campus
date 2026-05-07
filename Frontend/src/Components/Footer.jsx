@@ -11,7 +11,7 @@ export default function Footer() {
         <div className="footer-links">
           <div>
             <Link to="/nosotros">Nosotros</Link>
-            <Link to="/curso">Cursos</Link>
+            <Link to="/IngeniaHub">Ingenia Hub</Link>
             <Link to="/garantia">Garantía</Link>
           </div>
         </div>

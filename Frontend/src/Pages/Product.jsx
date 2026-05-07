@@ -189,7 +189,7 @@ export default function Product() {
             <span className="category-badge">
               {product.categoria?.toUpperCase() || "SIN CATEGORÍA"}
             </span>
-            <h1>{product.nombre}</h1>
+            <h1>{product.nombre?.toUpperCase() || "SIN NOMBRE"}</h1>
             {selectedColor && (
               <p className="selected-color-label">
                 Color seleccionado: <strong>{selectedColor.nombre}</strong>
@@ -228,7 +228,7 @@ export default function Product() {
       {/* ESPECIFICACIONES TÉCNICAS */}
       {Object.keys(especificaciones).length > 0 && (
         <section className="specs-technical">
-          <h2>Especificaciones Técnicas</h2>
+          <h2>ESPECIFICACIONES TECNICAS</h2>
           <div className="specs-table">
             {Object.entries(especificaciones).map(([key, value]) => (
               <div key={key} className="spec-row">
@@ -242,7 +242,7 @@ export default function Product() {
 
       {(idealPara.length > 0 || materialesCompatibles.length > 0) && (
         <section className="product-specs-two-columns">
-          <h2>Características Adicionales</h2>
+          <h2>CARACTERISTICAS ADICIONALES</h2>
           <div className="specs-columns-grid">
             {idealPara.length > 0 && (
               <div className="spec-column">
@@ -309,7 +309,7 @@ function RelatedProductsCarousel({ categoria, currentId, navigate }) {
 
   return (
     <section className="related-carousel">
-      <h2>Productos Relacionados</h2>
+      <h2>PRODUCTOS RELACIONADOS</h2>
       <div className="carousel-container">
         <div className="carousel-track">
           {related.map((product) => (
