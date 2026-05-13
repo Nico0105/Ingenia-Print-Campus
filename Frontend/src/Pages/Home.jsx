@@ -64,10 +64,10 @@ export default function Home() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch(`${API_URL}/api/products`)
+    fetch(`${API_URL}/api/products/destacados`)
       .then(res => res.json())
       .then(data => {
-        const parsed = data.slice(0, 4).map(p => ({
+        const parsed = (Array.isArray(data) ? data : []).map(p => ({
           ...p,
           imagenes: Array.isArray(p.imagenes)
             ? p.imagenes.map(img => typeof img === 'string' ? img : img.url).filter(Boolean)
@@ -75,7 +75,7 @@ export default function Home() {
         }));
         setProducts(parsed);
       })
-      .catch(err => console.error('Error fetching products:', err));
+      .catch(err => console.error('Error fetching destacados:', err));
   }, []);
 
   return (
@@ -105,32 +105,36 @@ export default function Home() {
           </div>
 
           <div className="product-grid">
-            {products.map((product) => (
-              <div className="card" key={product.id} onClick={() => navigate(`/product/${product.id}`)}>
-                <div className="card-image">
-                  <img
-                    src={product.imagenes?.[0] || 'https://res.cloudinary.com/dvjmdhlac/image/upload/v1775435437/Logo_Principal_gq4gtt.png'}
-                    alt={product.nombre}
-                    onError={(e) => {
-                      e.target.src = 'https://res.cloudinary.com/dvjmdhlac/image/upload/v1775435437/Logo_Principal_gq4gtt.png';
-                    }}
-                  />
-                </div>
-                <div className="card-body">
-                  <h4>{product.nombre}</h4>
-                  <ul>
-                    {Object.entries(product.contenido?.especificaciones || {}).slice(0, 3).map(([key, value], index) => (
-                      <li key={index}>{key}: {value}</li>
-                    ))}
-                  </ul>
-                  <div className="card-actions">
-                    <button className="btn-primary small" onClick={(e) => { e.stopPropagation(); navigate(`/product/${product.id}`); }}>
-                      Ver Producto
-                    </button>
+            {products.length === 0 ? (
+              <p className="no-destacados">No hay productos destacados por el momento.</p>
+            ) : (
+              products.map((product) => (
+                <div className="card" key={product.id} onClick={() => navigate(`/product/${product.id}`)}>
+                  <div className="card-image">
+                    <img
+                      src={product.imagenes?.[0] || 'https://res.cloudinary.com/dvjmdhlac/image/upload/v1775435437/Logo_Principal_gq4gtt.png'}
+                      alt={product.nombre}
+                      onError={(e) => {
+                        e.target.src = 'https://res.cloudinary.com/dvjmdhlac/image/upload/v1775435437/Logo_Principal_gq4gtt.png';
+                      }}
+                    />
+                  </div>
+                  <div className="card-body">
+                    <h4>{product.nombre}</h4>
+                    <ul>
+                      {Object.entries(product.contenido?.especificaciones || {}).slice(0, 3).map(([key, value], index) => (
+                        <li key={index}>{key}: {value}</li>
+                      ))}
+                    </ul>
+                    <div className="card-actions">
+                      <button className="btn-primary small" onClick={(e) => { e.stopPropagation(); navigate(`/product/${product.id}`); }}>
+                        Ver Producto
+                      </button>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              ))
+            )}
           </div>
         </section>
 

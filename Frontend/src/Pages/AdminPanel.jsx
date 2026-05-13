@@ -278,6 +278,19 @@ export default function AdminPanel() {
       });
   };
 
+  const handleToggleDestacado = (id) => {
+    fetch(`${API_URL}/api/products/${id}/destacado`, { method: "PUT" })
+      .then((res) => {
+        if (!res.ok) return res.json().then((err) => { throw new Error(err.message || `Error HTTP: ${res.status}`); });
+        return res.json();
+      })
+      .then(() => fetchProducts())
+      .catch((err) => {
+        console.error("Error cambiando destacado:", err);
+        alert("Error cambiando destacado: " + err.message);
+      });
+  };
+
   const handleDelete = (id) => {
     if (window.confirm("¿Eliminar producto?")) {
       fetch(`${API_URL}/api/products/${id}`, { method: "DELETE" }).then(() => fetchProducts());
@@ -293,7 +306,6 @@ export default function AdminPanel() {
       catch { coloresExistentes = []; }
     }
 
-    // Cargar imágenes existentes — cubre tanto strings como objetos {url}
     const imagenesExistentes = (product.imagenes || []).map((img) => {
       const url = typeof img === "string" ? img : img?.url;
       return { id: `existing-${url}`, url, preview: url, file: null };
@@ -610,6 +622,9 @@ export default function AdminPanel() {
                   <span className={`product-stock ${product.en_stock ? "in-stock" : "out-of-stock"}`}>
                     {product.en_stock ? "✓ En Stock" : "✗ Sin Stock"}
                   </span>
+                  {product.destacado && (
+                    <span className="product-destacado">★ Destacado</span>
+                  )}
                 </div>
                 <div className="actions">
                   {editingId === product.id ? (
@@ -620,6 +635,12 @@ export default function AdminPanel() {
                       <button onClick={() => handleDelete(product.id)}>Eliminar</button>
                       <button onClick={() => handleToggleStock(product.id)}>
                         {product.en_stock ? "Sin Stock" : "En Stock"}
+                      </button>
+                      <button
+                        onClick={() => handleToggleDestacado(product.id)}
+                        className={product.destacado ? "btn-destacado active" : "btn-destacado"}
+                      >
+                        {product.destacado ? "★ Quitar destacado" : "☆ Destacar"}
                       </button>
                     </>
                   )}

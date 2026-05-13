@@ -717,3 +717,19 @@
     height: 65px;
   }
 }
+
+.btn-destacado {
+  background-color: #555;
+  color: white;
+}
+
+.btn-destacado.active {
+  background-color: #f0a500;
+  color: white;
+}
+
+.product-destacado {
+  color: #f0a500;
+  font-weight: bold;
+  font-size: 0.85rem;
+}

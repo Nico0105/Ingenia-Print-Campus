@@ -4,7 +4,7 @@ import path from "path";
 import { upload } from '../cloudinary';
 import cloudinary from '../cloudinary';
 import mammoth from "mammoth";
-import { getProductoByNombre, getProductoById, getAllProductos, insertProducto, updateProducto, deleteProducto, toggleStock } from "../db";
+import { getProductoByNombre, getProductoById, getAllProductos, insertProducto, updateProducto, deleteProducto, toggleStock, toggleDestacado } from "../db";
 
 const router = Router();
 
@@ -131,7 +131,6 @@ const categoryDisplayNames: Record<string, string> = {
   'Accesorios': 'Accesorios'
 };
 
-// Helper para normalizar imagenes siempre a string[]
 function parseImagenesAsUrls(raw: any): string[] {
   try {
     const arr = typeof raw === 'string' ? JSON.parse(raw) : raw;
@@ -143,8 +142,6 @@ function parseImagenesAsUrls(raw: any): string[] {
 async function buildProducts(): Promise<any[]> {
   try {
     const folderProducts = getCategoriesFromFolders();
-    console.log('Folder products found:', folderProducts.length);
-
     const dbProducts = await getAllProductos();
     const dbProductsMap = new Map(dbProducts.map(p => [p.nombre, p]));
 
@@ -216,6 +213,7 @@ async function buildProducts(): Promise<any[]> {
         imagenes: images.length > 0 ? images : [`${BASE_URL}/images/Logo.png`],
         contenido,
         en_stock: dbProduct ? dbProduct.en_stock === 1 : true,
+        destacado: dbProduct ? dbProduct.destacado === 1 : false,
       };
     }));
 
@@ -242,6 +240,7 @@ async function buildProducts(): Promise<any[]> {
           imagenes: imagenes.length > 0 ? imagenes : [`${BASE_URL}/images/Logo.png`],
           contenido,
           en_stock: dbProduct.en_stock === 1,
+          destacado: dbProduct.destacado === 1,
         });
       } else {
         filteredProducts.push({
@@ -252,6 +251,7 @@ async function buildProducts(): Promise<any[]> {
           imagenes: imagenes.length > 0 ? imagenes : [`${BASE_URL}/images/Logo.png`],
           contenido,
           en_stock: dbProduct.en_stock === 1,
+          destacado: dbProduct.destacado === 1,
         });
       }
 
@@ -264,6 +264,17 @@ async function buildProducts(): Promise<any[]> {
     return [];
   }
 }
+
+// GET /api/products/destacados  ← DEBE ir antes de /:id
+router.get("/destacados", async (req: Request, res: Response) => {
+  try {
+    const products = await buildProducts();
+    const destacados = products.filter(p => p && p.destacado);
+    res.json(destacados);
+  } catch (error) {
+    res.status(500).json({ error: "Error leyendo destacados" });
+  }
+});
 
 // GET /api/products
 router.get("/", async (req: Request, res: Response) => {
@@ -393,7 +404,6 @@ router.put("/:id", upload.any(), async (req: Request, res: Response) => {
 
     if (!currentProducto) { res.status(404).json({ error: "Producto no encontrado" }); return; }
 
-    // Reconstruir imágenes en el orden exacto del frontend
     let imagenesFinal: { url: string; public_id: string }[] = [];
     try {
       const orden: { tipo: string; url: string | null }[] = JSON.parse(imagenes_orden || '[]');
@@ -500,6 +510,49 @@ router.put("/:id/stock", async (req: Request, res: Response) => {
   } catch (error) {
     console.error("Error actualizando stock:", error);
     res.status(500).json({ error: "Error actualizando stock" });
+  }
+});
+
+// PUT /api/products/:id/destacado
+router.put("/:id/destacado", async (req: Request, res: Response) => {
+  try {
+    const id = parseInt(req.params.id as string, 10);
+    if (isNaN(id)) { res.status(400).json({ error: "ID inválido" }); return; }
+
+    const products = await buildProducts();
+    const product = products.filter(p => p && p.id).find((p) => p.id === id);
+    if (!product) { res.status(404).json({ error: "Producto no encontrado" }); return; }
+
+    let dbProduct = await getProductoById(id);
+
+    if (!dbProduct) {
+      const folderProductsList = getCategoriesFromFolders();
+      const folderItem = folderProductsList.find(item => {
+        const fn = item.subcarpeta.split(/[\\/]/).pop() || item.subcarpeta;
+        return normalizeName(fn) === normalizeName(product.nombre);
+      });
+      const origenCarpeta = folderItem
+        ? `${folderItem.categoria}/${folderItem.subcarpeta}`
+        : `${product.categoria}/${product.nombre}`;
+
+      const newDbId = await insertProducto({
+        nombre: product.nombre,
+        categoria: product.categoria,
+        imagenes: JSON.stringify(product.imagenes.map((url: string) => ({ url, public_id: '' }))),
+        descripcion_general: JSON.stringify(product.contenido || {}),
+        en_stock: product.en_stock ? 1 : 0,
+        origen_carpeta: origenCarpeta
+      });
+      dbProduct = await getProductoById(newDbId);
+    }
+
+    if (!dbProduct) { res.status(500).json({ error: "Error creando producto en base de datos" }); return; }
+
+    await toggleDestacado(dbProduct.id);
+    res.json({ message: "Destacado actualizado" });
+  } catch (error) {
+    console.error("Error actualizando destacado:", error);
+    res.status(500).json({ error: "Error actualizando destacado" });
   }
 });
 

@@ -6,12 +6,10 @@ import bcrypt from 'bcryptjs';
 const ADMIN_USERNAME = process.env.ADMIN_USERNAME!;
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD!;
 
-
 export const db = new Pool({
   connectionString: process.env.DATABASE_URL,
   ssl: { rejectUnauthorized: false }
 });
-
 
 async function initDB() {
   await db.query(`
@@ -23,8 +21,14 @@ async function initDB() {
       en_stock INTEGER DEFAULT 1,
       categoria TEXT DEFAULT 'Sin categoría',
       subcategoria TEXT,
-      origen_carpeta TEXT
+      origen_carpeta TEXT,
+      destacado INTEGER DEFAULT 0
     )
+  `);
+
+  // Agregar columna si ya existe la tabla sin ella
+  await db.query(`
+    ALTER TABLE productos ADD COLUMN IF NOT EXISTS destacado INTEGER DEFAULT 0
   `);
 
   await db.query(`
@@ -73,7 +77,7 @@ export async function getAllProductos(): Promise<any[]> {
 
 export async function insertProducto(producto: any): Promise<number> {
   const { nombre, imagenes, descripcion_general, en_stock = true, origen_carpeta, categoria, subcategoria } = producto;
-  
+
   const imagenesStr = typeof imagenes === 'string' ? imagenes : JSON.stringify(imagenes);
   const descripcionStr = typeof descripcion_general === 'string' ? descripcion_general : JSON.stringify(descripcion_general);
 
@@ -107,6 +111,10 @@ export async function deleteProducto(nombre: string): Promise<void> {
 
 export async function toggleStock(id: number): Promise<void> {
   await db.query('UPDATE productos SET en_stock = 1 - en_stock WHERE id = $1', [id]);
+}
+
+export async function toggleDestacado(id: number): Promise<void> {
+  await db.query('UPDATE productos SET destacado = 1 - destacado WHERE id = $1', [id]);
 }
 
 export async function getAdminByUsername(username: string): Promise<any | null> {
