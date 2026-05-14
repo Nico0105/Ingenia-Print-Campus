@@ -26,7 +26,7 @@
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  overflow-x: hidden;
+  overflow-x: clip;
   overflow-y: visible;
   padding-bottom: 100px;
   position: relative;
