@@ -161,7 +161,8 @@ export default function Product() {
             data.contenido.colores = [];
           }
         }
-
+        console.log("IMAGENES:", data.imagenes);
+        console.log("TOTAL:", data.imagenes.length);
         setProduct(data);
         setLoading(false);
       })
