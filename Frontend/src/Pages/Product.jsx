@@ -1,10 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "./Product.css";
 import MainNavbar from "../Components/MainNavbar";
 import { useParams, useNavigate } from "react-router-dom";
 import { API_URL } from "../config";
 
-// Mapa de nombres de colores en español a valores CSS
 const COLOR_MAP = {
   rojo: "#e53e3e", red: "#e53e3e",
   azul: "#3182ce", blue: "#3182ce",
@@ -40,6 +39,94 @@ function getGarantia(categoria, nombre) {
   return { texto: "6 meses", tipo: "default" };
 }
 
+// ─────────────────────────────────────────────
+// ThumbnailCarousel — sin límite de imágenes.
+// Muestra todas; si hay más de 4 aparecen flechas
+// para navegar el track horizontal.
+// ─────────────────────────────────────────────
+function ThumbnailCarousel({ images, mainImage, onSelect }) {
+  const trackRef = useRef(null);
+  const SCROLL_STEP = 160; // px desplazados por clic de flecha
+  const VISIBLE_THRESHOLD = 4; // a partir de cuántas fotos salen las flechas
+
+  const scrollLeft = () => {
+    if (trackRef.current)
+      trackRef.current.scrollBy({ left: -SCROLL_STEP, behavior: "smooth" });
+  };
+
+  const scrollRight = () => {
+    if (trackRef.current)
+      trackRef.current.scrollBy({ left: SCROLL_STEP, behavior: "smooth" });
+  };
+
+  const showArrows = images.length > VISIBLE_THRESHOLD;
+
+  return (
+    <div className="thumbnail-carousel-wrapper">
+      {showArrows && (
+        <button
+          className="thumb-arrow thumb-arrow--left"
+          onClick={scrollLeft}
+          aria-label="Anterior"
+        >
+          <svg
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <polyline points="15 18 9 12 15 6" />
+          </svg>
+        </button>
+      )}
+
+      <div className="thumbnail-track" ref={trackRef}>
+        {images.map((img, i) => (
+          <div
+            key={i}
+            className={`thumbnail ${mainImage === i ? "active" : ""}`}
+            onClick={() => onSelect(i)}
+          >
+            <img
+              src={img}
+              alt={`Imagen ${i + 1}`}
+              onError={(e) => {
+                e.target.src =
+                  "https://res.cloudinary.com/dvjmdhlac/image/upload/v1775435437/Logo_Principal_gq4gtt.png";
+              }}
+            />
+          </div>
+        ))}
+      </div>
+
+      {showArrows && (
+        <button
+          className="thumb-arrow thumb-arrow--right"
+          onClick={scrollRight}
+          aria-label="Siguiente"
+        >
+          <svg
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <polyline points="9 18 15 12 9 6" />
+          </svg>
+        </button>
+      )}
+    </div>
+  );
+}
+
 export default function Product() {
   const { productId } = useParams();
   const navigate = useNavigate();
@@ -53,18 +140,26 @@ export default function Product() {
       .then((res) => res.json())
       .then((data) => {
         if (data && typeof data.imagenes === "string") {
-          try { data.imagenes = JSON.parse(data.imagenes); }
-          catch { data.imagenes = []; }
+          try {
+            data.imagenes = JSON.parse(data.imagenes);
+          } catch {
+            data.imagenes = [];
+          }
         }
         if (!Array.isArray(data?.imagenes)) data.imagenes = [];
-        data.imagenes = data.imagenes.map((img) =>
-          typeof img === "string" ? img : img.url
-        );
+        data.imagenes = data.imagenes
+          .map((img) => (typeof img === "string" ? img : img.url))
+          .filter(Boolean);
 
-        // Parsear colores si vienen como string
-        if (data.contenido?.colores && typeof data.contenido.colores === "string") {
-          try { data.contenido.colores = JSON.parse(data.contenido.colores); }
-          catch { data.contenido.colores = []; }
+        if (
+          data.contenido?.colores &&
+          typeof data.contenido.colores === "string"
+        ) {
+          try {
+            data.contenido.colores = JSON.parse(data.contenido.colores);
+          } catch {
+            data.contenido.colores = [];
+          }
         }
 
         setProduct(data);
@@ -73,26 +168,31 @@ export default function Product() {
       .catch(() => setLoading(false));
   }, [productId]);
 
-  if (loading) return (
-    <div className="product-page">
-      <MainNavbar />
-      <p style={{ padding: "2rem" }}>Cargando producto...</p>
-    </div>
-  );
-
-  if (!product || product.error) return (
-    <div className="product-error">
-      <MainNavbar />
-      <div className="error-container">
-        <h2>Producto no encontrado</h2>
-        <button onClick={() => navigate("/catalogo")}>Volver al Catálogo</button>
+  if (loading)
+    return (
+      <div className="product-page">
+        <MainNavbar />
+        <p style={{ padding: "2rem" }}>Cargando producto...</p>
       </div>
-    </div>
-  );
+    );
+
+  if (!product || product.error)
+    return (
+      <div className="product-error">
+        <MainNavbar />
+        <div className="error-container">
+          <h2>Producto no encontrado</h2>
+          <button onClick={() => navigate("/catalogo")}>
+            Volver al Catálogo
+          </button>
+        </div>
+      </div>
+    );
 
   const descripcionGeneral = product.contenido?.titulo || "";
   const especificaciones = product.contenido?.especificaciones || {};
-  const materialesCompatibles = product.contenido?.materiales_compatibles || [];
+  const materialesCompatibles =
+    product.contenido?.materiales_compatibles || [];
   const idealPara = product.contenido?.ideal_para || [];
   const colores = product.contenido?.colores || [];
   const isFilamento = product.categoria?.toLowerCase().includes("filament");
@@ -112,26 +212,37 @@ export default function Product() {
 
   return (
     <div className="product-page">
-      <header className="product-header"><MainNavbar /></header>
+      <header className="product-header">
+        <MainNavbar />
+      </header>
 
       <div className="breadcrumb">
-        <span onClick={() => navigate("/")} className="breadcrumb-link">Home</span>
+        <span onClick={() => navigate("/")} className="breadcrumb-link">
+          Home
+        </span>
         <span>/</span>
-        <span onClick={() => navigate("/catalogo")} className="breadcrumb-link">Catálogo</span>
+        <span
+          onClick={() => navigate("/catalogo")}
+          className="breadcrumb-link"
+        >
+          Catálogo
+        </span>
         <span>/</span>
         <span className="breadcrumb-current">{product.nombre}</span>
       </div>
 
       <main className="product-main">
-        {/* GALERÍA */}
+        {/* ── GALERÍA ── */}
         <section className="product-gallery">
+          {/* Imagen principal */}
           <div className="main-image">
             {imagenActual ? (
               <img
                 src={imagenActual}
                 alt={product.nombre}
                 onError={(e) => {
-                  e.target.src = "https://res.cloudinary.com/dvjmdhlac/image/upload/v1775435437/Logo_Principal_gq4gtt.png";
+                  e.target.src =
+                    "https://res.cloudinary.com/dvjmdhlac/image/upload/v1775435437/Logo_Principal_gq4gtt.png";
                 }}
               />
             ) : (
@@ -139,7 +250,10 @@ export default function Product() {
             )}
           </div>
 
-          {/* THUMBNAILS normales (no filamentos) o SWATCHES (filamentos) */}
+          {/*
+           * Si es filamento con colores → swatches de colores.
+           * Si no → carrusel de thumbnails (sin límite de fotos).
+           */}
           {isFilamento && colores.length > 0 ? (
             <div className="color-swatches">
               <p className="swatches-label">Colores disponibles:</p>
@@ -147,10 +261,14 @@ export default function Product() {
                 {colores.map((color, i) => (
                   <button
                     key={i}
-                    className={`swatch-btn ${selectedColor?.nombre === color.nombre ? "active" : ""}`}
-                    onClick={() => setSelectedColor(
-                      selectedColor?.nombre === color.nombre ? null : color
-                    )}
+                    className={`swatch-btn ${
+                      selectedColor?.nombre === color.nombre ? "active" : ""
+                    }`}
+                    onClick={() =>
+                      setSelectedColor(
+                        selectedColor?.nombre === color.nombre ? null : color
+                      )
+                    }
                     title={color.nombre}
                   >
                     <span
@@ -163,27 +281,17 @@ export default function Product() {
               </div>
             </div>
           ) : (
-            <div className="thumbnail-gallery">
-              {product.imagenes.slice(0, 4).map((img, i) => (
-                <div
-                  key={i}
-                  className={`thumbnail ${mainImage === i ? "active" : ""}`}
-                  onClick={() => setMainImage(i)}
-                >
-                  <img
-                    src={img}
-                    alt={`Thumbnail ${i + 1}`}
-                    onError={(e) => {
-                      e.target.src = "https://res.cloudinary.com/dvjmdhlac/image/upload/v1775435437/Logo_Principal_gq4gtt.png";
-                    }}
-                  />
-                </div>
-              ))}
-            </div>
+            product.imagenes.length > 0 && (
+              <ThumbnailCarousel
+                images={product.imagenes}
+                mainImage={mainImage}
+                onSelect={setMainImage}
+              />
+            )
           )}
         </section>
 
-        {/* DETALLES */}
+        {/* ── DETALLES ── */}
         <section className="product-details">
           <div className="product-title-section">
             <span className="category-badge">
@@ -198,7 +306,9 @@ export default function Product() {
           </div>
 
           {descripcionGeneral && (
-            <div className="description"><p>{descripcionGeneral}</p></div>
+            <div className="description">
+              <p>{descripcionGeneral}</p>
+            </div>
           )}
 
           <div className="cta-section">
@@ -210,7 +320,9 @@ export default function Product() {
           <div className="info-boxes">
             <div className="info-box">
               <span className="icon">🚚</span>
-              <p><strong>Envíos a todo el país</strong></p>
+              <p>
+                <strong>Envíos a todo el país</strong>
+              </p>
             </div>
 
             {garantia && (
@@ -225,7 +337,7 @@ export default function Product() {
         </section>
       </main>
 
-      {/* ESPECIFICACIONES TÉCNICAS */}
+      {/* ── ESPECIFICACIONES TÉCNICAS ── */}
       {Object.keys(especificaciones).length > 0 && (
         <section className="specs-technical">
           <h2>ESPECIFICACIONES TECNICAS</h2>
@@ -240,6 +352,7 @@ export default function Product() {
         </section>
       )}
 
+      {/* ── IDEAL PARA / MATERIALES ── */}
       {(idealPara.length > 0 || materialesCompatibles.length > 0) && (
         <section className="product-specs-two-columns">
           <h2>CARACTERISTICAS ADICIONALES</h2>
@@ -249,7 +362,9 @@ export default function Product() {
                 <h3 className="spec-column-title">Ideal Para</h3>
                 <div className="ideal-para-list">
                   {idealPara.map((item, j) => (
-                    <p key={j} className="ideal-para-item">{item}</p>
+                    <p key={j} className="ideal-para-item">
+                      {item}
+                    </p>
                   ))}
                 </div>
               </div>
@@ -281,6 +396,9 @@ export default function Product() {
   );
 }
 
+// ─────────────────────────────────────────────
+// Carrusel de productos relacionados
+// ─────────────────────────────────────────────
 function RelatedProductsCarousel({ categoria, currentId, navigate }) {
   const [related, setRelated] = useState([]);
 
@@ -289,20 +407,36 @@ function RelatedProductsCarousel({ categoria, currentId, navigate }) {
       .then((res) => res.json())
       .then((data) => {
         const filtered = data
-          .filter((p) => p && p.id && p.categoria === categoria && p.id !== currentId)
+          .filter(
+            (p) =>
+              p && p.id && p.categoria === categoria && p.id !== currentId
+          )
           .map((p) => ({
             ...p,
             imagenes: (() => {
-              let imgs = typeof p.imagenes === "string"
-                ? (() => { try { return JSON.parse(p.imagenes); } catch { return []; } })()
-                : (Array.isArray(p.imagenes) ? p.imagenes : []);
-              return imgs.map((img) => typeof img === "string" ? img : img.url);
-            })()
+              let imgs =
+                typeof p.imagenes === "string"
+                  ? (() => {
+                      try {
+                        return JSON.parse(p.imagenes);
+                      } catch {
+                        return [];
+                      }
+                    })()
+                  : Array.isArray(p.imagenes)
+                  ? p.imagenes
+                  : [];
+              return imgs.map((img) =>
+                typeof img === "string" ? img : img.url
+              );
+            })(),
           }))
           .slice(0, 8);
         setRelated(filtered);
       })
-      .catch((err) => console.error("Error fetching related products:", err));
+      .catch((err) =>
+        console.error("Error fetching related products:", err)
+      );
   }, [categoria, currentId]);
 
   if (related.length === 0) return null;
