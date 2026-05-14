@@ -52,11 +52,15 @@ function ThumbnailCarousel({ images, mainImage, onSelect }) {
   const scrollLeft = () => {
     if (trackRef.current)
       trackRef.current.scrollBy({ left: -SCROLL_STEP, behavior: "smooth" });
+    const prevIndex = mainImage > 0 ? mainImage - 1 : images.length - 1;
+    onSelect(prevIndex);
   };
 
   const scrollRight = () => {
     if (trackRef.current)
       trackRef.current.scrollBy({ left: SCROLL_STEP, behavior: "smooth" });
+    const nextIndex = mainImage < images.length - 1 ? mainImage + 1 : 0;
+    onSelect(nextIndex);
   };
 
   const showArrows = images.length > VISIBLE_THRESHOLD;
@@ -161,8 +165,7 @@ export default function Product() {
             data.contenido.colores = [];
           }
         }
-        console.log("IMAGENES:", data.imagenes);
-        console.log("TOTAL:", data.imagenes.length);
+
         setProduct(data);
         setLoading(false);
       })
