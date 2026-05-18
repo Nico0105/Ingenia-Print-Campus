@@ -29,16 +29,6 @@ function getColorCSS(nombre) {
   return COLOR_MAP[key] || "#ccc";
 }
 
-function getGarantia(categoria, nombre) {
-  const cat = categoria?.toLowerCase() || "";
-  const nom = nombre?.toLowerCase() || "";
-  if (cat.includes("filament")) return null;
-  if (nom.includes("bambu") || nom.includes("bambulab") || nom.includes("bambu lab")) {
-    return { texto: "1 año", tipo: "bambu" };
-  }
-  return { texto: "6 meses", tipo: "default" };
-}
-
 // ─────────────────────────────────────────────
 // ThumbnailCarousel — sin límite de imágenes.
 // Muestra todas; si hay más de 4 aparecen flechas
@@ -46,8 +36,8 @@ function getGarantia(categoria, nombre) {
 // ─────────────────────────────────────────────
 function ThumbnailCarousel({ images, mainImage, onSelect }) {
   const trackRef = useRef(null);
-  const SCROLL_STEP = 160; // px desplazados por clic de flecha
-  const VISIBLE_THRESHOLD = 4; // a partir de cuántas fotos salen las flechas
+  const SCROLL_STEP = 160;
+  const VISIBLE_THRESHOLD = 4;
 
   const scrollLeft = () => {
     if (trackRef.current)
@@ -73,16 +63,7 @@ function ThumbnailCarousel({ images, mainImage, onSelect }) {
           onClick={scrollLeft}
           aria-label="Anterior"
         >
-          <svg
-            width="16"
-            height="16"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          >
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
             <polyline points="15 18 9 12 15 6" />
           </svg>
         </button>
@@ -113,16 +94,7 @@ function ThumbnailCarousel({ images, mainImage, onSelect }) {
           onClick={scrollRight}
           aria-label="Siguiente"
         >
-          <svg
-            width="16"
-            height="16"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          >
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
             <polyline points="9 18 15 12 9 6" />
           </svg>
         </button>
@@ -195,12 +167,13 @@ export default function Product() {
 
   const descripcionGeneral = product.contenido?.titulo || "";
   const especificaciones = product.contenido?.especificaciones || {};
-  const materialesCompatibles =
-    product.contenido?.materiales_compatibles || [];
+  const materialesCompatibles = product.contenido?.materiales_compatibles || [];
   const idealPara = product.contenido?.ideal_para || [];
   const colores = product.contenido?.colores || [];
   const isFilamento = product.categoria?.toLowerCase().includes("filament");
-  const garantia = getGarantia(product.categoria, product.nombre);
+
+  // Garantía: leída desde contenido guardado (editable desde admin)
+  const garantiaTexto = product.contenido?.garantia || null;
 
   const imagenActual = selectedColor?.imagenUrl
     ? selectedColor.imagenUrl
@@ -225,10 +198,7 @@ export default function Product() {
           Home
         </span>
         <span>/</span>
-        <span
-          onClick={() => navigate("/catalogo")}
-          className="breadcrumb-link"
-        >
+        <span onClick={() => navigate("/catalogo")} className="breadcrumb-link">
           Catálogo
         </span>
         <span>/</span>
@@ -238,7 +208,6 @@ export default function Product() {
       <main className="product-main">
         {/* ── GALERÍA ── */}
         <section className="product-gallery">
-          {/* Imagen principal */}
           <div className="main-image">
             {imagenActual ? (
               <img
@@ -254,10 +223,6 @@ export default function Product() {
             )}
           </div>
 
-          {/*
-           * Si es filamento con colores → swatches de colores.
-           * Si no → carrusel de thumbnails (sin límite de fotos).
-           */}
           {isFilamento && colores.length > 0 ? (
             <div className="color-swatches">
               <p className="swatches-label">Colores disponibles:</p>
@@ -329,11 +294,16 @@ export default function Product() {
               </p>
             </div>
 
-            {garantia && (
-              <div className="info-box">
+            {/* Garantía: clickeable, lleva a /garantia */}
+            {garantiaTexto && (
+              <div
+                className="info-box info-box--clickable"
+                onClick={() => navigate("/garantia")}
+                title="Ver política de garantía"
+              >
                 <span className="icon">🔒</span>
                 <p>
-                  <strong>Garantía Oficial</strong> de {garantia.texto}
+                  <strong>Garantía Oficial</strong> de {garantiaTexto}
                 </p>
               </div>
             )}

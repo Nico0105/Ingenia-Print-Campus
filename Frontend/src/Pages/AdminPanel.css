@@ -445,6 +445,29 @@
 }
 
 /* ================================
+   CAMPO GARANTÍA
+================================ */
+.garantia-field {
+  padding: 16px 20px;
+  background: rgba(217, 119, 6, 0.05);
+  border: 1px solid rgba(217, 119, 6, 0.25);
+  border-radius: 10px;
+  margin-top: 4px;
+}
+
+.garantia-field label {
+  color: #f97316 !important;
+  font-size: 13px !important;
+}
+
+.garantia-hint {
+  margin: 8px 0 0 0;
+  font-size: 12px;
+  color: #64748b;
+  line-height: 1.5;
+}
+
+/* ================================
    SECCIÓN COLORES (Filamentos)
 ================================ */
 .colores-section {

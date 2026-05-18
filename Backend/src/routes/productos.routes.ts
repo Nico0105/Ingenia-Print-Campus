@@ -306,7 +306,7 @@ router.get("/:id", async (req: Request, res: Response) => {
 // POST /api/products
 router.post("/", upload.any(), async (req: Request, res: Response) => {
   try {
-    let { nombre, categoria, subcategoria, titulo, especificaciones, materiales_compatibles, ideal_para, colores } = req.body;
+    let { nombre, categoria, subcategoria, titulo, garantia, especificaciones, materiales_compatibles, ideal_para, colores } = req.body;
     if (!nombre) { res.status(400).json({ error: "Nombre requerido" }); return; }
 
     categoria = categoria || "Impresoras FDM";
@@ -335,6 +335,7 @@ router.post("/", upload.any(), async (req: Request, res: Response) => {
       imagenes: JSON.stringify(imagenes),
       descripcion_general: JSON.stringify({
         titulo,
+        garantia: garantia || '',
         especificaciones: JSON.parse(especificaciones || "{}"),
         materiales_compatibles: JSON.parse(materiales_compatibles || "[]"),
         ideal_para: JSON.parse(ideal_para || "[]"),
@@ -355,7 +356,7 @@ router.put("/:id", upload.any(), async (req: Request, res: Response) => {
     const id = parseInt(req.params.id as string, 10);
     if (isNaN(id)) { res.status(400).json({ error: "ID inválido" }); return; }
 
-    const { nombre, categoria, subcategoria, titulo, especificaciones,
+    const { nombre, categoria, subcategoria, titulo, garantia, especificaciones,
             materiales_compatibles, ideal_para, colores, imagenes_orden } = req.body;
 
     const allFiles = req.files as (Express.Multer.File & { path: string; filename: string })[];
@@ -437,6 +438,10 @@ router.put("/:id", upload.any(), async (req: Request, res: Response) => {
       };
     });
 
+    // Parsear descripcion_general existente para fallbacks
+    let existingContenido: any = {};
+    try { existingContenido = JSON.parse(currentProducto.descripcion_general || '{}'); } catch {}
+
     const updatedProduct = {
       nombre: nombre || currentProducto.nombre,
       categoria: categoria || currentProducto.categoria,
@@ -444,17 +449,18 @@ router.put("/:id", upload.any(), async (req: Request, res: Response) => {
       imagenes: imagenesFinal,
       en_stock: currentProducto.en_stock,
       descripcion_general: {
-        titulo: titulo || (JSON.parse(currentProducto.descripcion_general || '{}').titulo) || '',
+        titulo: titulo !== undefined ? titulo : (existingContenido.titulo || ''),
+        garantia: garantia !== undefined ? garantia : (existingContenido.garantia || ''),
         especificaciones: (() => {
-          try { return especificaciones ? JSON.parse(especificaciones) : (JSON.parse(currentProducto.descripcion_general || '{}').especificaciones || {}); }
+          try { return especificaciones ? JSON.parse(especificaciones) : (existingContenido.especificaciones || {}); }
           catch { return {}; }
         })(),
         materiales_compatibles: (() => {
-          try { return materiales_compatibles ? JSON.parse(materiales_compatibles) : (JSON.parse(currentProducto.descripcion_general || '{}').materiales_compatibles || []); }
+          try { return materiales_compatibles ? JSON.parse(materiales_compatibles) : (existingContenido.materiales_compatibles || []); }
           catch { return []; }
         })(),
         ideal_para: (() => {
-          try { return ideal_para ? JSON.parse(ideal_para) : (JSON.parse(currentProducto.descripcion_general || '{}').ideal_para || []); }
+          try { return ideal_para ? JSON.parse(ideal_para) : (existingContenido.ideal_para || []); }
           catch { return []; }
         })(),
         colores: coloresFinales,

@@ -9,6 +9,7 @@ const EMPTY_FORM = {
   subcategoria: "",
   imagenes: [],
   titulo: "",
+  garantia: "",
   especificaciones: [
     { key: "Tecnología", value: "" },
     { key: "Volumen de impresión", value: "" },
@@ -32,6 +33,7 @@ function buildFormData(form) {
   formData.append("categoria", form.categoria);
   formData.append("subcategoria", form.subcategoria);
   formData.append("titulo", form.titulo);
+  formData.append("garantia", form.garantia || "");
   formData.append("especificaciones", JSON.stringify(specsObject));
   formData.append("materiales_compatibles", JSON.stringify(form.materiales_compatibles.filter((m) => m)));
   formData.append("ideal_para", JSON.stringify(form.ideal_para.filter((i) => i)));
@@ -317,6 +319,7 @@ export default function AdminPanel() {
       subcategoria: product.subcategoria || "",
       imagenes: imagenesExistentes,
       titulo: product.contenido?.titulo || "",
+      garantia: product.contenido?.garantia || "",
       especificaciones: product.contenido?.especificaciones
         ? Object.entries(product.contenido.especificaciones).map(([key, value]) => ({ key, value }))
         : [
@@ -454,6 +457,20 @@ export default function AdminPanel() {
           value={form.titulo}
           onChange={(e) => setForm({ ...form, titulo: e.target.value })}
         />
+      </div>
+
+      {/* ── GARANTÍA ── */}
+      <div className="form-group garantia-field">
+        <label>🔒 Garantía:</label>
+        <input
+          type="text"
+          placeholder="Ej: 6 meses, 1 año, Sin garantía... (dejá vacío para no mostrar)"
+          value={form.garantia}
+          onChange={(e) => setForm({ ...form, garantia: e.target.value })}
+        />
+        <p className="garantia-hint">
+          Si dejás este campo vacío, el cuadro de garantía no se mostrará en la página del producto.
+        </p>
       </div>
 
       <h4>Especificaciones:</h4>
